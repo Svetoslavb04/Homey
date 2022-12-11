@@ -1,9 +1,9 @@
-import { FC } from 'react'
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+import { FC, ReactNode } from 'react'
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { StyledEngineProvider } from '@mui/material/styles';
 
 type Props = {
-    children: JSX.Element
+    children: ReactNode
 }
 
 declare module '@mui/material/styles' {
@@ -25,8 +25,11 @@ const MaterialUIProvider: FC<Props> = ({ children }) => {
     const theme = createTheme({
         palette: {
             primary: {
-                main: '#323232'
+                main: '#282828'
             }
+        },
+        typography: {
+            fontFamily: 'Khand'
         }
     })
 

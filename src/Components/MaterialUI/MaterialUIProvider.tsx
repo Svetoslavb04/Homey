@@ -1,6 +1,8 @@
 import { FC, ReactNode } from 'react'
+
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { StyledEngineProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 
 type Props = {
     children: ReactNode
@@ -36,6 +38,7 @@ const MaterialUIProvider: FC<Props> = ({ children }) => {
     return (
         <StyledEngineProvider injectFirst>
             <ThemeProvider theme={theme}>
+                <CssBaseline />
                 {children}
             </ThemeProvider>
         </StyledEngineProvider>

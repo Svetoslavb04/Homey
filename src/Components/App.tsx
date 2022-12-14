@@ -2,7 +2,7 @@ import './App.css';
 
 import { BrowserRouter } from 'react-router-dom';
 
-import MaterialUIProvider from './Core/MaterialUI/MaterialUIProvider'; //Everything provided by MUI
+import MaterialUIProvider from './Core/MaterialUI'; //Everything provided by MUI
 
 function App() {
   return (

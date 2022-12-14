@@ -1,5 +1,5 @@
 import './App.css';
-import MaterialUIProvider from './MaterialUI/MaterialUIProvider'; //Everything provided by MUI
+import MaterialUIProvider from './Core/MaterialUI/MaterialUIProvider'; //Everything provided by MUI
 
 function App() {
   return (

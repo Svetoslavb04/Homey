@@ -1,11 +1,15 @@
 import './App.css';
-import MaterialUIProvider from './MaterialUI/MaterialUIProvider'; //Everything provided by MUI
+
+import { BrowserRouter } from 'react-router-dom';
+
+import MaterialUIProvider from './Core/MaterialUI/MaterialUIProvider'; //Everything provided by MUI
 
 function App() {
   return (
     <div className="App">
       <MaterialUIProvider>
-        
+        <BrowserRouter>
+        </BrowserRouter>
       </MaterialUIProvider>
     </div>
   );

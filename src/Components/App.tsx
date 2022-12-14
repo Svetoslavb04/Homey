@@ -7,13 +7,11 @@ import Layout from './Core/Layout'; //Page layout
 
 function App() {
   return (
-    <div className="App">
-      <MaterialUIProvider>
-        <BrowserRouter>
-          <Layout />
-        </BrowserRouter>
-      </MaterialUIProvider>
-    </div>
+    <MaterialUIProvider>
+      <BrowserRouter>
+        <Layout />
+      </BrowserRouter>
+    </MaterialUIProvider>
   );
 }
 

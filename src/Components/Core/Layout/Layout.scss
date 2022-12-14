@@ -1,0 +1,13 @@
+@use '../../../assets/scss/variables' as v;
+
+.App {
+    min-height: 100vh;
+    background-color: v.$background-color;
+    display: flex;
+    flex-direction: row;
+    transition: all 0.5s;
+}
+
+#main {
+    flex-grow: 1;
+}

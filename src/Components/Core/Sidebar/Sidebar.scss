@@ -1,0 +1,106 @@
+@use "../../../assets/scss/variables.scss" as v;
+
+$sidebar-mobile-width: 270px;
+
+#sidebar {
+    width: 100%;
+    position: relative;
+    border-right: 1px solid v.$border-color;
+    flex-basis: 22%;
+    transition: all 0.5s;
+    padding: 3rem 40px;
+
+    #sidebar-logo {
+        margin-bottom: 4rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+            width: 70px;
+            height: 70px;
+            fill: v.$gold;
+        }
+
+        #sidebar-logo-text {
+            margin: 0;
+            line-height: 0.7;
+            color: white;
+            font-weight: 400;
+            font-size: 50px;
+        }
+    }
+
+    nav {
+        margin: 30px 0;
+
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        li {
+            border-bottom: 1px solid v.$border-color;
+        }
+
+        a {
+            display: block;
+            margin-top: 12px;
+            padding-bottom: 12px;
+            color: v.$grey-font;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 20px;
+            transition: all 0.5s;
+        }
+
+        a:hover {
+            color: v.$gold;
+        }
+
+        .active {
+            color: v.$gold;
+        }
+    }
+
+    #sidebar-toggler {
+        transition: all 0.7s;
+        display: none;
+    }
+}
+
+@media screen and (min-width: 780px) and (max-width: 1200px) {
+    #sidebar {
+        flex-basis: 30%;
+    }
+}
+
+@media screen and (max-width: 780px) {
+    #sidebar {
+        flex-basis: $sidebar-mobile-width;
+        padding: 3rem 30px;
+
+        #sidebar-toggler {
+            display: flex;
+            padding: 8px;
+            position: fixed;
+            top: 25px;
+            left: calc($sidebar-mobile-width + 20px);
+            border-radius: 100%;
+            background-color: v.$gold;
+        }
+    }
+
+    #sidebar.hidden {
+        flex-basis: 0px;
+        padding: 0;
+        border: 0;
+        overflow: hidden;
+
+        #sidebar-toggler {
+            left: 20px;
+        }
+    }
+}

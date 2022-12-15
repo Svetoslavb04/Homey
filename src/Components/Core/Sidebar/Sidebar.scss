@@ -1,7 +1,5 @@
 @use "../../../assets/scss/variables.scss" as v;
 
-$sidebar-mobile-width: 270px;
-
 #sidebar {
     width: 100%;
     position: relative;
@@ -66,6 +64,7 @@ $sidebar-mobile-width: 270px;
     }
 
     #sidebar-toggler {
+        cursor: pointer;
         transition: all 0.7s;
         display: none;
     }
@@ -79,7 +78,7 @@ $sidebar-mobile-width: 270px;
 
 @media screen and (max-width: 780px) {
     #sidebar {
-        flex-basis: $sidebar-mobile-width;
+        flex-basis: v.$sidebar-mobile-width;
         padding: 3rem 30px;
 
         #sidebar-toggler {
@@ -87,7 +86,7 @@ $sidebar-mobile-width: 270px;
             padding: 8px;
             position: fixed;
             top: 25px;
-            left: calc($sidebar-mobile-width + 20px);
+            left: calc(v.$sidebar-mobile-width + 20px);
             border-radius: 100%;
             background-color: v.$gold;
         }

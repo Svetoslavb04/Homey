@@ -1,11 +1,37 @@
 
-.user-icon {
-    font-size: large;
-    display: flex ;
-    color: gold;
-}
+@use "../assets/scss/variables.scss" as v;
 
 .login-container {
     display: flex;
-    color: aliceblue;
+    justify-content: center;
+    align-items:center;
+    flex-direction: column;
+    height: 100%;
+    
+
+    color: v.$grey-font;
+}
+
+.user-icon {
+    margin: 20px;
+    align-items:center;
+    width: 150px;
+    height: 150px;
+    fill: v.$gold;
+}
+
+.login-form {
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction: column;
+    background-color: v.$grey-font;
+    border-radius: 5%;
+
+    height: 300px;
+    width: 400px;
+
+    #username{
+        width: 200px;
+    }
 }

@@ -34,7 +34,7 @@ const Sidebar: FC = () => {
         .filter(link => link.visibleTo.includes(role))
 
     return (
-        <div id='sidebar' className={`${!isOpened && 'hidden'}`}>
+        <div id='sidebar' className={`${!isOpened ? 'hidden' : ''}`}>
             <div id="sidebar-logo">
                 <HouseSidingIcon fontSize='large' />
                 <h2 id='sidebar-logo-text'>Homey</h2>

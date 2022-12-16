@@ -1,13 +1,18 @@
-@use '../../../assets/scss/variables' as v;
+@use "../../../assets/scss/variables" as v;
 
 .App {
     min-height: 100vh;
     background-color: v.$background-color;
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 22fr 78fr;
+    grid-template-areas: "sidebar main";
     transition: all 0.5s;
 }
 
 #main {
-    flex-grow: 1;
+    grid-area: "main";
+}
+
+#sidebar {
+    grid-area: "sidebar";
 }

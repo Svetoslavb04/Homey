@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import { renderWithRouter } from '../../../utils/testutils';
 
 import Sidebar from './index'
@@ -35,3 +35,21 @@ test('Adds correct class to the property link', async () => {
     expect(propertiesLink).toHaveClass('active');
 
 })
+
+test('Renders correct toggle icon', async () => {
+
+    window.innerWidth = 500;
+
+    renderWithRouter(<Sidebar />, { route: '/properties' });
+
+    const closeIcon = await screen.findByTestId('CloseIcon');
+    expect(closeIcon).toBeInTheDocument();
+
+    await fireEvent(closeIcon, new Event('click', { bubbles: true }));
+
+    const menuIcon = await screen.findByTestId('MenuIcon');
+
+    expect(menuIcon).toBeInTheDocument();
+    expect(closeIcon).not.toBeInTheDocument();
+    
+});

@@ -19,7 +19,7 @@ const Sidebar: FC = () => {
 
     const [isOpened, setIsOpened] = useState<boolean>(true);
 
-    const role: Role = Role.agency //get from somewhere
+    const role: Role = Role.guest //get from somewhere
 
     const navLinks: INavLink[] = [
         { to: '/', text: 'Home', visibleTo: [Role.guest, Role.buyer, Role.agency] },

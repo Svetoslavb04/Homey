@@ -2,11 +2,12 @@
 
 #sidebar {
     width: 100%;
+    padding: 3rem 40px;
     position: relative;
     border-right: 1px solid v.$border-color;
     flex-basis: 22%;
+    flex-shrink: 0;
     transition: all 0.5s;
-    padding: 3rem 40px;
 
     #sidebar-logo {
         margin-bottom: 4rem;

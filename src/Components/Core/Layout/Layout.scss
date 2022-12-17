@@ -3,16 +3,11 @@
 .App {
     min-height: 100vh;
     background-color: v.$background-color;
-    display: grid;
-    grid-template-columns: 22fr 78fr;
-    grid-template-areas: "sidebar main";
+    display: flex;
+    flex-direction: row;
     transition: all 0.5s;
 }
 
 #main {
-    grid-area: "main";
-}
-
-#sidebar {
-    grid-area: "sidebar";
+    flex-grow: 1;
 }

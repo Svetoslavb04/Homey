@@ -1,5 +1,6 @@
 import './Login.scss';
 import { FC, useState } from 'react';
+import { NavLink } from "react-router-dom";
 
 import UserIcon from '@mui/icons-material/AccountCircleOutlined';
 import Visibility from '@mui/icons-material/Visibility';
@@ -26,9 +27,9 @@ const Login: FC = () => {
             </div>
             <form id='login-form'>
                 <div id='choose-form'>
-                    <div id='sign-in-option'> SIGN IN </div>
+                    <NavLink to='/login' className='form-type'> SIGN IN </NavLink>
                         
-                    <div id='sign-up-option'> SIGN UP </div>                 
+                    <NavLink to='/register' className='form-type'> SIGN UP </NavLink>                 
                 </div>
                 
                 <div id="login-username">

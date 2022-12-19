@@ -1,5 +1,5 @@
 import './Sidebar.scss';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import { NavLink } from "react-router-dom";
 
@@ -32,6 +32,11 @@ const Sidebar: FC = () => {
         { to: '/logout', text: 'Logout', visibleTo: [Role.buyer, Role.agency] },
     ]
         .filter(link => link.visibleTo.includes(role))
+
+    useEffect(
+        () => { document.body.toggleAttribute('sidebar-opened', isOpened) }
+        , [isOpened]
+    );
 
     return (
         <div id='sidebar' className={`${!isOpened ? 'hidden' : ''}`}>

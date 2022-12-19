@@ -3,7 +3,6 @@ import { FC, ReactNode } from 'react'
 import { createTheme, ThemeProvider } from '@mui/material/styles'; //Create theme and use it with the provider
 import { StyledEngineProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline'; //CSS Normalization
-import Button from '@mui/material/Button';
 
 type Props = {
     children: ReactNode //Special type to allow child components

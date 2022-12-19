@@ -29,7 +29,8 @@ test('Adds correct class to the property link', async () => {
 
     const propertiesLink = linkTags
         .find(a => a.textContent?.toLocaleLowerCase().includes('properties'))
-
+    console.log(linkTags.length);
+    
     expect(addPropertyLink).not.toHaveClass('active');
 
     expect(propertiesLink).toHaveClass('active');

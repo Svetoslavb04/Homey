@@ -9,7 +9,7 @@ export const renderWithRouter = (ui: ReactElement, { route = '/' } = {}) => {
     window.history.pushState({}, 'Test page', route)
     
     return {
-        user: userEvent.setup(),
+        //user: userEvent.setup(),
         ...render(ui, { wrapper: BrowserRouter }),
     }
 }

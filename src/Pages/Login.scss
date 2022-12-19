@@ -31,6 +31,23 @@
         width: 400px;
         transition: width 0.5s;
 
+        #choose-form{
+            display:flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            width: 80%;
+            
+            #sign-in-option{
+                text-align: center;
+                border-style:solid;
+                border-color: v.$gold;
+                color: v.$gold;
+                width:27%;
+                margin-right: 10px;
+            }
+        }
         #login-username,
         #login-password {
             margin: 0.6rem 0;

@@ -25,6 +25,12 @@ const Login: FC = () => {
                 <UserIcon className='user-icon' fontSize="large" />
             </div>
             <form id='login-form'>
+                <div id='choose-form'>
+                    <div id='sign-in-option'> SIGN IN </div>
+                        
+                    <div id='sign-up-option'> SIGN UP </div>                 
+                </div>
+                
                 <div id="login-username">
                     <TextField
                         fullWidth

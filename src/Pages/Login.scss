@@ -1,57 +1,109 @@
-
 @use "../assets/scss/variables.scss" as v;
 
-.login-container {
+#login-container {
     display: flex;
     justify-content: center;
-    align-items:center;
+    align-items: center;
     flex-direction: column;
-    height: 100%;
-    
-
+    margin-top: 3rem;
     color: v.$grey-font;
-}
 
-.user-icon {
-    position: absolute;
-    margin: 20px;
-    top: 100px;
-    width: 150px;
-    height: 150px;
-    fill: v.$gold;
-}
+    #login-user-logo-container {
+        text-align: center;
 
-.login-form {
-    position: absolute;
-    margin:10px;
-    display: flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction: column;
-    background-color: v.$grey-font;
-    border-radius: 5%;
-    top: 300px;
-
-    height: 300px;
-    width: 400px;
-
-    #username{
-        width: 200px;
+        .user-icon {
+            width: 150px;
+            height: 150px;
+            fill: v.$gold;
+        }
     }
 
-    #login-button {
-        background-color: v.$gold;
-        color: white;
-        padding: 14px 20px;
-        margin: 8px 0;
-        border: none;
-        cursor: pointer;
-        width: 40%;
-        border-radius: 8px;
-      }
+    #login-form {
+        margin: 10px;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        background-color: #323232;
+        border-radius: 5%;
 
-      #login-button:hover {
-        opacity: 0.8;
-      }
-      
+        width: 400px;
+        transition: width 0.5s;
+
+        #login-username,
+        #login-password {
+            margin: 0.6rem 0;
+            width: 70%;
+            color: v.$gold;
+
+            label,
+            input {
+                color: v.$gold;
+            }
+        }
+
+        .password-visibilty-icon svg {
+            opacity: 0.8;
+            fill: v.$gold;
+        }
+
+        #login-button-container {
+            width: 40%;
+            margin: 2rem 0 1.2rem 0;
+            transition: width 0.5s;
+        }
+
+        #login-button {
+            padding: 14px 20px;
+            font-size: 1.2rem;
+        }
+
+        #login-button:hover {
+            opacity: 0.8;
+        }
+    }
+
+    @media screen and (max-width: 500px) {
+        #login-form {
+            width: 80%;
+
+            #login-button-container {
+                width: 70%;
+            }
+        }
+    }
+
+    @media screen and (min-width: 1820px) {
+        #login-form {
+            width: 600px;
+
+            #login-username,
+            #login-password {
+                margin: 1rem 0;
+            }
+
+            #login-button-container {
+                width: 50%;
+            margin: 2.5rem 0 1.5rem 0;
+
+            }
+        }
+    }
+
+    @media screen and (min-width: 2200px) {
+        #login-form {
+            width: 35%;
+
+            #login-username,
+            #login-password {
+                margin: 1rem 0;
+            }
+
+            #login-button-container {
+            margin: 3rem 0 2rem 0;
+
+            }
+        }
+    }
 }

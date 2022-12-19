@@ -3,6 +3,7 @@ import { FC, ReactNode } from 'react'
 import { createTheme, ThemeProvider } from '@mui/material/styles'; //Create theme and use it with the provider
 import { StyledEngineProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline'; //CSS Normalization
+import Button from '@mui/material/Button';
 
 type Props = {
     children: ReactNode //Special type to allow child components
@@ -12,12 +13,9 @@ declare module '@mui/material/styles' {
 
     // allow custom values to the theme
     interface Theme {
-
     }
 
-    // allow custom values to the theme
     interface ThemeOptions {
-
     }
 
 }
@@ -29,6 +27,9 @@ const MaterialUIProvider: FC<Props> = ({ children }) => {
         palette: {
             primary: {
                 main: '#282828'
+            },
+            secondary: {
+                main: '#c5aa7e'
             }
         },
         typography: {

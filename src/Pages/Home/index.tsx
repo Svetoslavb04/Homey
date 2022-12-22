@@ -1,10 +1,15 @@
 import './Home.scss';
-import { FC, useEffect, useRef } from 'react'
+import { FC, useRef } from 'react'
 
 import { Splide, SplideSlide } from '@splidejs/react-splide'
 import '@splidejs/react-splide/css'
 
 import SlideshowPropertySlide from '../../interfaces/SlideShowSlide'
+
+import HouseIcon from '@mui/icons-material/House';
+import ApartmentIcon from '@mui/icons-material/Apartment';
+import VillaIcon from '@mui/icons-material/Villa';
+import LandscapeIcon from '@mui/icons-material/Landscape';
 
 const Home: FC = () => {
 
@@ -38,13 +43,6 @@ const Home: FC = () => {
 
     const splideRef = useRef<Splide>(null);
 
-    useEffect(() => {
-        window.addEventListener('resize', () => {
-            splideRef.current?.render()
-        })
-
-    }, [])
-
     return (
         <div id='home-container'>
             <div>
@@ -72,8 +70,25 @@ const Home: FC = () => {
                     )}
                 </Splide>
             </div>
-
-        </div>
+            <div id='home-property-cards'>
+                <div className='home-property-card'>
+                    <HouseIcon />
+                    <h5>Houses</h5>
+                </div>
+                <div className='home-property-card'>
+                    <ApartmentIcon />
+                    <h5>Apartments</h5>
+                </div>
+                <div className='home-property-card'>
+                    <VillaIcon />
+                    <h5>Villas</h5>
+                </div>
+                <div className='home-property-card'>
+                    <LandscapeIcon />
+                    <h5>Landfields</h5>
+                </div>
+            </div>
+        </div >
     )
 }
 

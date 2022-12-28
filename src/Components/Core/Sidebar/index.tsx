@@ -1,5 +1,5 @@
 import './Sidebar.scss';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import { NavLink } from "react-router-dom";
 
@@ -19,6 +19,8 @@ const Sidebar: FC = () => {
 
     const [isOpened, setIsOpened] = useState<boolean>(true);
 
+    useEffect(() => { document.body.toggleAttribute('sidebar-hidden', !isOpened) }, [isOpened])
+    
     const role: Role = Role.agency //get from somewhere
 
     const navLinks: INavLink[] = [

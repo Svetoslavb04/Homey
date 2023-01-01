@@ -194,6 +194,11 @@ const Home: FC = () => {
                     </div>
                 </div>
             </div>
+            <div id='home-mission'>
+                <h2>Our Mission</h2>
+                <p>Finding a property buyer is not easy, nor is choosing your next home. That is why we have brought both parties under one roof here to facilitate their task.
+                </p>
+            </div>
         </div >
     )
 }

@@ -2,6 +2,8 @@ import './Home.scss';
 import { FC, useRef } from 'react'
 
 import { useNavigate } from "react-router-dom";
+import { usePubSupContext } from '../../contexts/PubSubContext';
+import { customEvents, Subscriber } from '../../utils/pubsub';
 
 import { Splide, SplideSlide } from '@splidejs/react-splide'
 import '@splidejs/react-splide/css'
@@ -12,10 +14,32 @@ import HouseIcon from '@mui/icons-material/House';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import VillaIcon from '@mui/icons-material/Villa';
 import LandscapeIcon from '@mui/icons-material/Landscape';
+import useEffectSkipOnMount from '../../hooks/useEffectSkipOnMount';
 
 const Home: FC = () => {
 
+    const eventBus = usePubSupContext();
     const navigate = useNavigate();
+
+    const splideRef = useRef<Splide>(null);
+
+    useEffectSkipOnMount(() => {
+        
+        const subscriber: Subscriber = {
+            event: customEvents.sidebarStateChange,
+            callback: () => {
+
+                setTimeout(() => {
+                    splideRef.current?.go('>');
+                    splideRef.current?.go('<');
+                }, 500)
+
+            }
+        }
+
+        eventBus?.subscribe(subscriber);
+
+    }, [eventBus])
 
     const slides: SlideshowPropertySlide[] = [
         {
@@ -44,8 +68,6 @@ const Home: FC = () => {
             description: 'No city should be too large for a man to walk out of in a morning.'
         }
     ]
-
-    const splideRef = useRef<Splide>(null);
 
     //Fetch top properties
     const topProperties = [

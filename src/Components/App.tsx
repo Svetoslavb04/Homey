@@ -1,14 +1,20 @@
-import './App.css';
-import Button from '@mui/material/Button';
-import MaterialUIProvider from '../MaterialUI/MaterialUIProvider';
+import './App.scss';
+
+import { BrowserRouter } from 'react-router-dom';
+
+import MaterialUIProvider from './Core/MaterialUI'; //Everything provided by MUI
+import { PubSubProvider } from '../contexts/PubSubContext'; //Everything provided by MUI
+import Layout from './Core/Layout'; //Page layout
 
 function App() {
   return (
-    <div className="App">
-      <MaterialUIProvider>
-        <Button variant="contained">Hello World</Button>
-      </MaterialUIProvider>
-    </div>
+    <MaterialUIProvider>
+      <PubSubProvider>
+        <BrowserRouter>
+          <Layout />
+        </BrowserRouter>
+      </PubSubProvider>
+    </MaterialUIProvider>
   );
 }
 

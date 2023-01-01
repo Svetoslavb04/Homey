@@ -1,0 +1,133 @@
+@use "../../../assets/scss/variables.scss" as v;
+
+#sidebar {
+    width: 100%;
+    padding: 3rem 40px;
+    position: relative;
+    border-right: 1px solid v.$border-color;
+    flex-basis: 22%;
+    flex-shrink: 0;
+    transition: all 0.5s;
+
+    #sidebar-logo {
+        margin-bottom: 4rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+            width: 70px;
+            height: 70px;
+            fill: v.$gold;
+        }
+
+        #sidebar-logo-text {
+            margin: 0;
+            line-height: 0.7;
+            color: white;
+            font-weight: 400;
+            font-size: 50px;
+        }
+    }
+
+    nav {
+        margin: 30px 0;
+
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        li {
+            border-bottom: 1px solid v.$border-color;
+        }
+
+        a {
+            display: block;
+            margin-top: 12px;
+            padding-bottom: 12px;
+            color: v.$grey-font;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 20px;
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            color: v.$gold;
+        }
+
+        .active {
+            color: v.$gold;
+        }
+    }
+
+    #sidebar-toggler {
+        display: flex;
+        padding: 8px;
+        position: fixed;
+        top: 25px;
+        left: calc(v.$sidebar-mobile-width + 20px);
+        background-color: transparent;
+        overflow: hidden;
+        border-radius: 100%;
+        z-index: 9999;
+        cursor: pointer;
+        visibility: hidden;
+        transition: all 0.7s;
+
+        svg {
+            visibility: hidden;
+            opacity: 0%;
+            transition: all 0.7s;
+        }
+    }
+}
+
+@media screen and (min-width: 840px) and (max-width: 1200px) {
+    #sidebar {
+        flex-basis: 30%;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    #sidebar {
+        #sidebar-toggler {
+            visibility: visible;
+            background-color: v.$gold;
+
+            svg {
+                visibility: visible;
+                opacity: 100%;
+            }
+        }
+    }
+
+    #sidebar.hidden {
+        flex-basis: 0px;
+        padding: 0;
+        border: 0;
+        overflow: hidden;
+
+        #sidebar-toggler {
+            left: 20px;
+        }
+    }
+}
+
+@media screen and (max-width: 840px) {
+    #sidebar {
+        flex-basis: v.$sidebar-mobile-width;
+        padding: 3rem 30px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    #sidebar {
+        #sidebar-toggler {
+            left: 80%;
+        }
+    }
+}

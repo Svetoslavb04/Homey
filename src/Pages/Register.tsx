@@ -14,7 +14,7 @@ import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 
-const Login: FC = () => {
+const Register: FC = () => {
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -32,7 +32,7 @@ const Login: FC = () => {
                     <NavLink to='/register' className='form-type'> SIGN UP </NavLink>                 
                 </div>
                 
-                <div id="login-username" className='inputField'>
+                <div id="register-username" className='inputField'>
                     <TextField
                         fullWidth
                         label="Username"
@@ -41,7 +41,16 @@ const Login: FC = () => {
                         error={false}
                     />
                 </div>
-                <div id="login-password" className='inputPassword'>
+                <div id="register-email" className='inputField'>
+                    <TextField
+                        fullWidth
+                        label="Email"
+                        variant="standard"
+                        color="secondary"
+                        error={false}
+                    />
+                </div>
+                <div id="register-password" className='inputPassword'>
                     <FormControl fullWidth variant="standard" color="secondary">
                         <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
                         <Input
@@ -60,8 +69,27 @@ const Login: FC = () => {
                         />
                     </FormControl>
                 </div>
+                <div id="register-rePassword" className='inputPassword'>
+                    <FormControl fullWidth variant="standard" color="secondary">
+                        <InputLabel htmlFor="standard-adornment-password">Repeat Password</InputLabel>
+                        <Input
+                            id="standard-adornment-password"
+                            type={showPassword ? 'text' : 'password'}
+                            endAdornment={
+                                <InputAdornment position="end" className='password-visibilty-icon'>
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={handleClickShowPassword}
+                                    >
+                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                </InputAdornment>
+                            }
+                        />
+                    </FormControl>
+                </div>
                 <div id='login-button-container'>
-                    <Button fullWidth variant="contained" size='large' id='login-button' type='submit'>Login</Button>
+                    <Button fullWidth variant="contained" size='large' id='login-button' type='submit'>Register</Button>
                 </div>
             </form>
         </div>
@@ -70,4 +98,4 @@ const Login: FC = () => {
 
 
 
-export default Login;
+export default Register;

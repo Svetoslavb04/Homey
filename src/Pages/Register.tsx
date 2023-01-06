@@ -3,6 +3,8 @@ import { FC, useState } from 'react';
 import { NavLink } from "react-router-dom";
 
 import UserIcon from '@mui/icons-material/AccountCircleOutlined';
+import PersonIcon from '@mui/icons-material/Person';
+import GroupsIcon from '@mui/icons-material/Groups';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
@@ -13,6 +15,9 @@ import Button from '@mui/material/Button';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
+
+
+
 
 const Register: FC = () => {
 
@@ -32,6 +37,20 @@ const Register: FC = () => {
                     <NavLink to='/register' className='form-type'> SIGN UP </NavLink>                 
                 </div>
                 
+                <h2>SIGN UP AS</h2>
+                <div className='register-mode'>
+                    <div className='register-mode-option'>
+                         <h3>USER</h3>
+                         <div className='register-mode-icon-container'> <PersonIcon className='register-mode-icon'/> </div>
+                    </div>
+
+                    <div className='register-mode-option'>
+                         <h3>AGENCY</h3>
+                         <div className='register-mode-icon-container'> <GroupsIcon className='register-mode-icon'/> </div>
+                    </div>
+                </div>
+
+
                 <div id="register-username" className='inputField'>
                     <TextField
                         fullWidth

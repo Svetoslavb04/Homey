@@ -39,9 +39,9 @@
             align-items: center;
             font-size: 20px;
             width: 80%;
-            
-            
-
+            margin-bottom: 5%;
+                
+        
             .form-type{
                 text-decoration: none;
                 color: v.$grey-font;
@@ -58,7 +58,49 @@
                 color: v.$gold;
                 width:27%;
             }
+
         }
+        .register-mode{
+            margin-top: 1px;
+            margin-bottom: 5%;
+            gap: 8%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;    
+
+            .register-mode-option{
+                display: flex;
+                flex-direction:column;
+                align-items: center;
+
+                .register-mode-icon-container{
+               // border-style: solid;
+                margin-top: 0px;
+                transition: all 0.2s; 
+
+                    .register-mode-icon{
+                        height: 80px;
+                        width: 90px;
+                        fill: v.$grey-font;
+                    }
+                }
+            }
+            
+
+            .register-mode-option:hover{
+                color: v.$gold;
+
+                .register-mode-icon-container{
+                    border-style: solid;
+
+                    .register-mode-icon{
+                        fill: v.$gold;
+                    }
+                }
+            }
+        }
+
         .inputField,
         .inputPassword {
             margin: 0.6rem 0;

@@ -2,7 +2,6 @@ import './Login.scss';
 import { FC, useState } from 'react';
 import { NavLink } from "react-router-dom";
 
-import UserIcon from '@mui/icons-material/AccountCircleOutlined';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
@@ -23,48 +22,45 @@ const Login: FC = () => {
     return (
         <div id='image-background'>
                 <div id='login-container'>
-                <div id="login-user-logo-container">
-                    {/* <UserIcon className='user-icon' fontSize="large" /> */}
-                </div>
-                <form id='login-form'>
-                    <div id='choose-form'>
-                        <NavLink to='/login' className='form-type'> SIGN IN </NavLink>
-                            
-                        <NavLink to='/register' className='form-type'> SIGN UP </NavLink>                 
-                    </div>
-                    
-                    <div id="login-email" className='inputField'>
-                        <TextField
-                            fullWidth
-                            label="Email"
-                            variant="standard"
-                            color="secondary"
-                            error={false}
-                        />
-                    </div>
-                    <div id="login-password" className='inputPassword'>
-                        <FormControl fullWidth variant="standard" color="secondary">
-                            <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
-                            <Input
-                                id="standard-adornment-password"
-                                type={showPassword ? 'text' : 'password'}
-                                endAdornment={
-                                    <InputAdornment position="end" className='password-visibilty-icon'>
-                                        <IconButton
-                                            aria-label="toggle password visibility"
-                                            onClick={handleClickShowPassword}
-                                        >
-                                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                }
+                    <form id='login-form'>
+                        <div id='choose-form'>
+                            <NavLink to='/login' className='form-type'> SIGN IN </NavLink>
+                                
+                            <NavLink to='/register' className='form-type'> SIGN UP </NavLink>                 
+                        </div>
+                        
+                        <div id="login-email" className='inputField'>
+                            <TextField
+                                fullWidth
+                                label="Email"
+                                variant="standard"
+                                color="secondary"
+                                error={false}
                             />
-                        </FormControl>
-                    </div>
-                    <div id='login-button-container'>
-                        <Button fullWidth variant="contained" size='large' id='login-button' type='submit'>Login</Button>
-                    </div>
-                </form>
+                        </div>
+                        <div id="login-password" className='inputPassword'>
+                            <FormControl fullWidth variant="standard" color="secondary">
+                                <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
+                                <Input
+                                    id="standard-adornment-password"
+                                    type={showPassword ? 'text' : 'password'}
+                                    endAdornment={
+                                        <InputAdornment position="end" className='password-visibilty-icon'>
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowPassword}
+                                            >
+                                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    }
+                                />
+                            </FormControl>
+                        </div>
+                        <div id='login-button-container'>
+                            <Button fullWidth variant="contained" size='large' id='login-button' type='submit'>Login</Button>
+                        </div>
+                    </form>
             </div>
         </div>
 

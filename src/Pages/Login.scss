@@ -63,7 +63,7 @@
         .register-mode{
             margin-top: 1px;
             margin-bottom: 5%;
-            gap: 8%;
+            gap: 15%;
             display: flex;
             flex-direction: row;
             justify-content: center;
@@ -75,14 +75,20 @@
                 align-items: center;
 
                 .register-mode-icon-container{
-               // border-style: solid;
-                margin-top: 0px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
                 transition: all 0.2s; 
 
                     .register-mode-icon{
                         height: 80px;
                         width: 90px;
                         fill: v.$grey-font;
+                    }
+
+                    h3{
+                        margin-top: 0px;
+                        margin-bottom: 0px;
                     }
                 }
             }

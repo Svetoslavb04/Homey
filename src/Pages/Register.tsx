@@ -40,13 +40,15 @@ const Register: FC = () => {
                 <h2>SIGN UP AS</h2>
                 <div className='register-mode'>
                     <div className='register-mode-option'>
-                         <h3>USER</h3>
-                         <div className='register-mode-icon-container'> <PersonIcon className='register-mode-icon'/> </div>
+                        <div className='register-mode-icon-container'> <PersonIcon className='register-mode-icon'/> 
+                            <h3>USER</h3> 
+                        </div>
                     </div>
 
                     <div className='register-mode-option'>
-                         <h3>AGENCY</h3>
-                         <div className='register-mode-icon-container'> <GroupsIcon className='register-mode-icon'/> </div>
+                        <div className='register-mode-icon-container'> <GroupsIcon className='register-mode-icon'/> 
+                            <h3>AGENCY</h3> 
+                        </div>
                     </div>
                 </div>
 

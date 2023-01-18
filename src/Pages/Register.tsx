@@ -46,7 +46,7 @@ const Register: FC = () => {
             <form id='login-form'>
                 <div id='choose-form'>
                     <NavLink to='/login' className='form-type'> SIGN IN </NavLink>
-                        
+                    
                     <NavLink to='/register' className='form-type'> SIGN UP </NavLink>                 
                 </div>
                 

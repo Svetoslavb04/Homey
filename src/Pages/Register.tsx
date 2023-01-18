@@ -22,8 +22,21 @@ import FormControl from '@mui/material/FormControl';
 const Register: FC = () => {
 
     const [showPassword, setShowPassword] = useState(false);
+    const [showRePassword, setShowRePassword] = useState(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
+    const handleClickShowRePassword = () => setShowRePassword((show) => !show);
+
+    const [registerTypeIsUser, setUserType] = useState(true);
+
+    const changeRegisterTypeToAgency = () =>{ 
+        setUserType(false);
+   }
+
+   const changeRegisterTypeToUser = () =>{ 
+    setUserType(true);
+}
+
 
     return (
         <div id='login-container'>
@@ -37,31 +50,28 @@ const Register: FC = () => {
                     <NavLink to='/register' className='form-type'> SIGN UP </NavLink>                 
                 </div>
                 
-                <h2>SIGN UP AS</h2>
+                <h2>CREATE ACCOUNT</h2>
                 <div className='register-mode'>
                     <div className='register-mode-option'>
-                        <div className='register-mode-icon-container'> <PersonIcon className='register-mode-icon'/> 
+                        <div className={registerTypeIsUser ? 'register-mode-icon-container-active' : 'register-mode-icon-container'} 
+                            onClick={changeRegisterTypeToUser}
+                        > 
+                            <PersonIcon className='register-mode-icon'/> 
                             <h3>USER</h3> 
                         </div>
                     </div>
 
                     <div className='register-mode-option'>
-                        <div className='register-mode-icon-container'> <GroupsIcon className='register-mode-icon'/> 
+                        <div  className={!registerTypeIsUser ? 'register-mode-icon-container-active' : 'register-mode-icon-container'} 
+                            onClick={changeRegisterTypeToAgency}
+                        > 
+                            <GroupsIcon className='register-mode-icon'/> 
                             <h3>AGENCY</h3> 
                         </div>
                     </div>
                 </div>
 
 
-                <div id="register-username" className='inputField'>
-                    <TextField
-                        fullWidth
-                        label="Username"
-                        variant="standard"
-                        color="secondary"
-                        error={false}
-                    />
-                </div>
                 <div id="register-email" className='inputField'>
                     <TextField
                         fullWidth
@@ -71,6 +81,62 @@ const Register: FC = () => {
                         error={false}
                     />
                 </div>
+
+                {registerTypeIsUser
+                
+                    ?   <>
+                            <div id="register-firstName" className='inputField'>
+                                <TextField
+                                    fullWidth
+                                    label="First Name"
+                                    variant="standard"
+                                    color="secondary"
+                                    error={false}
+                                />
+                            </div>
+
+                            <div id="register-lastName" className='inputField'>
+                                <TextField
+                                    fullWidth
+                                    label="Last Name"
+                                    variant="standard"
+                                    color="secondary"
+                                    error={false}
+                                />
+                            </div>
+                        </>
+
+                    :   <>
+                            <div id="register-agencyName" className='inputField'>
+                                <TextField
+                                    fullWidth
+                                    label="Agency Name"
+                                    variant="standard"
+                                    color="secondary"
+                                    error={false}
+                                />
+                            </div>
+                            <div id="register-agencyCity" className='inputField'>
+                                <TextField
+                                    fullWidth
+                                    label="City"
+                                    variant="standard"
+                                    color="secondary"
+                                    error={false}
+                                />
+                            </div>
+                            <div id="register-agencyAdress" className='inputField'>
+                                <TextField
+                                    fullWidth
+                                    label="Adress"
+                                    variant="standard"
+                                    color="secondary"
+                                    error={false}
+                                />
+                            </div>
+                        </>
+                }
+                
                 <div id="register-password" className='inputPassword'>
                     <FormControl fullWidth variant="standard" color="secondary">
                         <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
@@ -95,14 +161,14 @@ const Register: FC = () => {
                         <InputLabel htmlFor="standard-adornment-password">Repeat Password</InputLabel>
                         <Input
                             id="standard-adornment-password"
-                            type={showPassword ? 'text' : 'password'}
+                            type={showRePassword ? 'text' : 'password'}
                             endAdornment={
                                 <InputAdornment position="end" className='password-visibilty-icon'>
                                     <IconButton
                                         aria-label="toggle password visibility"
-                                        onClick={handleClickShowPassword}
+                                        onClick={handleClickShowRePassword}
                                     >
-                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        {showRePassword ? <VisibilityOff /> : <Visibility />}
                                     </IconButton>
                                 </InputAdornment>
                             }

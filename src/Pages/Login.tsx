@@ -32,10 +32,10 @@ const Login: FC = () => {
                     <NavLink to='/register' className='form-type'> SIGN UP </NavLink>                 
                 </div>
                 
-                <div id="login-username" className='inputField'>
+                <div id="login-email" className='inputField'>
                     <TextField
                         fullWidth
-                        label="Username"
+                        label="Email"
                         variant="standard"
                         color="secondary"
                         error={false}

@@ -31,7 +31,7 @@
 
         #home-top-properties-container {
             position: relative;
-            padding: 20px 6rem;
+            padding: 20px 2rem;
             display: flex;
             gap: 50px;
 
@@ -43,59 +43,6 @@
 
             > div:nth-child(2) {
                 margin-top: 50px;
-            }
-
-            .home-top-property {
-                position: relative;
-                transition: all 0.5s;
-
-                .home-top-property-description {
-                    position: absolute;
-                    padding: 20px 20px 20px 0;
-                    bottom: 0;
-                    left: -25px;
-                    background-color: v.$background-color;
-
-                    h5 {
-                        color: v.$gold;
-                        font-size: 1.2rem;
-                        font-weight: 300;
-                        margin: 5px 0 0 0;
-                    }
-
-                    p {
-                        color: #fff;
-                        font-size: 1.4rem;
-                        margin: 0;
-                    }
-                }
-
-                .home-top-property-image-wrapper {
-                    padding-bottom: 50px;
-                    transition: all 0.5s;
-
-                    img {
-                        cursor: pointer;
-                        max-width: 100%;
-                        height: auto;
-                        transition: all 0.5s;
-                        &:hover {
-                            transform: scale(0.9);
-                        }
-                    }
-                }
-            }
-        }
-
-        @media screen and (max-width: 1080px) {
-            #home-top-properties-container {
-                padding: 20px 3rem;
-
-                .home-top-property {
-                    .home-top-property-image-wrapper {
-                        padding-bottom: 60px;
-                    }
-                }
             }
         }
     }
@@ -134,12 +81,6 @@
         #home-top-properties-container {
             flex-direction: column;
             gap: 0;
-
-            .home-top-property {
-                .home-top-property-description {
-                    padding: 10px 10px 10px 0;
-                }
-            }
         }
     }
 

@@ -1,5 +1,5 @@
 import './Home.scss';
-import { FC } from 'react';
+import { FC, MouseEvent } from 'react';
 
 import { useNavigate } from "react-router-dom";
 
@@ -10,6 +10,7 @@ import LandscapeIcon from '@mui/icons-material/Landscape';
 
 import HomeSlideShow from './Components/HomeSlideShow';
 import HomePropertyTypeCard, { HomePropertyTypeCardProps } from './Components/HomePropertyTypeCard';
+import PropertyCard, { IPropertyCard } from '../../Components/Core/PropertyCard';
 
 const Home: FC = () => {
 
@@ -33,8 +34,9 @@ const Home: FC = () => {
             type: 'Landfields'
         }
     ]
+    
     //Fetch top properties
-    const topProperties = [
+    const topProperties: IPropertyCard[] = [
         {
             id: '1',
             image: {
@@ -86,7 +88,7 @@ const Home: FC = () => {
         }
     ]
 
-    const handleTopPropertyClick = (id: string) => {
+    const handleTopPropertyClick = (e: MouseEvent<HTMLDivElement>, id: string) => {
 
         navigate(`/properties/${id}`);
 
@@ -98,7 +100,7 @@ const Home: FC = () => {
             <div id='home-property-cards'>
                 {
                     propertyCards.map(pc =>
-                        <HomePropertyTypeCard key={pc.type}  Icon={pc.Icon} type={pc.type} />
+                        <HomePropertyTypeCard key={pc.type} Icon={pc.Icon} type={pc.type} />
                     )
                 }
             </div>
@@ -109,18 +111,14 @@ const Home: FC = () => {
                         {
                             topProperties.slice(0, 3)
                                 .map(prop =>
-                                    <div className='home-top-property' key={`${prop.name + prop.town + prop.image.src}`}>
-                                        <div
-                                            onClick={handleTopPropertyClick.bind(null, prop.id)}
-                                            className='home-top-property-image-wrapper'
-                                        >
-                                            <img src={prop.image.src} alt={prop.image.alt} />
-                                        </div>
-                                        <div className='home-top-property-description'>
-                                            <h5>{prop.town}</h5>
-                                            <p>{prop.name}</p>
-                                        </div>
-                                    </div>
+                                    <PropertyCard
+                                        key={`${prop.name + prop.town + prop.image.src}`}
+                                        id={prop.id}
+                                        image={prop.image}
+                                        town={prop.town}
+                                        name={prop.name}
+                                        handleImageClick={handleTopPropertyClick}
+                                    />
                                 )
                         }
                     </div>
@@ -128,18 +126,14 @@ const Home: FC = () => {
                         {
                             topProperties.slice(3)
                                 .map(prop =>
-                                    <div className='home-top-property' key={`${prop.name + prop.town + prop.image.src}`}>
-                                        <div
-                                            onClick={handleTopPropertyClick.bind(null, prop.id)}
-                                            className='home-top-property-image-wrapper'
-                                        >
-                                            <img src={prop.image.src} alt={prop.image.alt} />
-                                        </div>
-                                        <div className='home-top-property-description'>
-                                            <h5>{prop.town}</h5>
-                                            <p>{prop.name}</p>
-                                        </div>
-                                    </div>
+                                    <PropertyCard
+                                        key={`${prop.name + prop.town + prop.image.src}`}
+                                        id={prop.id}
+                                        image={prop.image}
+                                        town={prop.town}
+                                        name={prop.name}
+                                        handleImageClick={handleTopPropertyClick}
+                                    />
                                 )
                         }
                     </div>

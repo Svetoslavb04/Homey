@@ -1,5 +1,5 @@
 import './Home.scss';
-import { FC } from 'react'
+import { FC } from 'react';
 
 import { useNavigate } from "react-router-dom";
 
@@ -7,12 +7,32 @@ import HouseIcon from '@mui/icons-material/House';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import VillaIcon from '@mui/icons-material/Villa';
 import LandscapeIcon from '@mui/icons-material/Landscape';
+
 import HomeSlideShow from './Components/HomeSlideShow';
+import HomePropertyTypeCard, { HomePropertyTypeCardProps } from './Components/HomePropertyTypeCard';
 
 const Home: FC = () => {
 
     const navigate = useNavigate();
 
+    const propertyCards: HomePropertyTypeCardProps[] = [
+        {
+            Icon: HouseIcon,
+            type: 'Houses'
+        },
+        {
+            Icon: ApartmentIcon,
+            type: 'Apartments'
+        },
+        {
+            Icon: VillaIcon,
+            type: 'Villas'
+        },
+        {
+            Icon: LandscapeIcon,
+            type: 'Landfields'
+        }
+    ]
     //Fetch top properties
     const topProperties = [
         {
@@ -76,22 +96,11 @@ const Home: FC = () => {
         <div id='home-container'>
             <HomeSlideShow />
             <div id='home-property-cards'>
-                <div className='home-property-card'>
-                    <HouseIcon />
-                    <h5>Houses</h5>
-                </div>
-                <div className='home-property-card'>
-                    <ApartmentIcon />
-                    <h5>Apartments</h5>
-                </div>
-                <div className='home-property-card'>
-                    <VillaIcon />
-                    <h5>Villas</h5>
-                </div>
-                <div className='home-property-card'>
-                    <LandscapeIcon />
-                    <h5>Landfields</h5>
-                </div>
+                {
+                    propertyCards.map(pc =>
+                        <HomePropertyTypeCard key={pc.type}  Icon={pc.Icon} type={pc.type} />
+                    )
+                }
             </div>
             <div id="home-top-properties">
                 <h2>Our top picks</h2>

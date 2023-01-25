@@ -1,0 +1,63 @@
+@use "src/assets/scss/variables.scss" as v;
+
+.property-listing-filter-section {
+    position: relative;
+
+
+    height: 100vh;
+
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    &::before {
+        background: black;
+        opacity: 0.6;
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    & > div {
+        position: relative;
+
+        height: 100%;
+
+        z-index: 2;
+    }
+
+    .property-listing-filter-heading-container {
+        position: relative;
+        top: 20%;
+
+        display: flex;
+        justify-content: center;
+
+        h2 {
+            margin: 0 15px;
+
+            font-size: 2.5rem;
+            font-weight: 400;
+            color: #ffffff;
+
+            @media screen and (max-width: 680px) {
+                text-align: center;
+                font-size: 2rem;
+            }
+
+            @media screen and (max-width: 530px) {
+                margin: 0 20px;
+                text-align: left;
+                font-size: 1.8rem;
+            }
+        }
+    }
+
+    .property-listing-filter {
+        width: 80%;
+
+        position: relative;
+        top: 20%;
+    }
+}

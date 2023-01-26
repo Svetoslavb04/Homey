@@ -21,8 +21,8 @@ const Login: FC = () => {
 
     return (
         <div id='image-background'>
-                <div id='login-container'>
-                    <form id='login-form'>
+                <div id='auth-container'>
+                    <form id='auth-form'>
                         <div id='choose-form'>
                             <NavLink to='/login' className='form-type'> SIGN IN </NavLink>
                                 
@@ -57,8 +57,8 @@ const Login: FC = () => {
                                 />
                             </FormControl>
                         </div>
-                        <div id='login-button-container'>
-                            <Button fullWidth variant="contained" size='large' id='login-button' type='submit'>Login</Button>
+                        <div id='auth-button-container'>
+                            <Button fullWidth variant="contained" size='large' id='auth-button' type='submit'>Login</Button>
                         </div>
                     </form>
             </div>

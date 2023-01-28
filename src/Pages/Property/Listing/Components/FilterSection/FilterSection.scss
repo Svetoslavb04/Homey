@@ -43,7 +43,7 @@
             span {
                 display: inline-block;
             }
-            
+
             @media screen and (max-width: 680px) {
                 font-size: 2rem;
                 text-align: center;
@@ -62,15 +62,83 @@
         top: 30%;
 
         width: 100%;
-        
+
         display: flex;
         justify-content: center;
 
         .property-listing-filter {
-            min-width: 400px;
-            width: 80%;
+            width: 90%;
 
             margin: 0 10px;
+
+            @media screen and (max-width: 680px) {
+                .property-filter-basic {
+                    flex-wrap: wrap;
+                    min-width: 320px;
+                    
+                    .property-filter-basic-item {
+                        flex-basis: 50%;
+                        border-right: none;
+                        flex-shrink: 0;
+                    }
+
+                    .property-filter-basic-item:first-child {
+                        padding-left: 0;
+                        border-right: 1px solid #e5e5e5;
+                    }
+
+                    .property-filter-basic-item:nth-child(3) {
+                        margin-top: 20px;
+                    }
+
+                    .property-filter-basic-item:nth-child(3),
+                    .property-filter-basic-item:last-child {
+                        padding: 0;
+                        flex-basis: 100%;
+                    }
+
+                    .property-filter-basic-item:last-child {
+                        margin-top: 5px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+body:not([sidebar-hidden]) {
+    @media screen and (max-width: 960px) {
+        .property-listing-filter {
+            min-width: 315px;
+
+            .property-filter-basic {
+                flex-wrap: wrap;
+
+                .property-filter-basic-item {
+                    flex-basis: 50%;
+                    border-right: none;
+                    flex-shrink: 0;
+                }
+
+                .property-filter-basic-item:first-child {
+                    padding-left: 0;
+                    border-right: 1px solid #e5e5e5;
+                }
+
+                .property-filter-basic-item:nth-child(3) {
+                    margin-top: 20px;
+                }
+
+                .property-filter-basic-item:nth-child(3),
+                .property-filter-basic-item:last-child {
+                    padding: 0;
+                    flex-basis: 100%;
+                }
+
+                .property-filter-basic-item:last-child {
+                    margin-top: 5px;
+                }
+            }
         }
     }
 }

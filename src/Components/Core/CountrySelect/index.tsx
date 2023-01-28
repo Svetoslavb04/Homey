@@ -18,10 +18,9 @@ type CountrySelectProps = {
 const CountrySelect: FC<CountrySelectProps> = ({ className, label, value, onChange }) => {
     return (
         <FormControl fullWidth variant='standard' className={`country-select${className ? ` ${className}` : ''}`}>
-            <InputLabel id="country-select-label">{label}</InputLabel>
+            <InputLabel className="country-select-label">{label}</InputLabel>
             <Select
                 label={label}
-                placeholder={label}
                 MenuProps={{ classes: { paper: 'country-select-countries-list' } }}
                 value={value}
                 onChange={onChange}
@@ -39,8 +38,8 @@ const CountrySelect: FC<CountrySelectProps> = ({ className, label, value, onChan
                                         src={`https://flagcdn.com/w320/${country.code.toLowerCase()}.png`}
                                         alt="flag"
                                     />
+                                    <span className='country-select-name'>{country.label}</span>
                                 </span>
-                                <span className='country-select-name'>{country.label}</span>
                             </div>
                         </MenuItem>
                     )

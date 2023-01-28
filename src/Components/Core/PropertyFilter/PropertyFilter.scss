@@ -1,18 +1,41 @@
 @use "src/assets/scss/variables.scss" as v;
 
 .property-filter {
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #ffffff;
+    .property-filter-basic {
+        padding: 20px;
 
-    .property-filter-country-select-item {
-        & > img {
-            margin-right: 2;
-            flex-shrink: 0;
+        border-radius: 5px;
+        background-color: #ffffff;
+
+        display: flex;
+        align-items: center;
+        
+        .property-filter-basic-item:first-child {
+            padding-left: 0;
         }
-    }
-    
-    .property-filter-country-select {
-        width: 30%;
+
+        .property-filter-basic-item {
+            flex-basis: 25%;
+            padding: 0 20px;
+            border-right: 1px solid #e5e5e5;
+        }
+
+        .property-filter-basic-item:last-child {
+            border-right: none;
+            padding-right: 0;
+        }
+        .property-filter-country-select-item {
+            & > img {
+                margin-right: 2;
+                flex-shrink: 0;
+            }
+        }
+
+        .property-filter-price-label {
+            margin: 0;
+
+            text-transform: uppercase;
+            font-size: 0.7rem;
+        }
     }
 }

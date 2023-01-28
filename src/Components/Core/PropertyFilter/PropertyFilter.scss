@@ -1,0 +1,18 @@
+@use "src/assets/scss/variables.scss" as v;
+
+.property-filter {
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #ffffff;
+
+    .property-filter-country-select-item {
+        & > img {
+            margin-right: 2;
+            flex-shrink: 0;
+        }
+    }
+    
+    .property-filter-country-select {
+        width: 30%;
+    }
+}

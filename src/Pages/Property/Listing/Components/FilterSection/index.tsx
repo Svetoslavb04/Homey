@@ -1,5 +1,7 @@
 import './FilterSection.scss';
 
+import PropertyFilter from '../../../../../Components/Core/PropertyFilter';
+
 const FilterSection = () => {
     return (
         <section
@@ -10,6 +12,7 @@ const FilterSection = () => {
                 <div className='property-listing-filter-heading-container'>
                     <h2><span>New home.&nbsp;</span><span>New adventures.&nbsp;</span><span>New memories.</span></h2>
                 </div>
+                <PropertyFilter className='property-listing-filter'/>
             </div>
         </section>
     )

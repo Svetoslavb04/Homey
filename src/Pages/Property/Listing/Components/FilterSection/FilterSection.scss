@@ -3,7 +3,6 @@
 .property-listing-filter-section {
     position: relative;
 
-
     height: 100vh;
 
     background-position: center;
@@ -54,10 +53,20 @@
         }
     }
 
-    .property-listing-filter {
-        width: 80%;
-        margin: 0 auto;
+    .property-listing-filter-container {
         position: relative;
         top: 30%;
+
+        width: 100%;
+        
+        display: flex;
+        justify-content: center;
+
+        .property-listing-filter {
+            min-width: 400px;
+            width: 80%;
+
+            margin: 0 10px;
+        }
     }
 }

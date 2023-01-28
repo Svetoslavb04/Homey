@@ -12,7 +12,9 @@ const FilterSection = () => {
                 <div className='property-listing-filter-heading-container'>
                     <h2><span>New home.&nbsp;</span><span>New adventures.&nbsp;</span><span>New memories.</span></h2>
                 </div>
+                <div className='property-listing-filter-container'>
                 <PropertyFilter className='property-listing-filter'/>
+                </div>
             </div>
         </section>
     )

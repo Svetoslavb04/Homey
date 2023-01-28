@@ -17,7 +17,7 @@ type CountrySelectProps = {
 
 const CountrySelect: FC<CountrySelectProps> = ({ className, label, value, onChange }) => {
     return (
-        <FormControl variant='standard' className={`country-select${className ? ` ${className}` : ''}`}>
+        <FormControl fullWidth variant='standard' className={`country-select${className ? ` ${className}` : ''}`}>
             <InputLabel id="country-select-label">{label}</InputLabel>
             <Select
                 label={label}

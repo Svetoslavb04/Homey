@@ -40,9 +40,13 @@
             font-weight: 400;
             color: #ffffff;
 
+            span {
+                display: inline-block;
+            }
+            
             @media screen and (max-width: 680px) {
-                text-align: center;
                 font-size: 2rem;
+                text-align: center;
             }
 
             @media screen and (max-width: 530px) {

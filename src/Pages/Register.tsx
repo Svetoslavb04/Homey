@@ -1,4 +1,4 @@
-import './Login.scss';
+import './Auth.scss';
 import { FC, useState } from 'react';
 import { NavLink } from "react-router-dom";
 

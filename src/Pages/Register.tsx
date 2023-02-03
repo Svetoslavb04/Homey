@@ -157,9 +157,9 @@ const Register: FC = () => {
                         </div>
                         <div id="register-rePassword" className='inputPassword'>
                             <FormControl fullWidth variant="standard" color="secondary">
-                                <InputLabel htmlFor="standard-adornment-password">Repeat Password</InputLabel>
+                                <InputLabel htmlFor="standard-adornment-repeat-password">Repeat Password</InputLabel>
                                 <Input
-                                    id="standard-adornment-password"
+                                    id="standard-adornment-repeat-password"
                                     type={showRePassword ? 'text' : 'password'}
                                     endAdornment={
                                         <InputAdornment position="end" className='password-visibilty-icon'>

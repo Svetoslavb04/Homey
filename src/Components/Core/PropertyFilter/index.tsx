@@ -30,7 +30,8 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
     country: 'BG',
     type: 'Any',
     priceRange: [0, 100000],
-    status: 'Any'
+    status: 'Any',
+    sizeRange: [0, 500]
   }
 
   const [state, dispatch] = usePropertyFilter(initialPropertyFilter);
@@ -49,6 +50,8 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
   const handleStatusChange = (e: ChangeEvent<HTMLInputElement>) =>
     dispatch({ type: PropertyFilterActionType.SET_STATUS, payload: e.target.value })
 
+  const handleSizeRangeChange = (e: Event, newValue: number | number[]) =>
+    dispatch({ type: PropertyFilterActionType.SET_SIZE_RANGE, payload: newValue })
   useEffect(() => {
 
     fetch('http://ip-api.com/json')
@@ -148,6 +151,21 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
                     />
                   </RadioGroup>
                 </FormControl>
+              </div>
+              <div className='property-filter-advanced-item'>
+                <label className='property-filter-advanced-label'>Size: {state.sizeRange[0]} - {state.sizeRange[1]}</label>
+                <div style={{ textAlign: 'center'}}>
+                  <Slider
+                    size="small"
+                    sx={{ width: '95%' }}
+                    getAriaLabel={() => 'Size range'}
+                    value={state.sizeRange}
+                    onChange={handleSizeRangeChange}
+                    valueLabelDisplay="auto"
+                    min={0} //Should get from server
+                    max={500} //Should get from server
+                  />
+                </div>
               </div>
               <div className='property-filter-advanced-item'>
               </div>

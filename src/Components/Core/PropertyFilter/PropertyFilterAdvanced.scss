@@ -46,10 +46,18 @@
 
         * {
             font-size: inherit;
+        }   
+
+        .property-filter-advanced-label {
+            color: black;
         }
 
         .property-filter-advanced-row {
             display: flex;
+        }
+
+        .property-filter-advanced-item {
+            flex-basis: 33.3%;
         }
 
         .MuiRadio-root {

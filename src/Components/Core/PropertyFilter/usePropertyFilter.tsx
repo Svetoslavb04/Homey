@@ -7,7 +7,8 @@ export enum PropertyFilterActionType {
     SET_COUNTRY = 'SET_COUNTRY',
     SET_TYPE = 'SET_TYPE',
     SET_PRICE_RANGE = 'SET_PRICE_RANGE',
-    SET_STATUS = 'SET_STATUS'
+    SET_STATUS = 'SET_STATUS',
+    SET_SIZE_RANGE = 'SET_SIZE_RANGE'
 }
 
 // An interface for our actions
@@ -21,7 +22,8 @@ export interface PropertyFilterState {
     country: string,
     type: PropertyType | 'Any',
     priceRange: number[],
-    status: PropertyStatus | 'Any'
+    status: PropertyStatus | 'Any',
+    sizeRange: number[]
 }
 
 // Our reducer function that uses a switch statement to handle our actions
@@ -66,6 +68,15 @@ const propertyReducer: Reducer<PropertyFilterState, PropertyFilterAction> =
                     }
                 } else {
                     throw Error('Invalid property status.')
+                }
+            case PropertyFilterActionType.SET_SIZE_RANGE:
+                if (Array.isArray(payload) && payload.every(e => !isNaN(e))) {
+                    return {
+                        ...state,
+                        sizeRange: payload
+                    }
+                } else {
+                    throw Error('Invalid property type.')
                 }
             default:
                 return state;

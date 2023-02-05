@@ -1,0 +1,1 @@
+export const countriesnowBaseURL = 'https://countriesnow.space/api/v0.1/'

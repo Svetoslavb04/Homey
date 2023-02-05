@@ -1,11 +1,13 @@
 import { Dispatch, Reducer, useReducer } from "react";
+import { PropertyStatus } from "../../../enums/PropertyStatus";
 import { PropertyType } from "../../../enums/PropertyType";
 
 // An enum with all the types of actions to use in our reducer
 export enum PropertyFilterActionType {
     SET_COUNTRY = 'SET_COUNTRY',
     SET_TYPE = 'SET_TYPE',
-    SET_PRICE_RANGE = 'SET_PRICE_RANGE'
+    SET_PRICE_RANGE = 'SET_PRICE_RANGE',
+    SET_STATUS = 'SET_STATUS'
 }
 
 // An interface for our actions
@@ -18,7 +20,8 @@ export interface PropertyFilterAction {
 export interface PropertyFilterState {
     country: string,
     type: PropertyType | 'Any',
-    priceRange: number[]
+    priceRange: number[],
+    status: PropertyStatus | 'Any'
 }
 
 // Our reducer function that uses a switch statement to handle our actions
@@ -54,6 +57,15 @@ const propertyReducer: Reducer<PropertyFilterState, PropertyFilterAction> =
                     }
                 } else {
                     throw Error('Invalid property type.')
+                }
+            case PropertyFilterActionType.SET_STATUS:
+                if (payload in PropertyStatus || payload === 'Any') {
+                    return {
+                        ...state,
+                        status: payload
+                    }
+                } else {
+                    throw Error('Invalid property status.')
                 }
             default:
                 return state;

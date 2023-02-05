@@ -121,7 +121,7 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
                   >
                     <FormControlLabel
                       value="for_sale"
-                      className='property-filter-advanced-value'
+                      className='property-filter-advanced-radio-value'
                       control={
                         <Radio
                           disableRipple
@@ -136,7 +136,7 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
                     />
                     <FormControlLabel
                       value="for_rent"
-                      className='property-filter-advanced-value'
+                      className='property-filter-advanced-radio-value'
                       control={
                         <Radio
                           disableRipple
@@ -154,7 +154,7 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
               </div>
               <div className='property-filter-advanced-item'>
                 <label className='property-filter-advanced-label'>Size: {state.sizeRange[0]} - {state.sizeRange[1]}</label>
-                <div style={{ textAlign: 'center'}}>
+                <div style={{ textAlign: 'center' }}>
                   <Slider
                     size="small"
                     sx={{ width: '95%' }}

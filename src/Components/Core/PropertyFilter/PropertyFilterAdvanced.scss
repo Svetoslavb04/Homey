@@ -42,14 +42,11 @@
 
     .property-filter-advanced-content {
         padding: 20px 30px;
-        font-size: 12px;
 
-        * {
-            font-size: inherit;
-        }   
-
-        .property-filter-advanced-label {
+        .property-filter-advanced-label,
+        .property-filter-advanced-radio-value span {
             color: black;
+            font-size: 12px;
         }
 
         .property-filter-advanced-row {

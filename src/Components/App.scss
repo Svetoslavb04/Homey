@@ -1,5 +1,8 @@
 @use "../assets/scss/variables.scss" as v;
 
+html {
+  overflow: hidden;
+}
 
 /*Scrollbar*/
 /* width */

@@ -1,0 +1,86 @@
+@use '../../assets/scss/variables.scss' as v;
+
+#property-main{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+
+    #top-image{
+        //background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('./villa.jpg');
+        background-size:cover;
+        background-position: center;
+        width: 100%;
+        height: 650px;
+        overflow: hidden;
+        text-transform: uppercase;
+
+        color: whitesmoke;
+        font-size: 200%;
+        align-self: flex-start;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10%;
+
+
+    }
+
+    #property-content{
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content:center;
+        margin-bottom: 15%;
+        #property-images{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            #property-primary-image{
+                height: 377px;
+                width: 670px;
+                margin-bottom: 14px;
+                cursor: pointer;
+            }
+
+            #property-secondary-images{
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                
+                img{
+                    height: 377px;
+                    width: 320px;
+                    margin: 14px;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        #property-description{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            font-size: 18px;
+            width: 320px;
+            color: v.$grey-font;
+
+            .property-info{
+                color: v.$gold;
+            }
+        }
+    }
+}
+
+   
+
+
+

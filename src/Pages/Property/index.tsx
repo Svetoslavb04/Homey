@@ -1,13 +1,19 @@
+import { log } from 'console';
 import './Property.scss'
 
-import { FC, useRef } from 'react'
+import { FC } from 'react';
+import { useParams } from 'react-router-dom';
+
 
 const Property: FC = ()=> {
+
+    const {propertyId} = useParams();
+    
     return (
     <div id='property-main'>
          <div id='top-image' style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(https://www.sunset.com/wp-content/uploads/medium_2x/hometour-Klopf-Architect-Sacramento-covered-porch-Mariko-Reed-0621.jpg)` }}>
             <div>
-                <h1> Name of the property </h1>
+                <h1> Name of the property</h1>
             </div>
          </div>
 
@@ -27,13 +33,19 @@ const Property: FC = ()=> {
                 <p> Villa gravida eros ut turpis interdum ornare. Interdum et malesu they adamale fames ac
                     anteipsu pimsine faucibus. Curabitur arcu site feugiat in torto.
                 </p>
-                <p><b className='property-info'>Client : </b> Bellway Homes</p>
-                <p><b className='property-info'>Number of Homes : </b> 3701</p>
-                <p><b className='property-info'>Tenure Mix : </b> 30% affordable, 70% private</p>
+                <p><b className='property-info'>Price : </b> 120 000 €</p>
+                <p><b className='property-info'>Number of rooms : </b> 3 rooms</p>
+                <p><b className='property-info'>Number of bathrooms : </b> 1 bathroom</p>
                 <p><b className='property-info'>Site Size : </b> 12ha</p>
-                <p><b className='property-info'>Planning Approved : </b> July 2021</p>
+                <p><b className='property-info'>Year of construction : </b> July 2021</p> 
             </div>
-         </div>
+           
+
+          
+         </div> 
+         <div id='selected-image'>
+                <img src='https://www.cuded.com/wp-content/uploads/2013/04/Caruth-Boulevard-Residence-by-Tom-Reisenbichler-1.jpg'/>
+        </div>
     </div>
     );
 }

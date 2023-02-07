@@ -44,24 +44,72 @@
         padding: 20px 30px;
 
         .property-filter-advanced-label,
-        .property-filter-advanced-radio-value span {
+        .property-filter-advanced-radio-value span,
+        .MuiFormControlLabel-label {
             color: black;
             font-size: 12px;
         }
 
         .property-filter-advanced-row {
             margin: 20px 0;
+
             @media screen and (max-width: 650px) {
                 gap: 7px;
             }
         }
 
+        .property-filter-advanced-row:nth-child(2) {
+            @media screen and (max-width: 650px) {
+                gap: 15px;
+            }
+        }
+
         .property-filter-advanced-item {
             flex-basis: 29%;
-            margin: 0 10px;
 
             @media screen and (max-width: 650px) {
                 flex-basis: 100%;
+            }
+        }
+
+        .property-filter-advanced-checkbox-item {
+            flex-basis: 25%;
+
+            @media screen and (max-width: 600px) {
+                flex-basis: 33%;
+            }
+
+            @media screen and (max-width: 460px) {
+                flex-basis: 50%;
+            }
+
+            .MuiCheckbox-root {
+                padding-right: 5px;
+            }
+        }
+
+        .property-filter-advanced-checkbox-new-item {
+            .MuiCheckbox-root {
+                padding-left: 0px;
+                right: 2px;
+            }
+        }
+
+        .property-filter-advanced-checkbox-add-item {
+            width: 30%;
+            height: 100%;
+            margin: 0 auto;
+            cursor: pointer;
+            border-radius: 100%;
+        }
+
+        .property-filter-advanced-new-checkbox-label {
+            width: 80%;
+            height: 20px;
+            align-self: center;
+
+            input {
+                font-size: 12px;
             }
         }
 
@@ -72,10 +120,6 @@
         .MuiFormLabel-root,
         .MuiInput-input {
             color: black;
-        }
-
-        .MuiFormControlLabel-label {
-            text-transform: uppercase;
         }
 
         .MuiAutocomplete-listbox,
@@ -91,8 +135,28 @@
             gap: 7px;
         }
 
+        .property-filter-advanced-row:nth-child(2) {
+            gap: 15px;
+        }
+
         .property-filter-advanced-item {
             flex-basis: 100%;
+        }
+    }
+}
+
+@media screen and (max-width: 850px) {
+    body:not([sidebar-hidden]) .property-filter-advanced {
+        .property-filter-advanced-checkbox-item {
+            flex-basis: 33%;
+        }
+    }
+}
+
+@media screen and (max-width: 730px) {
+    body:not([sidebar-hidden]) .property-filter-advanced {
+        .property-filter-advanced-checkbox-item {
+            flex-basis: 50%;
         }
     }
 }

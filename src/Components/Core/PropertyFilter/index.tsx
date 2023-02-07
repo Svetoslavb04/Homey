@@ -1,5 +1,5 @@
 import './PropertyFilter.scss';
-import { FC, useState, useEffect, HTMLAttributes, DetailedHTMLProps } from 'react'
+import { FC, useState, useEffect, HTMLAttributes, DetailedHTMLProps, useRef } from 'react'
 
 import CountrySelect from '../CountrySelect';
 
@@ -24,6 +24,27 @@ import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+import Checkbox from '@mui/material/Checkbox';
+
+import WifiIcon from '@mui/icons-material/Wifi';
+import AcUnitIcon from '@mui/icons-material/AcUnit';
+import FireplaceIcon from '@mui/icons-material/Fireplace';
+import BalconyIcon from '@mui/icons-material/Balcony';
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+import PoolIcon from '@mui/icons-material/Pool';
+import LocalParkingIcon from '@mui/icons-material/LocalParking';
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
+import SvgIcon from '@mui/material/SvgIcon';
+import Input from '@mui/material/Input';
+
+const AdvancedFilterCheckBox: FC<{ label: string, Icon: typeof SvgIcon, name: string }> =
+  ({ label, Icon, name }) =>
+    <div className='property-filter-advanced-checkbox-item'>
+      <FormControlLabel
+        control={<Checkbox name={name} sx={{ '& .MuiSvgIcon-root': { fontSize: 16 } }} disableRipple checkedIcon={<Icon />} />}
+        label={label}
+      />
+    </div>
 
 export type PropertyFilterProps = {
 
@@ -41,12 +62,49 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
     bedrooms: 'Any',
     bathrooms: 'Any',
     garages: 'Any',
+    claims: []
   }
+
+  const addNewcheckBoxItemRef = useRef<HTMLDivElement | null>(null);
 
   const [advancedFilterOpened, setAdvancedFilterOpened] = useState<boolean>(false);
 
   const [selectedCountry, setSelectedCountry] = useState<string>(initialPropertyFilter.country);
   const [availableCities, setAvailableCities] = useState<string[]>([]);
+
+  const [customCheckBoxes, setCustomCheckBoxes] = useState<number>(0);
+
+  const checkBoxes = [
+    {
+      label: 'Wifi',
+      Icon: WifiIcon,
+      name: 'wifi'
+    }, {
+      label: 'Air Conditioning',
+      Icon: AcUnitIcon,
+      name: 'airConditioning'
+    }, {
+      label: 'Fire Place',
+      Icon: FireplaceIcon,
+      name: 'fireplace'
+    }, {
+      label: 'Balcony',
+      Icon: BalconyIcon,
+      name: 'balcony'
+    }, {
+      label: 'Fitness',
+      Icon: FitnessCenterIcon,
+      name: 'fitness'
+    }, {
+      label: 'Swimming Pool',
+      Icon: PoolIcon,
+      name: 'swimmingPool'
+    }, {
+      label: 'Parking',
+      Icon: LocalParkingIcon,
+      name: 'parking'
+    }
+  ];
 
   useEffect(() => {
 
@@ -72,6 +130,16 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
   }, [setSelectedCountry])
 
   const handleCountryChange = (e: SelectChangeEvent<string>) => setSelectedCountry(e.target.value)
+
+  const handleCheckBoxButtonClick = () => {
+    const checkboxInput = addNewcheckBoxItemRef.current
+      ?.previousElementSibling
+      ?.querySelector("input[type='text']") as HTMLInputElement
+
+    if (checkboxInput?.value === '') { return }
+    
+    setCustomCheckBoxes(prev => ++prev)
+  }
 
   return (
     <div {...rest} className={`property-filter${className ? ` ${className}` : ''}`}>
@@ -215,7 +283,7 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
                   </Select>
                 </FormControl>
               </div>
-              <div className='property-filter-advanced-item df fdc'>
+              <div className='property-filter-advanced-item'>
                 <FormControl variant='standard' fullWidth>
                   <InputLabel>Bathrooms</InputLabel>
                   <Select
@@ -244,6 +312,31 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
                     }
                   </Select>
                 </FormControl>
+              </div>
+            </div>
+            <div className='property-filter-advanced-checkbox-row df fww'>
+              {
+                checkBoxes.map(c => <AdvancedFilterCheckBox key={c.name} label={c.label} name={c.name} Icon={c.Icon} />)
+              }
+              {
+                Array.from(Array(customCheckBoxes).keys()).map((_, i) =>
+                  <div key={i} className='property-filter-advanced-checkbox-item property-filter-advanced-checkbox-new-item df'>
+                    <Checkbox checked sx={{ '& .MuiSvgIcon-root': { fontSize: 16 } }} disableRipple />
+                    <Input
+                      placeholder="Enter keyword"
+                      className='property-filter-advanced-new-checkbox-label'
+                      onChange={(e) => { e.target.name = e.target.value }}
+                    />
+                  </div>
+                )
+              }
+              <div ref={addNewcheckBoxItemRef} className='property-filter-advanced-checkbox-item'>
+                <div
+                  className='df aic jcc property-filter-advanced-checkbox-add-item'
+                  onClick={handleCheckBoxButtonClick}
+                >
+                  <AddCircleOutlineOutlinedIcon />
+                </div>
               </div>
             </div>
           </div>

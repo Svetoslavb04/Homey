@@ -100,7 +100,7 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
         </div>
         <div className='property-filter-basic-item'>
           <FormControl variant='standard' fullWidth>
-            <InputLabel id="demo-simple-select-label">Type</InputLabel>
+            <InputLabel>Type</InputLabel>
             <Select
               value={state.type}
               label="Type"
@@ -118,7 +118,7 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
           </FormControl>
         </div>
         <div className='property-filter-basic-item'>
-          <p className='property-filter-price-label'>Price: {state.priceRange[0]} - {state.priceRange[1]}</p>
+          <label className='property-filter-price-label'>Price: {state.priceRange[0]} - {state.priceRange[1]}</label>
           <Slider
             size="small"
             getAriaLabel={() => 'Price range'}

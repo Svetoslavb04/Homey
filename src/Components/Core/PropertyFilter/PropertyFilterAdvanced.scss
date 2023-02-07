@@ -50,19 +50,48 @@
         }
 
         .property-filter-advanced-row {
-            display: flex;
+            @media screen and (max-width: 650px) {
+                gap: 7px;
+            }
         }
 
         .property-filter-advanced-item {
-            flex-basis: 33.3%;
+            flex-basis: 29%;
+            margin: 0 10px;
+
+            @media screen and (max-width: 650px) {
+                flex-basis: 100%;
+            }
         }
 
         .MuiRadio-root {
             padding: 4px 3px 6px 9px;
         }
 
+        .MuiFormLabel-root,
+        .MuiInput-input {
+            color: black;
+        }
+
         .MuiFormControlLabel-label {
             text-transform: uppercase;
+        }
+
+        .MuiAutocomplete-listbox,
+        .MuiInput-input {
+            font-size: 14px;
+        }
+    }
+}
+
+@media screen and (max-width: 930px) {
+    body:not([sidebar-hidden]) .property-filter-advanced {
+        .property-filter-advanced-row {
+            gap: 7px;
+        }
+
+        .property-filter-advanced-item {
+            flex-basis: 100%;
         }
     }
 }

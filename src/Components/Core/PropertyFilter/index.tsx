@@ -3,6 +3,8 @@ import { FC, useState, useEffect, HTMLAttributes, DetailedHTMLProps, ChangeEvent
 
 import CountrySelect from '../CountrySelect';
 
+import { citiesOfCountryURL } from '../../../assets/js/APIs';
+
 import { PropertyType } from '../../../enums/PropertyType';
 
 import FormControl from '@mui/material/FormControl';
@@ -19,6 +21,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
 import { PropertyFilterActionType, PropertyFilterState, usePropertyFilter } from './usePropertyFilter';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
+import { countries } from '../../../assets/js/countries';
 
 export type PropertyFilterProps = {
 
@@ -31,12 +36,30 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
     type: 'Any',
     priceRange: [0, 100000],
     status: 'Any',
-    sizeRange: [0, 500]
+    sizeRange: [0, 500],
+    city: ''
   }
 
   const [state, dispatch] = usePropertyFilter(initialPropertyFilter);
 
   const [advancedFilterOpened, setAdvancedFilterOpened] = useState<boolean>(false);
+
+  const [availableCities, setAvailableCities] = useState<string[]>([]);
+
+  useEffect(() => {
+
+    fetch(citiesOfCountryURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ country: countries.filter(c => c.code === state.country)[0].name })
+    })
+      .then(res => res.json())
+      .then(payload => setAvailableCities(payload.data))
+      .catch(err => console.log(err))
+
+  }, [state.country])
 
   const handleCountryChange = (e: SelectChangeEvent<string>) =>
     dispatch({ type: PropertyFilterActionType.SET_COUNTRY, payload: e.target.value })
@@ -52,6 +75,10 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
 
   const handleSizeRangeChange = (e: Event, newValue: number | number[]) =>
     dispatch({ type: PropertyFilterActionType.SET_SIZE_RANGE, payload: newValue })
+
+  const handleCityChange = (e: any, newValue: string | null) =>
+    dispatch({ type: PropertyFilterActionType.SET_CITY, payload: newValue })
+
   useEffect(() => {
 
     fetch('http://ip-api.com/json')
@@ -109,7 +136,7 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
       <div className='property-filter-advanced'>
         <Collapse in={advancedFilterOpened}>
           <div className='property-filter-advanced-content'>
-            <div className='property-filter-advanced-row'>
+            <div className='property-filter-advanced-row df fww jcsb'>
               <div className='property-filter-advanced-item'>
                 <FormControl>
                   <FormLabel className="property-filter-advanced-label">Status</FormLabel>
@@ -152,12 +179,11 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
                   </RadioGroup>
                 </FormControl>
               </div>
-              <div className='property-filter-advanced-item'>
-                <label className='property-filter-advanced-label'>Size: {state.sizeRange[0]} - {state.sizeRange[1]}</label>
-                <div style={{ textAlign: 'center' }}>
+              <div className='property-filter-advanced-item df fdc'>
+                <label className='property-filter-advanced-label'>Size: {state.sizeRange[0]} - {state.sizeRange[1]} (m2)</label>
+                <div className='df'>
                   <Slider
                     size="small"
-                    sx={{ width: '95%' }}
                     getAriaLabel={() => 'Size range'}
                     value={state.sizeRange}
                     onChange={handleSizeRangeChange}
@@ -168,6 +194,24 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
                 </div>
               </div>
               <div className='property-filter-advanced-item'>
+                <Autocomplete
+                  freeSolo
+                  disableCloseOnSelect
+                  clearOnBlur={false}
+                  disablePortal
+                  options={availableCities}
+                  value={state.city}
+                  onChange={handleCityChange}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="City"
+                      placeholder='Enter a city'
+                      className='property-filter-advanced-value'
+                      variant='standard'
+                    />
+                  )}
+                />
               </div>
             </div>
           </div>

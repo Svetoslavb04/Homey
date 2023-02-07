@@ -39,7 +39,8 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
     sizeRange: [0, 500],
     city: '',
     bedrooms: 'Any',
-    bathrooms: 'Any'
+    bathrooms: 'Any',
+    garages: 'Any',
   }
 
   const [advancedFilterOpened, setAdvancedFilterOpened] = useState<boolean>(false);
@@ -230,7 +231,19 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
                 </FormControl>
               </div>
               <div className='property-filter-advanced-item'>
-
+                <FormControl variant='standard' fullWidth>
+                  <InputLabel>Garages</InputLabel>
+                  <Select
+                    defaultValue={initialPropertyFilter.garages}
+                    name="garages"
+                    label="Garages"
+                  >
+                    {
+                      [...Array.from(Array(10).keys()).map(n => ++n), 'Any']
+                        .map(number => <MenuItem key={number} value={number}>{number}</MenuItem>)
+                    }
+                  </Select>
+                </FormControl>
               </div>
             </div>
           </div>

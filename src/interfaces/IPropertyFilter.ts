@@ -10,4 +10,5 @@ export default interface IPropertyFilter {
     city?: string,
     bedrooms?: number | 'Any',
     bathrooms?: number | 'Any',
+    garages?: number | 'Any',
 }

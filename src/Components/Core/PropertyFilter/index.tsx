@@ -1,11 +1,14 @@
 import './PropertyFilter.scss';
-import { FC, useState, useEffect, HTMLAttributes, DetailedHTMLProps, ChangeEvent } from 'react'
+import { FC, useState, useEffect, HTMLAttributes, DetailedHTMLProps } from 'react'
 
 import CountrySelect from '../CountrySelect';
 
 import { citiesOfCountryURL } from '../../../assets/js/APIs';
 
 import { PropertyType } from '../../../enums/PropertyType';
+import IPropertyFilter from '../../../interfaces/IPropertyFilter';
+
+import { countries } from '../../../assets/js/countries';
 
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
@@ -14,16 +17,13 @@ import Button from '@mui/material/Button';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Slider from '@mui/material/Slider';
 import Collapse from '@mui/material/Collapse';
-
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import FormLabel from '@mui/material/FormLabel';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
-import { PropertyFilterActionType, PropertyFilterState, usePropertyFilter } from './usePropertyFilter';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import { countries } from '../../../assets/js/countries';
 
 export type PropertyFilterProps = {
 
@@ -31,19 +31,18 @@ export type PropertyFilterProps = {
 
 const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
 
-  const initialPropertyFilter: PropertyFilterState = {
+  const initialPropertyFilter: IPropertyFilter = {
     country: 'BG',
     type: 'Any',
     priceRange: [0, 100000],
     status: 'Any',
     sizeRange: [0, 500],
-    city: ''
+    city: '',
   }
-
-  const [state, dispatch] = usePropertyFilter(initialPropertyFilter);
 
   const [advancedFilterOpened, setAdvancedFilterOpened] = useState<boolean>(false);
 
+  const [selectedCountry, setSelectedCountry] = useState<string>(initialPropertyFilter.country);
   const [availableCities, setAvailableCities] = useState<string[]>([]);
 
   useEffect(() => {
@@ -53,39 +52,23 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ country: countries.filter(c => c.code === state.country)[0].name })
+      body: JSON.stringify({ country: countries.filter(c => c.code === selectedCountry)[0].name })
     })
       .then(res => res.json())
       .then(payload => setAvailableCities(payload.data))
       .catch(err => console.log(err))
 
-  }, [state.country])
-
-  const handleCountryChange = (e: SelectChangeEvent<string>) =>
-    dispatch({ type: PropertyFilterActionType.SET_COUNTRY, payload: e.target.value })
-
-  const handleTypeChange = (e: SelectChangeEvent<string>) =>
-    dispatch({ type: PropertyFilterActionType.SET_TYPE, payload: e.target.value })
-
-  const handlePriceChange = (e: Event, newValue: number | number[]) =>
-    dispatch({ type: PropertyFilterActionType.SET_PRICE_RANGE, payload: newValue })
-
-  const handleStatusChange = (e: ChangeEvent<HTMLInputElement>) =>
-    dispatch({ type: PropertyFilterActionType.SET_STATUS, payload: e.target.value })
-
-  const handleSizeRangeChange = (e: Event, newValue: number | number[]) =>
-    dispatch({ type: PropertyFilterActionType.SET_SIZE_RANGE, payload: newValue })
-
-  const handleCityChange = (e: any, newValue: string | null) =>
-    dispatch({ type: PropertyFilterActionType.SET_CITY, payload: newValue })
+  }, [selectedCountry])
 
   useEffect(() => {
 
     fetch('http://ip-api.com/json')
       .then(res => res.json())
-      .then(payload => { dispatch({ type: PropertyFilterActionType.SET_COUNTRY, payload: payload.countryCode }) })
+      .then(payload => { setSelectedCountry(payload.countryCode) })
 
-  }, [dispatch])
+  }, [setSelectedCountry])
+
+  const handleCountryChange = (e: SelectChangeEvent<string>) => setSelectedCountry(e.target.value)
 
   return (
     <div {...rest} className={`property-filter${className ? ` ${className}` : ''}`}>
@@ -94,7 +77,7 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
           <CountrySelect
             className='property-filter-country-select'
             label='Country'
-            value={state.country}
+            value={selectedCountry}
             onChange={handleCountryChange}
           />
         </div>
@@ -102,9 +85,9 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
           <FormControl variant='standard' fullWidth>
             <InputLabel>Type</InputLabel>
             <Select
-              value={state.type}
+              name='type'
+              defaultValue={initialPropertyFilter.type}
               label="Type"
-              onChange={handleTypeChange}
             >
               {
                 [...Object.values(PropertyType), 'Any']
@@ -118,12 +101,12 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
           </FormControl>
         </div>
         <div className='property-filter-basic-item'>
-          <label className='property-filter-price-label'>Price: {state.priceRange[0]} - {state.priceRange[1]}</label>
+          <label className='property-filter-price-label'>Price: {initialPropertyFilter.priceRange[0]} - {initialPropertyFilter.priceRange[1]}</label>
           <Slider
+            name='priceRange'
             size="small"
             getAriaLabel={() => 'Price range'}
-            value={state.priceRange}
-            onChange={handlePriceChange}
+            defaultValue={initialPropertyFilter.priceRange}
             valueLabelDisplay="auto"
             min={0} //Should get from server
             max={100000} //Should get from server
@@ -143,8 +126,7 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
                   <RadioGroup
                     row
                     name="status-radio-group"
-                    value={state.status}
-                    onChange={handleStatusChange}
+                    defaultValue={initialPropertyFilter.status}
                   >
                     <FormControlLabel
                       value="for_sale"
@@ -180,13 +162,13 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
                 </FormControl>
               </div>
               <div className='property-filter-advanced-item df fdc'>
-                <label className='property-filter-advanced-label'>Size: {state.sizeRange[0]} - {state.sizeRange[1]} (m2)</label>
+                <label className='property-filter-advanced-label'>Size: {initialPropertyFilter.sizeRange[0]} - {initialPropertyFilter.sizeRange[1]} (m2)</label>
                 <div className='df'>
                   <Slider
+                    name='sizeRange'
                     size="small"
                     getAriaLabel={() => 'Size range'}
-                    value={state.sizeRange}
-                    onChange={handleSizeRangeChange}
+                    defaultValue={initialPropertyFilter.sizeRange}
                     valueLabelDisplay="auto"
                     min={0} //Should get from server
                     max={500} //Should get from server
@@ -200,12 +182,12 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
                   clearOnBlur={false}
                   disablePortal
                   options={availableCities}
-                  value={state.city}
-                  onChange={handleCityChange}
+                  defaultValue={initialPropertyFilter.city}
                   renderInput={(params) => (
                     <TextField
                       {...params}
                       label="City"
+                      name='city'
                       placeholder='Enter a city'
                       className='property-filter-advanced-value'
                       variant='standard'

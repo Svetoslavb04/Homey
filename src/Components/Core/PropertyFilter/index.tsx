@@ -38,6 +38,8 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
     status: 'Any',
     sizeRange: [0, 500],
     city: '',
+    bedrooms: 'Any',
+    bathrooms: 'Any'
   }
 
   const [advancedFilterOpened, setAdvancedFilterOpened] = useState<boolean>(false);
@@ -194,6 +196,41 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
                     />
                   )}
                 />
+              </div>
+            </div>
+            <div className='property-filter-advanced-row df fww jcsb'>
+              <div className='property-filter-advanced-item'>
+                <FormControl variant='standard' fullWidth>
+                  <InputLabel>Bedrooms</InputLabel>
+                  <Select
+                    defaultValue={initialPropertyFilter.bedrooms}
+                    name="bedrooms"
+                    label="Bedrooms"
+                  >
+                    {
+                      [...Array.from(Array(10).keys()).map(n => ++n), 'Any']
+                        .map(number => <MenuItem key={number} value={number}>{number}</MenuItem>)
+                    }
+                  </Select>
+                </FormControl>
+              </div>
+              <div className='property-filter-advanced-item df fdc'>
+                <FormControl variant='standard' fullWidth>
+                  <InputLabel>Bathrooms</InputLabel>
+                  <Select
+                    defaultValue={initialPropertyFilter.bathrooms}
+                    name="bathrooms"
+                    label="Bathrooms"
+                  >
+                    {
+                      [...Array.from(Array(10).keys()).map(n => ++n), 'Any']
+                        .map(number => <MenuItem key={number} value={number}>{number}</MenuItem>)
+                    }
+                  </Select>
+                </FormControl>
+              </div>
+              <div className='property-filter-advanced-item'>
+
               </div>
             </div>
           </div>

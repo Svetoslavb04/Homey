@@ -321,7 +321,7 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
               {
                 Array.from(Array(customCheckBoxes).keys()).map((_, i) =>
                   <div key={i} className='property-filter-advanced-checkbox-item property-filter-advanced-checkbox-new-item df'>
-                    <Checkbox checked sx={{ '& .MuiSvgIcon-root': { fontSize: 16 } }} disableRipple />
+                    <Checkbox defaultChecked sx={{ '& .MuiSvgIcon-root': { fontSize: 16 } }} disableRipple />
                     <Input
                       placeholder="Enter keyword"
                       className='property-filter-advanced-new-checkbox-label'

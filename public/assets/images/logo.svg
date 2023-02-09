@@ -1,0 +1,43 @@
+<svg xmlns:mydata="http://www.w3.org/2000/svg" mydata:contrastcolor="282217"
+    mydata:template="Contrast" mydata:presentation="2.5" mydata:layouttype="undefined"
+    mydata:specialfontid="undefined" mydata:id1="750" mydata:id2="113" mydata:companyname="Homey"
+    mydata:companytagline="" version="1.1" xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 550 470">
+    <g fill="#c5aa7e" fill-rule="none" stroke="none" stroke-width="1" stroke-linecap="butt"
+        stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
+        font-family="none" font-weight="none" font-size="none" text-anchor="none"
+        style="mix-blend-mode: normal">
+        <g
+            data-paper-data="{&quot;isGlobalGroup&quot;:true,&quot;bounds&quot;:{&quot;x&quot;:65.87062925351842,&quot;y&quot;:115.00000000000003,&quot;width&quot;:418.25874149296317,&quot;height&quot;:240.00000000000003}}">
+            <g data-paper-data="{&quot;isPrimaryText&quot;:true}" fill-rule="nonzero">
+                <path
+                    d="M65.87063,290.3647h11.74014v26.44758h47.86366v-26.44758h11.74014v64.6353h-11.74014v-26.44758h-47.86366v26.44758h-11.74014z"
+                    data-paper-data="{&quot;glyphName&quot;:&quot;H&quot;,&quot;glyphIndex&quot;:0,&quot;firstGlyphOfWord&quot;:true,&quot;word&quot;:1}"
+                    fill="#ffffff"></path>
+                <path
+                    d="M162.88808,290.3647c0,0 14.32039,0 42.96118,0c4.98849,0 8.90187,2.0642 11.74014,6.1926c1.54815,2.49424 2.32223,5.1605 2.32223,7.99878v36.25253c0,4.98849 -2.0642,8.90187 -6.1926,11.74014c-2.40823,1.54815 -5.03149,2.32223 -7.86977,2.32223h-42.96118c-5.07449,0 -8.98788,-2.0642 -11.74014,-6.1926c-1.63416,-2.40823 -2.45124,-5.03149 -2.45124,-7.86977v-36.25253c0,-5.07449 2.0642,-8.98788 6.1926,-11.74014c2.49424,-1.63416 5.1605,-2.45124 7.99878,-2.45124zM165.21031,302.10485c-2.23622,0 -3.74136,1.0321 -4.51544,3.0963c-0.17202,0.60206 -0.25803,1.16111 -0.25803,1.67716v31.60808c0,2.23622 1.0321,3.74136 3.0963,4.51544c0.60206,0.17202 1.16111,0.25803 1.67716,0.25803h38.31673c2.23622,0 3.74136,-1.0751 4.51544,-3.22531c0.17202,-0.51605 0.25803,-1.0321 0.25803,-1.54815v-31.60808c0,-2.23622 -1.0751,-3.74136 -3.22531,-4.51544c-0.51605,-0.17202 -1.0321,-0.25803 -1.54815,-0.25803z"
+                    data-paper-data="{&quot;glyphName&quot;:&quot;O&quot;,&quot;glyphIndex&quot;:1,&quot;word&quot;:1}"
+                    fill="#ffffff"></path>
+                <path
+                    d="M231.52276,290.3647h10.19199l33.28524,23.6093l33.28524,-23.6093h10.32101v64.6353h-11.74014v-49.15379l-31.8661,22.44819l-31.73709,-22.44819v49.15379h-11.74014z"
+                    data-paper-data="{&quot;glyphName&quot;:&quot;M&quot;,&quot;glyphIndex&quot;:2,&quot;word&quot;:1}"
+                    fill="#ffffff"></path>
+                <path
+                    d="M330.21738,290.3647h71.34395v11.74014h-59.60381v14.70743h48.76675v11.74014h-48.76675v14.70743h59.60381v11.61113h-71.34395z"
+                    data-paper-data="{&quot;glyphName&quot;:&quot;E&quot;,&quot;glyphIndex&quot;:3,&quot;word&quot;:1}"
+                    fill="#ffffff"></path>
+                <path
+                    d="M412.78542,290.3647h11.74014v13.80434c0.08601,2.15021 1.0751,3.65536 2.96729,4.51544l20.90004,7.86977l20.90004,-7.86977c1.97819,-0.86008 3.01029,-2.36523 3.0963,-4.51544v-13.80434h11.74014v15.48151c0,4.98849 -2.10721,8.90187 -6.32162,11.74014c-0.94609,0.60206 -1.89218,1.0751 -2.83828,1.41914l-20.64201,7.86977v28.12474h-11.74014v-28.12474l-20.77102,-7.86977c-4.38643,-1.72017 -7.2247,-4.85947 -8.51483,-9.41792c-0.34403,-1.29013 -0.51605,-2.58025 -0.51605,-3.87038z"
+                    data-paper-data="{&quot;glyphName&quot;:&quot;Y&quot;,&quot;glyphIndex&quot;:4,&quot;lastGlyphOfWord&quot;:true,&quot;word&quot;:1}"
+                    fill="#ffffff"></path>
+            </g>
+            <g
+                data-paper-data="{&quot;fillRule&quot;:&quot;evenodd&quot;,&quot;fillRuleOriginal&quot;:&quot;evenodd&quot;,&quot;isIcon&quot;:true,&quot;iconStyle&quot;:&quot;standalone&quot;,&quot;selectedEffects&quot;:{&quot;container&quot;:&quot;&quot;,&quot;transformation&quot;:&quot;&quot;,&quot;pattern&quot;:&quot;&quot;},&quot;bounds&quot;:{&quot;x&quot;:191.88558773544406,&quot;y&quot;:115.00000000000003,&quot;width&quot;:166.22882452911182,&quot;height&quot;:144.06035621833794},&quot;iconType&quot;:&quot;icon&quot;,&quot;rawIconId&quot;:&quot;1935038&quot;,&quot;isDetailed&quot;:false,&quot;suitableAsStandaloneIcon&quot;:true}"
+                fill-rule="evenodd">
+                <path
+                    d="M308.24403,115l-77.5723,27.7019l-33.25272,33.23533h5.55082v27.71931h-11.08424v5.53342l166.22882,32.5567v-38.09012h-22.16848v-27.71931h11.08424zM305.94713,121.69927l30.99064,48.70454h-6.52526v38.78615h22.16848v25.82263l-144.07774,-28.20652v-19.59318l1.35725,-0.34802l15.27781,-3.82815v26.15325h44.31957v-63.59953l-7.6041,3.02772l-48.80895,19.54098l20.67203,-20.65462zM208.50325,181.48806v-5.55082l55.42121,-22.15108v49.87039h-33.25272v-27.71931zM258.39104,170.40381l-22.16848,5.53342v16.63507h22.16848zM252.84022,177.5033v9.53558h-11.08424v-6.76887zM191.88559,220.27421v38.78615h138.52692zM197.419,227.5825l92.64129,25.94444h-92.64129z"
+                    data-paper-data="{&quot;isPathIcon&quot;:true}" fill="#c5aa7e"></path>
+            </g>
+        </g>
+    </g>
+</svg>

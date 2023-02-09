@@ -17,10 +17,8 @@
         align-items: center;
         justify-content: center;
 
-        svg {
-            width: 55px;
-            height: 55px;
-            fill: v.$gold;
+        img {
+            width: 80%
         }
 
         #sidebar-logo-text {
@@ -121,7 +119,7 @@
 @media screen and (max-width: 840px) {
     #sidebar {
         flex-basis: v.$sidebar-mobile-width;
-        padding: 3rem 30px;
+        padding: 2rem 30px;
     }
 }
 

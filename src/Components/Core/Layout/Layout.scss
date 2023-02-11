@@ -1,4 +1,5 @@
 @use "../../../assets/scss/variables" as v;
+@use 'src/assets/scss/basic_utilities';
 
 .App {
     min-height: 100vh;
@@ -6,10 +7,13 @@
     display: flex;
     flex-direction: row;
     transition: all 0.5s;
+    overflow: hidden;
+    font-family: 'Khand', 'Arial', 'sans-serif';
 }
 
 #main {
-    overflow: hidden;
+    height: 100vh;
+    min-width: 300px;
     flex-grow: 1;
-    font-family: 'Khand';
+    overflow: auto;
 }

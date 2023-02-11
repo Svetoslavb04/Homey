@@ -1,0 +1,90 @@
+@use "src/assets/scss/variables.scss" as v;
+
+#home-container {
+    #home-property-cards {
+        display: flex;
+
+        .home-property-card {
+            flex-basis: 25%;
+            flex-shrink: 0;
+
+            cursor: pointer;
+        }
+
+        @media screen and (max-width: 840px) {
+            flex-direction: column;
+        }
+    }
+
+    #home-top-properties {
+        h2 {
+            text-align: center;
+            font-size: 50px;
+            font-weight: 500;
+            line-height: 1em;
+            text-transform: uppercase;
+            color: #fff;
+            position: relative;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        #home-top-properties-container {
+            position: relative;
+            padding: 20px 2rem;
+            display: flex;
+            gap: 50px;
+
+            > div {
+                display: flex;
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            > div:nth-child(2) {
+                margin-top: 50px;
+            }
+        }
+    }
+
+    #home-mission {
+        margin: 0 2rem 20px 2rem;
+
+        position: relative;
+        color: #fff;
+        text-align: center;
+        letter-spacing: 0.5px;
+
+        h2 {
+            font-size: 50px;
+            font-weight: 500;
+            line-height: 1em;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        p {
+            margin: 0 20%;
+            font-size: 20px;
+        }
+
+        @media screen and (max-width: 780px) {
+            p {
+                margin: 0 5%;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 780px) {
+    body #home-container #home-top-properties {
+        #home-top-properties-container {
+            flex-direction: column;
+            gap: 0;
+        }
+    }
+
+    body[sidebar-hidden] #home-top-properties-container {
+        flex-direction: row;
+    }
+}

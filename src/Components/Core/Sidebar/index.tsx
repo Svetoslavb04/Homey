@@ -5,9 +5,10 @@ import { NavLink } from "react-router-dom";
 
 import { Role } from '../../../enums/Role';
 
-import HouseSidingIcon from '@mui/icons-material/HouseSiding';
 import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
+import { usePubSupContext } from '../../../contexts/PubSubContext';
+import { customEvents } from '../../../utils/pubsub';
 
 interface INavLink {
     to: string,
@@ -17,7 +18,17 @@ interface INavLink {
 
 const Sidebar: FC = () => {
 
+    const eventBus = usePubSupContext();
+
     const [isOpened, setIsOpened] = useState<boolean>(true);
+
+    useEffect(() => {
+
+        document.body.toggleAttribute('sidebar-hidden', !isOpened)
+
+        eventBus?.publish(customEvents.sidebarStateChange)
+
+    }, [isOpened, eventBus])
 
     const role: Role = Role.guest //get from somewhere
 
@@ -41,8 +52,7 @@ const Sidebar: FC = () => {
     return (
         <div id='sidebar' className={`${!isOpened ? 'hidden' : ''}`}>
             <div id="sidebar-logo">
-                <HouseSidingIcon fontSize='large' />
-                <h2 id='sidebar-logo-text'>Homey</h2>
+                <img src="assets/images/logo.png" alt="" />
             </div>
             <nav>
                 <ul>

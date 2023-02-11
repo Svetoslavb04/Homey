@@ -1,6 +1,8 @@
 import { Routes, Route, createBrowserRouter } from 'react-router-dom';
 import Login from '../Pages/Login';
 import Register from '../Pages/Register';
+import Home from '../Pages/Home';
+import PropertiesListing from '../Pages/Property/Listing';
 
 const RoutesList = () => {
     return (
@@ -13,6 +15,8 @@ const RoutesList = () => {
                 element = {<Register/>} 
                 path='/register'
             />
+            <Route index path='/' element={<Home />} />
+            <Route index path='/properties' element={<PropertiesListing />} />
         </Routes>
     )
 }

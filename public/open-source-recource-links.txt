@@ -1,0 +1,4 @@
+- Home page image: https://shtheme.org/
+- General information about countries: https://countriesnow.space
+    Github repo: https://github.com/MartinsOnuoha/countriesNowAPI
+    API URL: https://countriesnow.space/api/v0.1

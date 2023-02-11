@@ -1,10 +1,13 @@
 @use "../assets/scss/variables.scss" as v;
 
+html {
+  overflow: hidden;
+}
 
 /*Scrollbar*/
 /* width */
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 5px;
   }
   
   /* Track */

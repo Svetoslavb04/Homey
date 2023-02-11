@@ -1,0 +1,216 @@
+@use "../assets/scss/variables.scss" as v;
+
+#image-background{
+
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../public/assets/images/modern\ house_9.jpeg');
+    background-size:cover;
+    background-position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+
+    #auth-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 3rem;
+    opacity: 0.95;
+    color: v.$grey-font;
+
+        #auth-form {
+            margin: 10px;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: #323232;
+            border-radius: 5%;
+
+            width: 400px;
+            transition: width 0.5s;
+
+            #choose-form{
+                display:flex;
+                flex-direction: row;
+                justify-content: center;
+                gap: 25px;
+                align-items: center;
+                font-size: 27px;
+                width: 80%;
+                margin-bottom: 5%;
+                    
+            
+                .form-type{
+                    text-decoration: none;
+                    color: v.$grey-font;
+                    transition: all 0.2s; 
+                }
+                .form-type:hover{
+                    //text-decoration: none;
+                    color: v.$gold;  
+                }
+                .active{
+                    text-align: center;
+
+                    border-style:solid;
+                    border-radius: 8px;
+                    border-color: v.$gold;
+
+                    //text-decoration: underline;
+                    color: v.$gold;
+                    width:32%;
+                }
+
+            }
+            .register-mode{
+                margin-top: 1px;
+                margin-bottom: 5%;
+                gap: 15%;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;    
+
+                .register-mode-option{
+                    display: flex;
+                    flex-direction:column;
+                    align-items: center;
+
+                    .register-mode-icon-container{
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center; 
+
+                        .register-mode-icon{
+                            height: 80px;
+                            width: 90px;
+                            fill: v.$grey-font;
+                        }
+
+                        h3{
+                            margin-top: 0px;
+                            margin-bottom: 0px;
+                        }
+                    }
+                    
+                    .register-mode-icon-container-active{
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        transition: all 0.1s; 
+                        border-style: solid;
+                        border-radius: 6px;
+                        border-color: v.$gold;
+
+                        .register-mode-icon{
+                            height: 80px;
+                            width: 90px;
+                            fill: v.$gold;
+                        }
+
+                        h3{
+                            margin-top: 0px;
+                            margin-bottom: 0px;
+                            color: v.$gold;
+                        }
+                    }
+                }
+                
+                
+                .register-mode-option:hover{
+                    color: v.$gold;
+
+                    .register-mode-icon{
+                        fill: v.$gold;
+                    }
+                    
+                }
+            }
+
+            .inputField,
+            .inputPassword {
+                margin: 0.6rem 0;
+                width: 70%;
+                color: v.$gold;
+
+                label,
+                input {
+                    color: v.$gold;
+                }
+            }
+
+            .password-visibilty-icon svg {
+                opacity: 0.8;
+                fill: v.$gold;
+            }
+
+            #auth-button-container {
+                width: 40%;
+                margin: 2rem 0 1.2rem 0;
+                transition: width 0.5s;
+            }
+
+            #auth-button {
+                padding: 14px 20px;
+                font-size: 1.2rem;
+            }
+
+            #auth-button:hover {
+                opacity: 0.8;
+            }
+        }
+
+    @media screen and (max-width: 500px) {
+        #login-form {
+            width: 80%;
+
+            #login-button-container {
+                width: 70%;
+            }
+        }
+    }
+
+    @media screen and (min-width: 1820px) {
+        #login-form {
+            width: 600px;
+
+            #login-username,
+            #login-password {
+                margin: 1rem 0;
+            }
+
+            #login-button-container {
+                width: 50%;
+            margin: 2.5rem 0 1.5rem 0;
+
+            }
+        }
+    }
+
+    @media screen and (min-width: 2200px) {
+        #login-form {
+            width: 35%;
+
+            #login-username,
+            #login-password {
+                margin: 1rem 0;
+            }
+
+            #login-button-container {
+            margin: 3rem 0 2rem 0;
+
+            }
+        }
+    }
+}
+}
+
+

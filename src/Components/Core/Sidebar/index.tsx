@@ -44,6 +44,11 @@ const Sidebar: FC = () => {
     ]
         .filter(link => link.visibleTo.includes(role))
 
+    useEffect(
+        () => { document.body.toggleAttribute('sidebar-opened', isOpened) }
+        , [isOpened]
+    );
+
     return (
         <div id='sidebar' className={`${!isOpened ? 'hidden' : ''}`}>
             <div id="sidebar-logo">

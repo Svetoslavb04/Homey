@@ -29,6 +29,9 @@ const MaterialUIProvider: FC<Props> = ({ children }) => {
         palette: {
             primary: {
                 main: '#282828'
+            },
+            secondary: {
+                main: '#c5aa7e'
             }
         },
         typography: {

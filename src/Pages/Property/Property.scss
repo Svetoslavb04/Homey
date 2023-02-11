@@ -81,42 +81,70 @@
         }
     }
 
+
+    
     #selected-image{
         display: flex;
+        flex-direction: row;
         align-items: center;
-        justify-content: start;
-        position:static;
-        z-index: 30;
+        justify-content: center;
+        height: 100vh;
+        width: 100%;
+        left: 0; 
+        top: 0;
+        position: fixed;
+        
+        z-index: 10;
 
         img{
-            top: 50%;
-            left: 50%;
             width: 65vw;
             height: 85vh;
-            transform: translate(-50%, -50%);
             border: 1px solid #666;
-            position: fixed;
+            margin-left: 5%;
+            z-index: 30;
         }
         .btn-close {
             font-size: xxx-large;
             color: rgb(131, 131, 131);
-            top: 4%;
-            left: 80%;
-            position:fixed;
-            padding: 5px 10px;
-            width: 100px;
+            width: 5%;
+            align-self: flex-start;
+            margin-top: 2vh;  
+            z-index: 30;
             cursor: pointer;
-          }
+            
+        }
+        .btn-close:hover{
+            color: v.$gold;
+        }
+        #arrow-back{
+            left: 0.5%;
+            position: fixed;
+        }
+        #arrow-forward{
+            right: 0.5%;
+            position: fixed;
+        }
+        .arrow{
+            color: rgb(131, 131, 131);
+            background-color: #1a1a1a;
+            font-size: xx-large;
+            z-index: 30;
+            cursor: pointer;
+        }
+
+        .arrow:hover{
+            background-color: v.$gold;
+        }
+        #backdrop {
+            background-color: rgba(32, 32, 32, 0.8);
+            height: 100vh;
+            left: 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 20;
+        }
     }
-    #backdrop {
-        background-color: rgba(0, 0, 0, 0.6);
-        height: 100vh;
-        left: 0;
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 20;
-      }
 }
 
    

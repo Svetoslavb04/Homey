@@ -5,7 +5,6 @@ import { NavLink } from "react-router-dom";
 
 import { Role } from '../../../enums/Role';
 
-import HouseSidingIcon from '@mui/icons-material/HouseSiding';
 import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
 import { usePubSupContext } from '../../../contexts/PubSubContext';

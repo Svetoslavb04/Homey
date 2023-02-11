@@ -1,0 +1,28 @@
+@use "../assets/scss/variables.scss" as v;
+
+html {
+  overflow: hidden;
+}
+
+/*Scrollbar*/
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    opacity: 0%;
+    background: v.$background-color; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    border-radius: 16px;
+    background: rgb(117, 117, 117); 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }

@@ -1,0 +1,13 @@
+@use "src/assets/scss/variables.scss" as v;
+
+.property-listing-container {
+    .property-listing-pagination {
+        margin: 30px;
+
+        .MuiPagination-root {
+            .MuiPaginationItem-root:not(.Mui-selected) {
+                color: white;
+            }
+        }
+    }
+}

@@ -1,0 +1,25 @@
+.properties-listing-section {
+    position: relative;
+    margin-top: 2rem;
+    padding: 20px 2rem;
+    display: flex;
+    justify-content: space-around;
+    gap: 50px;
+
+    > div {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    > div:nth-child(2) {
+        margin-top: 50px;
+    }
+}
+
+@media screen and (max-width: 780px) {
+    body .properties-listing-section {
+        flex-direction: column;
+        gap: 0;
+    }
+}

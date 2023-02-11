@@ -1,6 +1,8 @@
 
 import './Property.scss'
 import CloseIcon from '@mui/icons-material/Close';
+import ArrowBack from '@mui/icons-material/ArrowBackIosRounded';
+import ArrowForward from '@mui/icons-material/ArrowForwardIosRounded';
 import { FC, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -66,21 +68,19 @@ const Property: FC = ()=> {
                 <p><b className='property-info'>Price : </b> 120 000 €</p>
                 <p><b className='property-info'>Number of rooms : </b> 3 rooms</p>
                 <p><b className='property-info'>Number of bathrooms : </b> 1 bathroom</p>
-                <p><b className='property-info'>Site Size : </b> 12ha</p>
+                <p><b className='property-info'>Site Size : </b> 120 m²</p>
                 <p><b className='property-info'>Year of construction : </b> July 2021</p> 
             </div>
-           
 
-          
          </div>
-        {imageToOpen != '' &&  
-            <>
+        {imageToOpen !== '' &&    
+            <div id='selected-image'>
                 <div id='backdrop' onClick={()=> closeImageHandler()}></div>
-                <div id='selected-image'>
-                    <CloseIcon  className="btn-close" onClick={() => closeImageHandler()}/>
-                    <img src= {imageToOpen} />
-                </div>
-            </>
+                <ArrowBack id='arrow-back' className='arrow' />
+                <img src= {imageToOpen} />
+                <CloseIcon  className="btn-close" onClick={() => closeImageHandler()}/>
+                <ArrowForward className='arrow' id='arrow-forward'/>
+            </div>
         }
          
     </div>

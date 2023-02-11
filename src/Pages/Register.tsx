@@ -28,43 +28,44 @@ const Register: FC = () => {
 
     const [registerTypeIsUser, setUserType] = useState(true);
 
-    const changeRegisterTypeToAgency = () =>{ 
+    const changeRegisterTypeToAgency = () => {
         setUserType(false);
-   }
+    }
 
-   const changeRegisterTypeToUser = () =>{ 
-    setUserType(true);
-}
+    const changeRegisterTypeToUser = () => {
+        setUserType(true);
+    }
 
 
     return (
 
-        <div id='image-background'>   
-                <div id='auth-container'>
+        <div id='image-background'>
+            <div id='auth-container'>
+                <div className='auth-form-wrapper auth-register-form-wrapper'>
                     <form id='auth-form'>
                         <div id='choose-form'>
                             <NavLink to='/login' className='form-type'> SIGN IN </NavLink>
-                            
-                            <NavLink to='/register' className='form-type'> SIGN UP </NavLink>                 
+
+                            <NavLink to='/register' className='form-type'> SIGN UP </NavLink>
                         </div>
-                        
+
                         <h2>CREATE ACCOUNT</h2>
                         <div className='register-mode'>
                             <div className='register-mode-option'>
-                                <div className={registerTypeIsUser ? 'register-mode-icon-container-active' : 'register-mode-icon-container'} 
+                                <div className={registerTypeIsUser ? 'register-mode-icon-container-active' : 'register-mode-icon-container'}
                                     onClick={changeRegisterTypeToUser}
-                                > 
-                                    <PersonIcon className='register-mode-icon'/> 
-                                    <h3>USER</h3> 
+                                >
+                                    <PersonIcon className='register-mode-icon' />
+                                    <h3>USER</h3>
                                 </div>
                             </div>
 
                             <div className='register-mode-option'>
-                                <div  className={!registerTypeIsUser ? 'register-mode-icon-container-active' : 'register-mode-icon-container'} 
+                                <div className={!registerTypeIsUser ? 'register-mode-icon-container-active' : 'register-mode-icon-container'}
                                     onClick={changeRegisterTypeToAgency}
-                                > 
-                                    <GroupsIcon className='register-mode-icon'/> 
-                                    <h3>AGENCY</h3> 
+                                >
+                                    <GroupsIcon className='register-mode-icon' />
+                                    <h3>AGENCY</h3>
                                 </div>
                             </div>
                         </div>
@@ -79,63 +80,63 @@ const Register: FC = () => {
                                 error={false}
                             />
                         </div>
-                        
+
 
                         {registerTypeIsUser
-                        
-                            ?   <>
-                                    <div id="register-firstName" className='inputField'>
-                                        <TextField
-                                            fullWidth
-                                            label="First Name"
-                                            variant="standard"
-                                            color="secondary"
-                                            error={false}
-                                        />
-                                    </div>
 
-                                    <div id="register-lastName" className='inputField'>
-                                        <TextField
-                                            fullWidth
-                                            label="Last Name"
-                                            variant="standard"
-                                            color="secondary"
-                                            error={false}
-                                        />
-                                    </div>
-                                </>
+                            ? <>
+                                <div id="register-firstName" className='inputField'>
+                                    <TextField
+                                        fullWidth
+                                        label="First Name"
+                                        variant="standard"
+                                        color="secondary"
+                                        error={false}
+                                    />
+                                </div>
 
-                            :   <>
-                                    <div id="register-agencyName" className='inputField'>
-                                        <TextField
-                                            fullWidth
-                                            label="Agency Name"
-                                            variant="standard"
-                                            color="secondary"
-                                            error={false}
-                                        />
-                                    </div>
-                                    <div id="register-agencyCity" className='inputField'>
-                                        <TextField
-                                            fullWidth
-                                            label="City"
-                                            variant="standard"
-                                            color="secondary"
-                                            error={false}
-                                        />
-                                    </div>
-                                    <div id="register-agencyAdress" className='inputField'>
-                                        <TextField
-                                            fullWidth
-                                            label="Adress"
-                                            variant="standard"
-                                            color="secondary"
-                                            error={false}
-                                        />
-                                    </div>
-                                </>
+                                <div id="register-lastName" className='inputField'>
+                                    <TextField
+                                        fullWidth
+                                        label="Last Name"
+                                        variant="standard"
+                                        color="secondary"
+                                        error={false}
+                                    />
+                                </div>
+                            </>
+
+                            : <>
+                                <div id="register-agencyName" className='inputField'>
+                                    <TextField
+                                        fullWidth
+                                        label="Agency Name"
+                                        variant="standard"
+                                        color="secondary"
+                                        error={false}
+                                    />
+                                </div>
+                                <div id="register-agencyCity" className='inputField'>
+                                    <TextField
+                                        fullWidth
+                                        label="City"
+                                        variant="standard"
+                                        color="secondary"
+                                        error={false}
+                                    />
+                                </div>
+                                <div id="register-agencyAdress" className='inputField'>
+                                    <TextField
+                                        fullWidth
+                                        label="Adress"
+                                        variant="standard"
+                                        color="secondary"
+                                        error={false}
+                                    />
+                                </div>
+                            </>
                         }
-                        
+
                         <div id="register-password" className='inputPassword'>
                             <FormControl fullWidth variant="standard" color="secondary">
                                 <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
@@ -179,7 +180,8 @@ const Register: FC = () => {
                         </div>
                     </form>
                 </div>
-            </div>  
+            </div>
+        </div>
     )
 }
 

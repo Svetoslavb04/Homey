@@ -21,14 +21,15 @@ const Login: FC = () => {
 
     return (
         <div id='image-background'>
-                <div id='auth-container'>
+            <div id='auth-container'>
+                <div className='auth-form-wrapper'>
                     <form id='auth-form'>
                         <div id='choose-form'>
                             <NavLink to='/login' className='form-type'> SIGN IN </NavLink>
-                                
-                            <NavLink to='/register' className='form-type'> SIGN UP </NavLink>                 
+
+                            <NavLink to='/register' className='form-type'> SIGN UP </NavLink>
                         </div>
-                        
+
                         <div id="login-email" className='inputField'>
                             <TextField
                                 fullWidth
@@ -61,10 +62,11 @@ const Login: FC = () => {
                             <Button fullWidth variant="contained" size='large' id='auth-button' type='submit'>Login</Button>
                         </div>
                     </form>
+                </div>
             </div>
         </div>
 
-      
+
     )
 }
 

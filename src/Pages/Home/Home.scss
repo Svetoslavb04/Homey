@@ -33,6 +33,7 @@
             position: relative;
             padding: 20px 2rem;
             display: flex;
+            justify-content: space-around;
             gap: 50px;
 
             > div {
@@ -82,9 +83,5 @@
             flex-direction: column;
             gap: 0;
         }
-    }
-
-    body[sidebar-hidden] #home-top-properties-container {
-        flex-direction: row;
     }
 }

@@ -30,6 +30,10 @@ const PropertyCard: FC<PropertyCardProps> = ({ id, image, town, name, handleImag
         <h5>{town}</h5>
         <p>{name}</p>
       </div>
+      <div className='home-top-property-description'>
+        <h5>{town}</h5>
+        <p>{name}</p>
+      </div>
     </div>
   )
 }

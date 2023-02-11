@@ -1,5 +1,9 @@
 # Homey | Property board for NOIT
 
+<p align="center">
+  <img src="public/assets/images/logo_not_transperant.png" width="40%">
+</p>
+
 ## Live demo
 
 Currently unavailable

@@ -32,7 +32,8 @@ const MaterialUIProvider: FC<Props> = ({ children }) => {
             }
         },
         typography: {
-            fontFamily: 'Khand'
+            fontFamily: 'Khand, Arial',
+            
         }
     })
 

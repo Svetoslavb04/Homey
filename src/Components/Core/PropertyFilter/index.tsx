@@ -1,5 +1,5 @@
 import './PropertyFilter.scss';
-import { FC, useState, useEffect, HTMLAttributes, DetailedHTMLProps, useRef } from 'react'
+import { FC, useState, useEffect, HTMLAttributes, DetailedHTMLProps, useRef, FormEvent } from 'react'
 
 import CountrySelect from '../CountrySelect';
 
@@ -36,21 +36,21 @@ import LocalParkingIcon from '@mui/icons-material/LocalParking';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import SvgIcon from '@mui/material/SvgIcon';
 import Input from '@mui/material/Input';
+import { PropertyStatus } from '../../../enums/PropertyStatus';
 
-const AdvancedFilterCheckBox: FC<{ label: string, Icon: typeof SvgIcon, name: string }> =
-  ({ label, Icon, name }) =>
-    <div className='property-filter-advanced-checkbox-item'>
-      <FormControlLabel
-        control={<Checkbox name={name} sx={{ '& .MuiSvgIcon-root': { fontSize: 16 } }} disableRipple checkedIcon={<Icon />} />}
-        label={label}
-      />
-    </div>
+const AdvancedFilterCheckBox: FC<{ label: string, Icon: typeof SvgIcon, name: string }> = ({ label, Icon, name }) =>
+  <div className='property-filter-advanced-checkbox-item'>
+    <FormControlLabel
+      control={<Checkbox name={name} sx={{ '& .MuiSvgIcon-root': { fontSize: 16 } }} disableRipple checkedIcon={<Icon />} />}
+      label={label}
+    />
+  </div>
 
 export type PropertyFilterProps = {
+  handleFilterChange: (newFilter: IPropertyFilter) => void
+} & DetailedHTMLProps<HTMLAttributes<HTMLFormElement>, HTMLFormElement>
 
-} & DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
-
-const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
+const PropertyFilter: FC<PropertyFilterProps> = ({ className, handleFilterChange, ...rest }) => {
 
   const initialPropertyFilter: IPropertyFilter = {
     country: 'BG',
@@ -69,8 +69,11 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
 
   const [advancedFilterOpened, setAdvancedFilterOpened] = useState<boolean>(false);
 
-  const [selectedCountry, setSelectedCountry] = useState<string>(initialPropertyFilter.country);
+  const [selectedCountry, setSelectedCountry] = useState<string>(initialPropertyFilter.country || 'Bulgaria');
   const [availableCities, setAvailableCities] = useState<string[]>([]);
+
+  const [priceRange, setPriceRange] = useState<number[]>(initialPropertyFilter.priceRange);
+  const [sizeRange, setSizeRange] = useState<number[]>(initialPropertyFilter.sizeRange || [0, 0]);
 
   const [customCheckBoxes, setCustomCheckBoxes] = useState<number>(0);
 
@@ -108,6 +111,8 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
 
   useEffect(() => {
 
+    if (!countries.some(c => c.code === selectedCountry)) { return setAvailableCities([]) }
+
     fetch(citiesOfCountryURL, {
       method: 'POST',
       headers: {
@@ -137,12 +142,56 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
       ?.querySelector("input[type='text']") as HTMLInputElement
 
     if (checkboxInput?.value === '') { return }
-    
+
     setCustomCheckBoxes(prev => ++prev)
   }
 
+  const handleFormSubmit = (e: FormEvent) => {
+    e.preventDefault()
+
+    const formData = new FormData(e.target as HTMLFormElement)
+
+    const newFilter: IPropertyFilter = {
+      priceRange,
+      sizeRange,
+      claims: []
+    }
+
+    if (countries.some(c => c.code === selectedCountry)) { newFilter.country = selectedCountry }
+
+    const type = formData.get('type') as PropertyType || 'Any'
+    if (type && type in PropertyType) { newFilter.type = type }
+    
+    const status = formData.get('status-radio-group') as PropertyStatus || 'Any'
+    if (status && status in PropertyStatus) { newFilter.status = status }
+
+    const city = formData.get('city')?.toString().trim();
+    if (city) { newFilter.city = city }
+
+    const bedrooms = Number(formData.get('bedrooms'))
+    if (bedrooms > 1) { newFilter.bedrooms = bedrooms }
+
+    const bathrooms = Number(formData.get('bathrooms'))
+    if (bathrooms > 1) { newFilter.bathrooms = bathrooms }
+
+    const garages = Number(formData.get('garages'))
+    if (garages > 1) { newFilter.garages = garages }
+
+    const nonCheckboxes = ['type', 'status-radio-group', 'priceRange', 'sizeRange', 'city', 'bedrooms', 'bathrooms', 'garages']
+
+    formData.forEach((value, key) => !nonCheckboxes.includes(key)
+      ? newFilter.claims?.push(key) : {}
+    )
+
+    handleFilterChange(newFilter);
+  }
+
   return (
-    <div {...rest} className={`property-filter${className ? ` ${className}` : ''}`}>
+    <form
+      {...rest}
+      className={`property-filter${className ? ` ${className}` : ''}`}
+      onSubmit={handleFormSubmit}
+    >
       <div className='property-filter-basic'>
         <div className='property-filter-basic-item'>
           <CountrySelect
@@ -172,19 +221,20 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
           </FormControl>
         </div>
         <div className='property-filter-basic-item'>
-          <label className='property-filter-price-label'>Price: {initialPropertyFilter.priceRange[0]} - {initialPropertyFilter.priceRange[1]}</label>
+          <label className='property-filter-price-label'>Price: {priceRange[0]} - {priceRange[1]}</label>
           <Slider
             name='priceRange'
             size="small"
             getAriaLabel={() => 'Price range'}
             defaultValue={initialPropertyFilter.priceRange}
             valueLabelDisplay="auto"
+            onChange={(e: Event, newValue: number[] | number) => { setPriceRange(newValue as number[]) }}
             min={0} //Should get from server
             max={100000} //Should get from server
           />
         </div>
         <div className='property-filter-basic-item'>
-          <Button fullWidth variant="contained">Search Property</Button>
+          <Button fullWidth variant="contained" type='submit'>Search Property</Button>
         </div>
       </div>
       <div className='property-filter-advanced'>
@@ -200,7 +250,7 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
                     defaultValue={initialPropertyFilter.status}
                   >
                     <FormControlLabel
-                      value="for_sale"
+                      value={PropertyStatus.for_sale}
                       className='property-filter-advanced-radio-value'
                       control={
                         <Radio
@@ -215,7 +265,7 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
                       label="for sale"
                     />
                     <FormControlLabel
-                      value="for_rent"
+                      value={PropertyStatus.for_rent}
                       className='property-filter-advanced-radio-value'
                       control={
                         <Radio
@@ -233,13 +283,14 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
                 </FormControl>
               </div>
               <div className='property-filter-advanced-item df fdc'>
-                <label className='property-filter-advanced-label'>Size: {initialPropertyFilter.sizeRange[0]} - {initialPropertyFilter.sizeRange[1]} (m2)</label>
+                <label className='property-filter-advanced-label'>Size: {sizeRange[0]} - {sizeRange[1]} (m2)</label>
                 <div className='df'>
                   <Slider
                     name='sizeRange'
                     size="small"
                     getAriaLabel={() => 'Size range'}
                     defaultValue={initialPropertyFilter.sizeRange}
+                    onChange={(e: Event, newValue: number[] | number) => { setSizeRange(newValue as number[]) }}
                     valueLabelDisplay="auto"
                     min={0} //Should get from server
                     max={500} //Should get from server
@@ -249,7 +300,6 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
               <div className='property-filter-advanced-item'>
                 <Autocomplete
                   freeSolo
-                  disableCloseOnSelect
                   clearOnBlur={false}
                   disablePortal
                   options={availableCities}
@@ -325,7 +375,13 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
                     <Input
                       placeholder="Enter keyword"
                       className='property-filter-advanced-new-checkbox-label'
-                      onChange={(e) => { e.target.name = e.target.value }}
+                      onChange={(e) => {
+                        const input = e.target.parentElement?.parentElement?.children[0].children[0];
+
+                        if (input && input.tagName.toLowerCase() === 'input') {
+                          (input as HTMLInputElement).name = e.target.value
+                        }
+                      }}
                     />
                   </div>
                 )
@@ -348,7 +404,7 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, ...rest }) => {
           </div>
         </div>
       </div>
-    </div>
+    </form>
   )
 }
 

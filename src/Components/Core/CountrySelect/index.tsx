@@ -26,6 +26,16 @@ const CountrySelect: FC<CountrySelectProps> = ({ className, label, value, onChan
                 onChange={onChange}
             >
                 {
+                    <MenuItem
+                        key={'any'}
+                        value={'any'}
+                    >
+                        <div className='country-select-item'>
+                            <span className='country-select-name'>Any</span>
+                        </div>
+                    </MenuItem>
+                }
+                {
                     countries?.map(country =>
                         <MenuItem
                             key={country.name}

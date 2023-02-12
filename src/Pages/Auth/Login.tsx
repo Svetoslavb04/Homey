@@ -1,7 +1,7 @@
 import './Auth.scss';
 
 import { FocusEvent, FC, FormEvent, useState } from 'react';
-import { NavLink } from "react-router-dom";
+import { Navigate, NavLink, useNavigate } from "react-router-dom";
 
 import { homeyAPI } from '../../assets/js/APIs';
 import { useAuthContext } from '../../contexts/AuthContext';
@@ -13,8 +13,11 @@ import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import InputAdornment from '@mui/material/InputAdornment';
+import { login } from '../../services/authService';
 
 const Login: FC = () => {
+
+    const navigate = useNavigate();
 
     const { setUser } = useAuthContext()
 
@@ -53,22 +56,20 @@ const Login: FC = () => {
     const handleFormSubmit = (e: FormEvent) => {
         e.preventDefault()
 
-        fetch(homeyAPI.login, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email: email.value, password: password.value })
-        })
-            .then(res => res.json())
+        if (email.error || password.error) { return }
+
+        login(email.value, password.value)
             .then(payload => {
 
                 if (payload._id && payload.role) {
                     setUser(payload)
+                    navigate('/', { replace: true })
                 }
 
+                //open notification
             })
             .catch(err => console.log(err))
+
     }
 
     return (

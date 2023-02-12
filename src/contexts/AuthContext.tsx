@@ -6,7 +6,7 @@ import { Role } from '../enums/Role';
 import { IAgency } from '../interfaces/IAgency';
 import { IUser } from '../interfaces/IUser';
 
-const initialUser = {
+export const initialUser = {
     role: Role.guest,
     _id: null
 }

@@ -22,7 +22,7 @@ const Logout = () => {
             .then(() => setUser(initialUser))
             .catch(err => console.log(err))
             
-    }, [navigate, setUser])
+    }, [navigate, setUser, popNotification])
 
     return (
         <>

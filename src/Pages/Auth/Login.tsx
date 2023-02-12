@@ -68,7 +68,7 @@ const Login: FC = () => {
                     popNotification({ type: 'success', message: 'Succesfully logged in!' })
                     navigate('/', { replace: true })
                     
-                } else if (payload.status != 200) {
+                } else if (payload.status !== 200) {
                     popNotification({ type: 'error', message: 'Invalid email or password!' })
                 }
 

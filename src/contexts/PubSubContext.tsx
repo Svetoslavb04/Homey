@@ -18,4 +18,4 @@ export const PubSubProvider: FC<Props> = ({ children }) => {
     )
 }
 
-export const usePubSupContext = () => useContext(PubSubContext);
+export const usePubSubContext = () => useContext(PubSubContext);

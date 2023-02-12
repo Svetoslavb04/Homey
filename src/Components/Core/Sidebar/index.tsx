@@ -7,7 +7,7 @@ import { Role } from '../../../enums/Role';
 
 import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
-import { usePubSupContext } from '../../../contexts/PubSubContext';
+import { usePubSubContext } from '../../../contexts/PubSubContext';
 import { customEvents } from '../../../utils/pubsub';
 
 interface INavLink {
@@ -18,7 +18,7 @@ interface INavLink {
 
 const Sidebar: FC = () => {
 
-    const eventBus = usePubSupContext();
+    const eventBus = usePubSubContext();
 
     const [isOpened, setIsOpened] = useState<boolean>(true);
 

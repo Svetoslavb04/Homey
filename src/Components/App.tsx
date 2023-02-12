@@ -7,15 +7,18 @@ import { PubSubProvider } from '../contexts/PubSubContext';
 import { AuthProvider } from '../contexts/AuthContext';
 
 import Layout from './Core/Layout'; //Page layout
+import { NotificationProvider } from '../contexts/NotificationContext/NotificationContext';
 
 function App() {
   return (
     <MaterialUIProvider>
       <PubSubProvider>
         <AuthProvider>
-          <BrowserRouter>
-            <Layout />
-          </BrowserRouter>
+          <NotificationProvider>
+            <BrowserRouter>
+              <Layout />
+            </BrowserRouter>
+          </NotificationProvider>
         </AuthProvider>
       </PubSubProvider>
     </MaterialUIProvider>

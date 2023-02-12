@@ -3,6 +3,7 @@ import Login from '../Pages/Login';
 import Register from '../Pages/Register';
 import Home from '../Pages/Home';
 import PropertiesListing from '../Pages/Property/Listing';
+import AddProperty from '../Pages/Property/Create';
 
 const RoutesList = () => {
     return (
@@ -14,6 +15,10 @@ const RoutesList = () => {
             <Route 
                 element = {<Register/>} 
                 path='/register'
+            />
+            <Route 
+                element = {<AddProperty/>} 
+                path='/properties/add'
             />
             <Route index path='/' element={<Home />} />
             <Route index path='/properties' element={<PropertiesListing />} />

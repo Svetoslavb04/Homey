@@ -13,7 +13,7 @@
         
     } 
     .property-info{
-                color: v.$gold;
+        color: v.$gold;
     }
     #contact-section{
         display: flex;
@@ -22,8 +22,12 @@
         justify-content: space-evenly;
         width: 80%;
         #agency-info{
+            font-size: 1.8em;
             display: flex;
             flex-direction: row;
+            span{
+                margin-right: 10px;
+            }
         }
         
         #contact-button {

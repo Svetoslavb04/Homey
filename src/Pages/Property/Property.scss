@@ -10,7 +10,6 @@
 
 
     #top-image{
-        //background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('./villa.jpg');
         background-size:cover;
         background-position: center;
         width: 100%;
@@ -81,6 +80,12 @@
             }
             .property-info{
                 color: v.$gold;
+            }
+            #extras{
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-between;
             }
         }
     }

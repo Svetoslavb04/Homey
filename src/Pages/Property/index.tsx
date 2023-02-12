@@ -35,7 +35,7 @@ const Property: FC = ()=> {
                 'https://www.mydomaine.com/thmb/dke2LC6lH21Pvqwd2lI6AIutnDY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/SuCasaDesign-Modern-9335be77ca0446c7883c5cf8d974e47c.jpg',
                  'https://www.cuded.com/wp-content/uploads/2013/04/Caruth-Boulevard-Residence-by-Tom-Reisenbichler-1.jpg', 
                  'https://www.sunset.com/wp-content/uploads/medium_2x/hometour-Klopf-Architect-Sacramento-covered-porch-Mariko-Reed-0621.jpg'],
-        extras: ['Wifi', 'Air Conditioning', 'Fire Place', 'Balcony', 'Fitness', 'Swimming Pool', 'Parking']
+        extras: ['Wifi', 'Fire Place', 'Fitness', 'Swimming Pool', 'Parking']
     }
 
     const [imageToOpen, SetImageToOpen] = useState('');
@@ -94,16 +94,15 @@ const Property: FC = ()=> {
       }];
 
 
-      const ext = [];
+    const extras = [];
     for (const extra of fetchedProperty.extras) {
         const claim = IconifyiedExtras.find(c => c.name === extra)
         if (claim) {
             console.log(claim);
             
-            ext.push(`${<claim.Icon/>} ${claim.name}`);
+            extras.push({Icon: claim.Icon, name:claim.name});
         }
-        
-    }
+    };
 
     return (
     <div id='property-main'>
@@ -134,8 +133,8 @@ const Property: FC = ()=> {
                 <p><b className='property-info'>Number of bathrooms : </b> 1 bathroom</p>                
                 <p><b className='property-info'>Year of construction : </b> July 2021</p> 
                 <p><b className='property-info'>Garages : </b> 1</p>
-                <hr></hr>
-                <p><b className='property-info'>Extras : </b> {ext} </p>
+                
+                <p id='extras'><b className='property-info'>Extras : </b> {extras.map(e=> <div key={e.name}><e.Icon/> {e.name}</div>)} </p>
             </div>
 
          </div>

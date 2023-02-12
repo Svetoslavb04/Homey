@@ -1,11 +1,14 @@
-import Pagination from '@mui/material/Pagination';
-import { useState } from 'react';
-import { IProperty } from '../../../interfaces/IProperty';
+import './PropertiesListings.scss';
 
+import { useState } from 'react';
+
+import { IProperty } from '../../../interfaces/IProperty';
 import IPropertyFilter from '../../../interfaces/IPropertyFilter';
+
 import FilterSection from './Components/FilterSection';
 import PropertiesSection from './Components/PropertiesSection';
-import './PropertiesListings.scss';
+
+import Pagination from '@mui/material/Pagination';
 
 const PropertiesListings = () => {
 

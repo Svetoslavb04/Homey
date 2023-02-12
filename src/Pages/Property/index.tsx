@@ -15,6 +15,8 @@ import PoolIcon from '@mui/icons-material/Pool';
 import LocalParkingIcon from '@mui/icons-material/LocalParking';
 
 
+
+
 const Property: FC = ()=> {
 
     const {propertyId} = useParams();
@@ -105,17 +107,17 @@ const Property: FC = ()=> {
     for (const extra of fetchedProperty.extras) {
         const claim = IconifyiedExtras.find(c => c.name === extra)
         if (claim) {
-            console.log(claim);
-            
             extras.push({Icon: claim.Icon, name:claim.name});
         }
     };
 
     return (
+        
+
     <div id='property-main'>
          <div id='top-image' style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${fetchedProperty.images[0]})` }}>
             <div>  
-                <h1> {fetchedProperty.name} </h1>
+                 <h1>{fetchedProperty.name}</h1>
             </div>
          </div>
 
@@ -123,8 +125,13 @@ const Property: FC = ()=> {
             <div id='property-images'>
                 <img id='property-primary-image' src={fetchedProperty.images[1]} alt='house' onClick={() => clickImageHandler(fetchedProperty.images[1])} />
                 <div id='property-secondary-images'>
-                    <img src={fetchedProperty.images[2]} onClick={() => clickImageHandler(fetchedProperty.images[2])} alt="house" />
-                    <img src={fetchedProperty.images[3]} onClick={() => clickImageHandler(fetchedProperty.images[3])} alt="house" /> 
+                  <div className='secondary-image'>
+                        <img src={fetchedProperty.images[2]} onClick={() => clickImageHandler(fetchedProperty.images[2])} alt="house" />
+                  </div> 
+                  <div className='secondary-image'>
+                        <img src={fetchedProperty.images[3]} onClick={() => clickImageHandler(fetchedProperty.images[3])} alt="house" />
+                  </div>
+                    
                 </div>
             </div>
             <div id='property-description'>
@@ -138,7 +145,7 @@ const Property: FC = ()=> {
                 <p><b className='property-info'>Number of bathrooms : </b> {fetchedProperty.numberOfBathrooms} bathroom</p>                
                 <p><b className='property-info'>Year of construction : </b> {fetchedProperty.year}</p> 
                 <p><b className='property-info'>Garages : </b> {fetchedProperty.numberOfGarages}</p>
-                <p ><b className='property-info'>Extras : </b> <div id='extras'>{extras.map(e=> <div key={e.name}><e.Icon/> {e.name}</div>)}</div> </p>
+                <div ><b className='property-info'>Extras : </b> <div className='extras'>{extras.map(e=> <div className ='extra' key={e.name}><e.Icon/> {e.name}</div>)}</div> </div>
             </div>
 
         </div>

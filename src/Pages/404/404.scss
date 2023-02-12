@@ -1,0 +1,113 @@
+@use "src/assets/scss/variables.scss" as v;
+
+.four-o-four-container {
+    line-height: 1;
+    color: white;
+
+    .four-o-four-image-container {
+        position: relative;
+        height: 70vh;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+
+        min-width: 360px;
+
+        border-bottom: 2px solid v.$background-color-light;
+
+        &::before {
+            background: black;
+            opacity: 0.6;
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .four-o-four-vertical-line {
+        position: relative;
+        margin: -37px auto;
+        border: 0;
+        border-left: 1px solid;
+        border-color: #c5a47e;
+        width: 2px;
+        height: 75px;
+        z-index: 10;
+    }
+
+    .four-o-four-heading-container {
+        margin-top: 6rem;
+    }
+    .four-o-four-heading {
+        margin: 0;
+
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+
+        text-align: center;
+        font-size: 70px;
+        font-weight: 400;
+
+        @media screen and (max-width: 767px) {
+            font-size: 60px;
+        }
+
+        @media screen and (max-width: 380px) {
+            font-size: 50px;
+        }
+    }
+
+    .four-o-four-big-heading-wrapper {
+        width: 70%;
+        margin: 0 auto;
+        text-align: center;
+
+        * {
+            margin: 0;
+            font-weight: 400;
+        }
+
+        .four-o-four-big-heading {
+            font-size: 22vw;
+            line-height: 0.8;
+
+            @media screen and (max-width: 767px) {
+                font-size: 40vw;
+            }
+        }
+
+        .four-o-four-big-sub-heading {
+            margin-top: 1rem;
+
+            font-size: 50px;
+
+            @media screen and (min-width: 1840px) {
+                font-size: 60px;
+            }
+        }
+
+        @media screen and (max-width: 767px) {
+            width: 90%;
+
+            .four-o-four-big-heading {
+                font-size: 40vw;
+            }
+        }
+    }
+
+    .four-o-four-big-back-home-wrapper {
+        margin: 4rem 0 2rem 0;
+        text-align: center;
+
+        a {
+            text-decoration: none;
+        }
+
+        .four-o-four-big-back-home {
+            padding: 15px 35px;
+            font-size: 1.5rem;
+        }
+    }
+}

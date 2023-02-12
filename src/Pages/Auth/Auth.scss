@@ -1,7 +1,7 @@
 @use "src/assets/scss/variables.scss" as v;
 
 #image-background {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.3)),
         url("../../../public/assets/images/modern\ house_9.jpeg");
     background-size: cover;
 
@@ -14,7 +14,7 @@
         height: 100%;
         margin: 0 auto;
         opacity: 0.95;
-        color: v.$grey-font;
+        color: black;
 
         .auth-form-wrapper {
             position: absolute;
@@ -35,7 +35,7 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            background-color: #323232;
+            background-color: #f2f2f2;
             border-radius: 5%;
 
             width: 400px;
@@ -58,20 +58,21 @@
                 }
                 .form-type:hover {
                     //text-decoration: none;
-                    color: v.$gold;
+                    color: black;
                 }
                 .active {
                     text-align: center;
 
                     border-style: solid;
                     border-radius: 8px;
-                    border-color: v.$gold;
+                    border-color: black;
 
                     //text-decoration: underline;
-                    color: v.$gold;
+                    color: black;
                     width: 32%;
                 }
             }
+
             .register-mode {
                 cursor: pointer;
                 margin-top: 1px;
@@ -111,27 +112,27 @@
                         transition: all 0.1s;
                         border-style: solid;
                         border-radius: 6px;
-                        border-color: v.$gold;
+                        border-color: black;
 
                         .register-mode-icon {
                             height: 80px;
                             width: 90px;
-                            fill: v.$gold;
+                            fill: black;
                         }
 
                         h3 {
                             margin-top: 0px;
                             margin-bottom: 0px;
-                            color: v.$gold;
+                            color: black;
                         }
                     }
                 }
 
                 .register-mode-option:hover {
-                    color: v.$gold;
+                    color: black;
 
                     .register-mode-icon {
-                        fill: v.$gold;
+                        fill: black;
                     }
                 }
             }
@@ -140,17 +141,21 @@
             .inputPassword {
                 margin: 0.6rem 0;
                 width: 70%;
-                color: v.$gold;
+                color: black;
 
                 label:not(.Mui-error),
                 input:not([aria-invalid="true"]) {
-                    color: v.$gold;
+                    color: black;
+                }
+
+                .MuiInputBase-input:after {
+                    border-bottom: 2px solid black;
                 }
             }
 
             .password-visibilty-icon svg {
                 opacity: 0.8;
-                fill: v.$gold;
+                fill: black;
             }
 
             #auth-button-container {
@@ -160,8 +165,8 @@
             }
 
             #auth-button {
-                padding: 14px 20px;
-                font-size: 1.2rem;
+                padding: 5px 20px;
+                font-size: 1.4rem;
             }
 
             #auth-button:hover {

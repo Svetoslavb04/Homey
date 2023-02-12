@@ -170,7 +170,7 @@ const Register: FC = () => {
                                 fullWidth
                                 label="Email"
                                 variant="standard"
-                                color="secondary"
+                                color="primary"
                                 helperText={formData.email.error && "Invalid Email"}
                                 error={formData.email.error}
                                 value={formData.email.value}
@@ -185,7 +185,7 @@ const Register: FC = () => {
                                         fullWidth
                                         label="First Name"
                                         variant="standard"
-                                        color="secondary"
+                                        color="primary"
                                         helperText={formData.firstName.error && "First name should be at least 2 characters long!"}
                                         error={formData.firstName.error}
                                         value={formData.firstName.value}
@@ -198,7 +198,7 @@ const Register: FC = () => {
                                         fullWidth
                                         label="Last Name"
                                         variant="standard"
-                                        color="secondary"
+                                        color="primary"
                                         helperText={formData.lastName.error && "Last name should be at least 2 characters long!"}
                                         error={formData.lastName.error}
                                         value={formData.lastName.value}
@@ -213,7 +213,7 @@ const Register: FC = () => {
                                         fullWidth
                                         label="Agency Name"
                                         variant="standard"
-                                        color="secondary"
+                                        color="primary"
                                         helperText={formData.agencyName.error && "Agency name should be at least 2 characters long!"}
                                         error={formData.agencyName.error}
                                         value={formData.agencyName.value}
@@ -226,7 +226,7 @@ const Register: FC = () => {
                                         fullWidth
                                         label="City"
                                         variant="standard"
-                                        color="secondary"
+                                        color="primary"
                                         helperText={formData.city.error && "City should be at least 3 characters long!"}
                                         error={formData.city.error}
                                         value={formData.city.value}
@@ -239,7 +239,7 @@ const Register: FC = () => {
                                         fullWidth
                                         label="Address"
                                         variant="standard"
-                                        color="secondary"
+                                        color="primary"
                                         helperText={formData.address.error && "Address should be at least 3 characters long!"}
                                         error={formData.address.error}
                                         value={formData.address.value}
@@ -254,7 +254,7 @@ const Register: FC = () => {
                                 fullWidth
                                 label="Password"
                                 variant="standard"
-                                color="secondary"
+                                color="primary"
                                 helperText={formData.password.error && "Password should be at least 8 characters"}
                                 error={formData.password.error}
                                 value={formData.password.value}
@@ -280,7 +280,7 @@ const Register: FC = () => {
                                 fullWidth
                                 label="Repeat Password"
                                 variant="standard"
-                                color="secondary"
+                                color="primary"
                                 helperText={formData.rePassword.error && "Passwords do not match"}
                                 error={formData.rePassword.error}
                                 value={formData.rePassword.value}

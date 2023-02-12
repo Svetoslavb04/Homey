@@ -93,7 +93,7 @@ const Login: FC = () => {
                                 label="Email"
                                 helperText={email.error && "Invalid Email"}
                                 variant="standard"
-                                color="secondary"
+                                color="primary"
                                 error={email.error}
                                 value={email.value}
                                 onChange={(e) => { setEmail(p => ({ ...p, value: e.target.value })) }}
@@ -105,7 +105,7 @@ const Login: FC = () => {
                                 fullWidth
                                 label="Password"
                                 variant="standard"
-                                color="secondary"
+                                color="primary"
                                 helperText={password.error && "Password should be at least 8 characters"}
                                 error={password.error}
                                 value={password.value}

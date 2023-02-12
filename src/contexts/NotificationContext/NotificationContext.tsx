@@ -5,7 +5,7 @@ import { createContext, useState, useContext, ReactNode, FC } from "react";
 import { AlertColor } from "@mui/material/Alert";
 import Slide from "@mui/material/Slide";
 import TransitionGroup from "react-transition-group/TransitionGroup";
-import Notification from "../../Components/Core/Notification";
+import Notification from "../../Components/Notification";
 
 export interface INotification {
     type: AlertColor, message: string

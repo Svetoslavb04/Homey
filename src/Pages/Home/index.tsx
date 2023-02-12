@@ -10,7 +10,7 @@ import LandscapeIcon from '@mui/icons-material/Landscape';
 
 import HomeSlideShow from './Components/HomeSlideShow';
 import HomePropertyTypeCard, { HomePropertyTypeCardProps } from './Components/HomePropertyTypeCard';
-import PropertyCard, { IPropertyCard } from '../../Components/Core/PropertyCard';
+import PropertyCard, { IPropertyCard } from '../../Components/PropertyCard';
 
 const Home: FC = () => {
 

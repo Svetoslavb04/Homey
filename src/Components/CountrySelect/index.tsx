@@ -1,7 +1,7 @@
 import './CountrySelect.scss';
 import { FC } from 'react';
 
-import { countries } from '../../../assets/js/countries';
+import { countries } from '../../assets/js/countries';
 
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';

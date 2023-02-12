@@ -1,10 +1,12 @@
 import { createContext, FC, ReactNode, useContext, useEffect, useState } from 'react'
+import Fade from '@mui/material/Fade';
 
 import { Role } from '../enums/Role';
 
 import { IAgency } from '../interfaces/IAgency';
 import { IUser } from '../interfaces/IUser';
 import { me } from '../services/authService';
+import PageLoader from '../Components/Core/PageLoader';
 
 export const initialUser = {
     role: Role.guest,
@@ -27,6 +29,8 @@ type Props = {
 
 export const AuthProvider: FC<Props> = ({ children }) => {
 
+    const [isUserLoaded, setIsUserLoaded] = useState(false);
+
     const [user, setUser] = useState<IUser | IAgency | typeof initialUser>(initialUser)
 
     useEffect(() => {
@@ -37,14 +41,20 @@ export const AuthProvider: FC<Props> = ({ children }) => {
                 if (payload.status === 400) { setUser(initialUser) }
                 if (payload.status === 200) { setUser(payload.user) }
 
+                setTimeout(() => setIsUserLoaded(true), 500)
             })
-            .catch(err => console.log(err))
+            .catch(err => { console.log(err); setTimeout(() => setIsUserLoaded(true), 500) })
 
     }, [])
 
     return (
         <AuthContext.Provider value={{ user, setUser }}>
-            {children}
+            <Fade in={!isUserLoaded} unmountOnExit>
+                <div>
+                    <PageLoader />
+                </div>
+            </Fade>
+            {isUserLoaded && children}
         </AuthContext.Provider>
     )
 }

@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { useNotificationContext } from "../../../contexts/NotificationContext/NotificationContext";
+import { useNotificationContext } from "../../contexts/NotificationContext/NotificationContext";
 
 import IconButton from "@mui/material/IconButton";
 import Alert, { AlertColor } from "@mui/material/Alert";

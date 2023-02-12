@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import PropertyCardExtended from '../../../../../Components/Core/PropertyCardExtended';
+import PropertyCardExtended from '../../../../../Components/PropertyCardExtended';
 import { IProperty } from '../../../../../interfaces/IProperty';
 
 import './PropertiesSection.scss';

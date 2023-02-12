@@ -3,7 +3,7 @@ import './HomeSlideShow.scss'
 import { FC, useRef } from 'react'
 
 import { customEvents, Subscriber } from '../../../../utils/pubsub'
-import { usePubSupContext } from '../../../../contexts/PubSubContext'
+import { usePubSubContext } from '../../../../contexts/PubSubContext'
 
 import useEffectSkipOnMount from '../../../../hooks/useEffectSkipOnMount'
 
@@ -45,7 +45,7 @@ type Props = {
 
 const HomeSlideShow: FC<Props> = ({ slides = defaultSlides }) => {
 
-    const eventBus = usePubSupContext();
+    const eventBus = usePubSubContext();
 
     const splideRef = useRef<Splide>(null);
 

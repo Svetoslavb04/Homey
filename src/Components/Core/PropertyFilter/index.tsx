@@ -1,7 +1,7 @@
 import './PropertyFilter.scss';
 import { FC, useState, useEffect, HTMLAttributes, DetailedHTMLProps, useRef, FormEvent } from 'react'
 
-import CountrySelect from '../CountrySelect';
+import CountrySelect from '../../CountrySelect';
 
 import { citiesOfCountryURL } from '../../../assets/js/APIs';
 

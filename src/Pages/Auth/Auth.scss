@@ -28,6 +28,7 @@
         }
 
         #auth-form {
+            user-select: none;
             margin: 50px;
             padding: 20px;
             display: flex;
@@ -72,6 +73,7 @@
                 }
             }
             .register-mode {
+                cursor: pointer;
                 margin-top: 1px;
                 margin-bottom: 5%;
                 gap: 15%;
@@ -140,8 +142,8 @@
                 width: 70%;
                 color: v.$gold;
 
-                label,
-                input {
+                label:not(.Mui-error),
+                input:not([aria-invalid="true"]) {
                     color: v.$gold;
                 }
             }

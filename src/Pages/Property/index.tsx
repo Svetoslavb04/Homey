@@ -48,44 +48,59 @@ const Property: FC = ()=> {
         SetImageToOpen(oldValue => oldValue = '');
     }
     
+    const forwardImageOpened = (url: string) =>{
+        let imageIndex = fetchedProperty.images.findIndex(u=> u==url);
+
+        imageIndex+=1;
+        if (imageIndex>3) {
+            imageIndex = 0;
+        }
+
+        SetImageToOpen(fetchedProperty.images[imageIndex]);
+    }
+
+     const backImageOpened = (url: string) =>{
+        let imageIndex = fetchedProperty.images.findIndex(u=> u==url);
+
+        imageIndex-=1;
+        if (imageIndex<0) {
+            imageIndex = 3;
+        }
+
+        SetImageToOpen(fetchedProperty.images[imageIndex]);
+    }
+
     const IconifyiedExtras = [ {
-        label: 'Wifi',
+        name: 'Wifi',
         Icon: WifiIcon,
-        name: 'wifi'
       }, {
-        label: 'Air Conditioning',
+        name: 'Air Conditioning',
         Icon: AcUnitIcon,
-        name: 'airConditioning'
       }, {
-        label: 'Fire Place',
+        name: 'Fire Place',
         Icon: FireplaceIcon,
-        name: 'fireplace'
       }, {
-        label: 'Balcony',
+        name: 'Balcony',
         Icon: BalconyIcon,
-        name: 'balcony'
       }, {
-        label: 'Fitness',
+        name: 'Fitness',
         Icon: FitnessCenterIcon,
-        name: 'fitness'
       }, {
-        label: 'Swimming Pool',
+        name: 'Swimming Pool',
         Icon: PoolIcon,
-        name: 'swimmingPool'
       }, {
-        label: 'Parking',
+        name: 'Parking',
         Icon: LocalParkingIcon,
-        name: 'parking'
       }];
 
 
       const ext = [];
     for (const extra of fetchedProperty.extras) {
-        const claim = IconifyiedExtras.find(c => c.label === extra)
+        const claim = IconifyiedExtras.find(c => c.name === extra)
         if (claim) {
             console.log(claim);
             
-            ext.push(`${<claim.Icon/>} ${claim.label}`);
+            ext.push(`${<claim.Icon/>} ${claim.name}`);
         }
         
     }
@@ -127,10 +142,10 @@ const Property: FC = ()=> {
         {imageToOpen !== '' &&    
             <div id='selected-image'>
                 <div id='backdrop' onClick={()=> closeImageHandler()}></div>
-                <ArrowBack id='arrow-back' className='arrow' />
+                <ArrowBack id='arrow-back' className='arrow' onClick = {()=> backImageOpened(imageToOpen)}/>
                 <img src= {imageToOpen} />
                 <CloseIcon  className="btn-close" onClick={() => closeImageHandler()}/>
-                <ArrowForward className='arrow' id='arrow-forward'/>
+                <ArrowForward className='arrow' id='arrow-forward' onClick = {()=> forwardImageOpened(imageToOpen)}/>
             </div>
         }
          

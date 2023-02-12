@@ -1,8 +1,8 @@
-@use "../assets/scss/variables.scss" as v;
+@use "src/assets/scss/variables.scss" as v;
 
 #image-background {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-        url("../../public/assets/images/modern\ house_9.jpeg");
+        url("../../../public/assets/images/modern\ house_9.jpeg");
     background-size: cover;
 
     width: 100%;

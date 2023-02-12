@@ -1,6 +1,6 @@
-import { Routes, Route, createBrowserRouter } from 'react-router-dom';
-import Login from '../Pages/Login';
-import Register from '../Pages/Register';
+import { Routes, Route } from 'react-router-dom';
+import Login from '../Pages/Auth/Login';
+import Register from '../Pages/Auth/Register';
 import Home from '../Pages/Home';
 import PropertiesListing from '../Pages/Property/Listing';
 

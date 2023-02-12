@@ -1,7 +1,5 @@
 import Pagination from '@mui/material/Pagination';
 import { useState } from 'react';
-import { PropertyStatus } from '../../../enums/PropertyStatus';
-import { PropertyType } from '../../../enums/PropertyType';
 import { IProperty } from '../../../interfaces/IProperty';
 
 import IPropertyFilter from '../../../interfaces/IPropertyFilter';

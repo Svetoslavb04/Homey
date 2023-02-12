@@ -140,8 +140,8 @@
                 width: 70%;
                 color: v.$gold;
 
-                label,
-                input {
+                label:not(.Mui-error),
+                input:not([aria-invalid="true"]) {
                     color: v.$gold;
                 }
             }

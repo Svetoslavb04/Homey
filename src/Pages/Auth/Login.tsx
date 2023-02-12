@@ -1,9 +1,8 @@
 import './Auth.scss';
 
 import { FocusEvent, FC, FormEvent, useState } from 'react';
-import { Navigate, NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
-import { homeyAPI } from '../../assets/js/APIs';
 import { useAuthContext } from '../../contexts/AuthContext';
 
 import Visibility from '@mui/icons-material/Visibility';
@@ -14,11 +13,13 @@ import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import InputAdornment from '@mui/material/InputAdornment';
 import { login } from '../../services/authService';
+import { useNotificationContext } from '../../contexts/NotificationContext/NotificationContext';
 
 const Login: FC = () => {
 
     const navigate = useNavigate();
 
+    const { popNotification } = useNotificationContext();
     const { setUser } = useAuthContext()
 
     const [showPassword, setShowPassword] = useState(false);
@@ -62,11 +63,15 @@ const Login: FC = () => {
             .then(payload => {
 
                 if (payload._id && payload.role) {
+
                     setUser(payload)
+                    popNotification({ type: 'success', message: 'Succesfully logged in!' })
                     navigate('/', { replace: true })
+                    
+                } else if (payload.status != 200) {
+                    popNotification({ type: 'error', message: 'Invalid email or password!' })
                 }
 
-                //open notification
             })
             .catch(err => console.log(err))
 

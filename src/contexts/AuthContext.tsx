@@ -15,12 +15,12 @@ export const initialUser = {
 
 type AuthContextValue = {
     user: IUser | IAgency | typeof initialUser,
-    setUser: (user: IUser | IAgency | typeof initialUser) => void
+    updateUser: () => void
 }
 
 export const AuthContext = createContext<AuthContextValue>({
     user: initialUser,
-    setUser() { }
+    updateUser() { }
 });
 
 type Props = {
@@ -35,6 +35,11 @@ export const AuthProvider: FC<Props> = ({ children }) => {
 
     useEffect(() => {
 
+        updateUser()
+
+    }, [])
+
+    function updateUser() {
         me()
             .then(payload => {
 
@@ -45,10 +50,10 @@ export const AuthProvider: FC<Props> = ({ children }) => {
             })
             .catch(err => { console.log(err); setTimeout(() => setIsUserLoaded(true), 500) })
 
-    }, [])
+    }
 
     return (
-        <AuthContext.Provider value={{ user, setUser }}>
+        <AuthContext.Provider value={{ user, updateUser }}>
             <Fade in={!isUserLoaded} unmountOnExit>
                 <div>
                     <PageLoader />

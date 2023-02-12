@@ -1,9 +1,9 @@
 import './Auth.scss';
 import { FC, FormEvent, useState } from 'react';
 
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
-import { ActionTypes, FormDataMode, useRegisterFormData } from './useRegisterFormData';
+import { ActionTypes, AgencyData, CommonData, FormDataMode, UserData, useRegisterFormData } from './useRegisterFormData';
 
 import PersonIcon from '@mui/icons-material/Person';
 import GroupsIcon from '@mui/icons-material/Groups';
@@ -14,8 +14,18 @@ import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import InputAdornment from '@mui/material/InputAdornment';
+import { useNotificationContext } from '../../contexts/NotificationContext/NotificationContext';
+import { registerAgency, registerUser } from '../../services/authService';
+import { IUserData } from '../../interfaces/IUserData';
+import { IAgencyData } from '../../interfaces/IAgencyData';
+import { useAuthContext } from '../../contexts/AuthContext';
 
 const Register: FC = () => {
+
+    const navigate = useNavigate();
+
+    const { updateUser } = useAuthContext();
+    const { popNotification } = useNotificationContext();
 
     const [showPassword, setShowPassword] = useState(false);
     const [showRePassword, setShowRePassword] = useState(false);
@@ -27,6 +37,101 @@ const Register: FC = () => {
 
     const handleFormSubmit = (e: FormEvent) => {
         e.preventDefault();
+
+        const info = {
+            email: formData.email,
+            password: formData.password,
+            rePassword: formData.rePassword
+        }
+
+        if (validateValues(info)) { return }
+
+        switch (formData.mode) {
+            case FormDataMode.user:
+                handleUserRegister()
+                break;
+            case FormDataMode.agency:
+                handleAgencyRegister()
+                break;
+            default:
+                break;
+        }
+
+        async function handleUserRegister() {
+
+            const userInfo = {
+                ...info,
+                firstName: formData.firstName,
+                lastName: formData.lastName
+            }
+
+            if (validateValues(userInfo)) { return }
+
+            const normalizedUserInfo = normalizeData(userInfo) as IUserData;
+
+            try {
+                const res = await registerUser(normalizedUserInfo)
+
+                if (res.status !== 200) { throw res.message }
+                
+                updateUser()
+                popNotification({ type: 'success', message: 'Succesful registration!' })
+                navigate('/', { replace: true });
+
+            } catch (error: any) { popNotification({ type: 'error', message: error }) }
+        }
+
+        async function handleAgencyRegister() {
+
+            const agencyInfo = {
+                ...info,
+                agencyName: formData.agencyName,
+                city: formData.city,
+                address: formData.address,
+            }
+
+            if (validateValues(agencyInfo)) { return }
+
+            const normalizedAgencyInfo = normalizeData(agencyInfo) as IAgencyData;
+
+            try {
+                const res = await registerAgency(normalizedAgencyInfo)
+
+                if (res.status !== 200) { throw res.message }
+
+                updateUser()
+                popNotification({ type: 'success', message: 'Succesful registration!' })
+                navigate('/', { replace: true });
+
+            } catch (error: any) { popNotification({ type: 'error', message: error }) }
+        }
+
+        function validateValues(object: AgencyData | UserData | CommonData) {
+            let flag = false;
+
+            if (Object.values(object).some(v => v.error)) {
+                popNotification({ type: 'error', message: 'All fields must be valid!' })
+                flag = true;
+            } else if (Object.values(object).some(v => v.value === '')) {
+                popNotification({ type: 'error', message: 'All fields are required!' })
+                flag = true;
+            }
+
+            return flag
+        }
+
+        function normalizeData(data: AgencyData | UserData): IUserData | IAgencyData {
+
+            const keys = Object.keys(data);
+
+            let newData: any = {};
+
+            keys.forEach((k) => {
+                newData[k as keyof (AgencyData | UserData)] = data[k as keyof (AgencyData | UserData)].value
+            })
+
+            return newData
+        }
     }
 
     return (

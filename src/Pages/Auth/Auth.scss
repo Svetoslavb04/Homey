@@ -28,6 +28,7 @@
         }
 
         #auth-form {
+            user-select: none;
             margin: 50px;
             padding: 20px;
             display: flex;
@@ -72,6 +73,7 @@
                 }
             }
             .register-mode {
+                cursor: pointer;
                 margin-top: 1px;
                 margin-bottom: 5%;
                 gap: 15%;

@@ -20,7 +20,7 @@ const Login: FC = () => {
     const navigate = useNavigate();
 
     const { popNotification } = useNotificationContext();
-    const { setUser } = useAuthContext()
+    const { updateUser } = useAuthContext()
 
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -64,7 +64,7 @@ const Login: FC = () => {
 
                 if (payload._id && payload.role) {
 
-                    setUser(payload)
+                    updateUser()
                     popNotification({ type: 'success', message: 'Succesfully logged in!' })
                     navigate('/', { replace: true })
                     

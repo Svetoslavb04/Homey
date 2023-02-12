@@ -5,30 +5,34 @@ export enum FormDataMode {
     'agency' = 'agency'
 }
 
-type FormData = {
-    mode: FormDataMode
+export type CommonData = {
     email: { error: boolean, value: string },
     password: { error: boolean, value: string },
     rePassword: { error: boolean, value: string }
 }
 
-type UserFormData = FormData & {
+export type FormData = { mode: FormDataMode }
+
+export type UserData = CommonData & {
     firstName: { error: boolean, value: string },
     lastName: { error: boolean, value: string },
 }
+export type UserFormData = FormData & UserData
 
-type AgencyFormData = FormData & {
+export type AgencyData = CommonData & {
     agencyName: { error: boolean, value: string },
     city: { error: boolean, value: string },
     address: { error: boolean, value: string },
 }
 
-type Action = {
+export type AgencyFormData = FormData & AgencyData
+
+export type Action = {
     type: string,
     payload: any
 }
 
-const initialState: UserFormData & AgencyFormData = {
+export const initialState: UserFormData & AgencyFormData = {
     mode: FormDataMode.user,
     email: { error: false, value: '' },
     firstName: { error: false, value: '' },

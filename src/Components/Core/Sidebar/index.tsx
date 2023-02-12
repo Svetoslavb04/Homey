@@ -7,8 +7,11 @@ import { Role } from '../../../enums/Role';
 
 import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
+
 import { usePubSubContext } from '../../../contexts/PubSubContext';
 import { customEvents } from '../../../utils/pubsub';
+
+import { useAuthContext } from '../../../contexts/AuthContext';
 
 interface INavLink {
     to: string,
@@ -19,6 +22,7 @@ interface INavLink {
 const Sidebar: FC = () => {
 
     const eventBus = usePubSubContext();
+    const { user } = useAuthContext();
 
     const [isOpened, setIsOpened] = useState<boolean>(true);
 
@@ -30,7 +34,7 @@ const Sidebar: FC = () => {
 
     }, [isOpened, eventBus])
 
-    const role: Role = Role.guest //get from somewhere
+    const role: Role = user.role//get from somewhere
 
     const navLinks: INavLink[] = [
         { to: '/', text: 'Home', visibleTo: [Role.guest, Role.user, Role.agency] },

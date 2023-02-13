@@ -26,6 +26,16 @@ export const getFilteredData = (filter: IPropertyFilter) =>
             return res.json()
         })
 
+export const getById = (_id: string) =>
+    fetch(`${homeyAPI.properties.getById}/${_id}`)
+        .then(res => {
+            if (!res.ok) {
+                throw res.json()
+            }
+
+            return res.json()
+        })
+
 export const getMetaData = () =>
     fetch(`${homeyAPI.properties.getMetaData}?pageSize=6`)
         .then(res => {

@@ -1,5 +1,5 @@
 import './Home.scss';
-import { FC, MouseEvent } from 'react';
+import { FC, MouseEvent, useEffect, useState } from 'react';
 
 import { useNavigate } from "react-router-dom";
 
@@ -12,9 +12,38 @@ import HomeSlideShow from './Components/HomeSlideShow';
 import HomePropertyTypeCard, { HomePropertyTypeCardProps } from './Components/HomePropertyTypeCard';
 import PropertyCard, { IPropertyCard } from '../../Components/PropertyCard';
 
+import { getTop } from '../../services/propertyService';
+
+import { homeyAPI } from '../../assets/js/APIs';
+
 const Home: FC = () => {
 
     const navigate = useNavigate();
+
+    const [topProperties, setTopProperties] = useState<IPropertyCard[]>([]);
+
+    useEffect(() => {
+
+        getTop(6)
+            .then(payload => {
+
+                const topProperties: IPropertyCard[] = payload.properties.map((p: any) => {
+                    const propertyCard: IPropertyCard = {
+                        id: p._id,
+                        name: p.name,
+                        town: p.city,
+                        image: {
+                            src: `${homeyAPI.images.baseURL}/${p.images[0]}`,
+                            alt: 'property'
+                        }
+                    }
+
+                    return propertyCard
+                })
+
+                setTopProperties(topProperties)
+            })
+    }, [])
 
     const propertyCards: HomePropertyTypeCardProps[] = [
         {
@@ -34,59 +63,6 @@ const Home: FC = () => {
             type: 'Landfields'
         }
     ]
-    
-    //Fetch top properties
-    const topProperties: IPropertyCard[] = [
-        {
-            id: '1',
-            image: {
-                src: 'assets/images/modern_house_1.jpg',
-                alt: 'house'
-            },
-            town: 'Sofia',
-            name: 'Modern House'
-        }, {
-            id: '2',
-            image: {
-                src: 'assets/images/modern_house_2.jpg',
-                alt: 'house'
-            },
-            town: 'Sofia',
-            name: 'Modern House'
-        }, {
-            id: '3',
-            image: {
-                src: 'assets/images/modern_house_3.jpg',
-                alt: 'house'
-            },
-            town: 'Sofia',
-            name: 'Modern House'
-        }, {
-            id: '4',
-            image: {
-                src: 'assets/images/modern_house_4.jpg',
-                alt: 'house'
-            },
-            town: 'Sofia',
-            name: 'Modern House'
-        }, {
-            id: '5',
-            image: {
-                src: 'assets/images/modern_house_7.jpg',
-                alt: 'house'
-            },
-            town: 'Sofia',
-            name: 'Modern House'
-        }, {
-            id: '6',
-            image: {
-                src: 'assets/images/modern_house_8.jpg',
-                alt: 'house'
-            },
-            town: 'Sofia',
-            name: 'Modern House'
-        }
-    ]
 
     const handleTopPropertyClick = (e: MouseEvent<HTMLDivElement>, id: string) => {
 
@@ -99,20 +75,20 @@ const Home: FC = () => {
             <HomeSlideShow />
             <div id='home-property-cards'>
                 {
-                    propertyCards.map(pc =>
-                        <HomePropertyTypeCard key={pc.type} Icon={pc.Icon} type={pc.type} />
+                    propertyCards.map((pc, i) =>
+                        <HomePropertyTypeCard key={pc.type + i} Icon={pc.Icon} type={pc.type} />
                     )
                 }
             </div>
             <div id="home-top-properties">
                 <h2>Our top picks</h2>
                 <div id='home-top-properties-container'>
-                    <div>
+                    <div id='home-top-properties-left'>
                         {
                             topProperties.slice(0, 3)
-                                .map(prop =>
+                                .map((prop, i) =>
                                     <PropertyCard
-                                        key={`${prop.name + prop.town + prop.image.src}`}
+                                        key={`${prop.name + prop.town + prop.image.src + i}`}
                                         id={prop.id}
                                         image={prop.image}
                                         town={prop.town}
@@ -122,12 +98,12 @@ const Home: FC = () => {
                                 )
                         }
                     </div>
-                    <div>
+                    <div id='home-top-properties-right'>
                         {
                             topProperties.slice(3)
-                                .map(prop =>
+                                .map((prop, i) =>
                                     <PropertyCard
-                                        key={`${prop.name + prop.town + prop.image.src}`}
+                                        key={`${prop.name + prop.town + prop.image.src + i}`}
                                         id={prop.id}
                                         image={prop.image}
                                         town={prop.town}

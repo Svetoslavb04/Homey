@@ -25,24 +25,6 @@ const defaultInitialPropertyFilter: IPropertyFilter = {
     claims: []
 }
 
-const defaultMetaData: IPropertiesMeta = {
-    count: 0,
-    maxBathrooms: 0,
-    maxBedrooms: 0,
-    maxGarages: 0,
-    maxPrice: 0,
-    maxSize: 0,
-    maxYearBuilt: 0,
-    minBathrooms: 0,
-    minBedrooms: 0,
-    minGarages: 0,
-    minPrice: 0,
-    minSize: 0,
-    minYearBuilt: 0,
-    pages: 0,
-    types: []
-}
-
 const FilterSection: FC<FilterSectionProps> = ({ metaData, setFilter }) => {
 
     const handleFilterChange = (newFilter: IPropertyFilter) => { setFilter(newFilter) }

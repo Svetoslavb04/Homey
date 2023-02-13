@@ -56,8 +56,6 @@ export type PropertyFilterProps = {
 const PropertyFilter: FC<PropertyFilterProps> =
   ({ className, metaData, initialPropertyFilter, handleFilterChange, ...rest }) => {
 
-    const isInitial = useRef<number>(0);
-
     const addNewcheckBoxItemRef = useRef<HTMLDivElement | null>(null);
 
     const [advancedFilterOpened, setAdvancedFilterOpened] = useState<boolean>(false);

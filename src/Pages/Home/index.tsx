@@ -15,12 +15,14 @@ import PropertyCard, { IPropertyCard } from '../../Components/PropertyCard';
 import { getTop } from '../../services/propertyService';
 
 import { homeyAPI } from '../../assets/js/APIs';
+import LocalLoader from '../../Components/LocalLoader';
 
 const Home: FC = () => {
 
     const navigate = useNavigate();
 
-    const [topProperties, setTopProperties] = useState<IPropertyCard[]>([]);
+    const [propertiesLoaded, setPropertiesLoaded] = useState<boolean>(false);
+    const [topProperties, setTopProperties] = useState<IPropertyCard[] | null>(null);
 
     useEffect(() => {
 
@@ -45,6 +47,10 @@ const Home: FC = () => {
             })
     }, [])
 
+    useEffect(() => {
+        if (!propertiesLoaded && topProperties) { setPropertiesLoaded(true) }
+    }, [topProperties, propertiesLoaded])
+
     const propertyCards: HomePropertyTypeCardProps[] = [
         {
             Icon: HouseIcon,
@@ -64,11 +70,7 @@ const Home: FC = () => {
         }
     ]
 
-    const handleTopPropertyClick = (e: MouseEvent<HTMLDivElement>, id: string) => {
-
-        navigate(`/properties/${id}`);
-
-    }
+    const handleTopPropertyClick = (e: MouseEvent<HTMLDivElement>, id: string) => { navigate(`/properties/${id}`); }
 
     return (
         <div id='home-container'>
@@ -83,9 +85,10 @@ const Home: FC = () => {
             <div id="home-top-properties">
                 <h2>Our top picks</h2>
                 <div id='home-top-properties-container'>
+                    {!propertiesLoaded && <LocalLoader />}
                     <div id='home-top-properties-left'>
                         {
-                            topProperties.slice(0, 3)
+                            topProperties?.slice(0, 3)
                                 .map((prop, i) =>
                                     <PropertyCard
                                         key={`${prop.name + prop.town + prop.image.src + i}`}
@@ -100,7 +103,7 @@ const Home: FC = () => {
                     </div>
                     <div id='home-top-properties-right'>
                         {
-                            topProperties.slice(3)
+                            topProperties?.slice(3)
                                 .map((prop, i) =>
                                     <PropertyCard
                                         key={`${prop.name + prop.town + prop.image.src + i}`}

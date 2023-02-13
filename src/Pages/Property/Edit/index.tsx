@@ -1,10 +1,8 @@
 import './Edit.scss';
 import { FC, useEffect, useState } from 'react';
-import { NavLink } from "react-router-dom";
 
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import { countries } from '../../../assets/js/countries';
 import { citiesOfCountryURL } from '../../../assets/js/APIs';
@@ -61,9 +59,9 @@ const EditProperty: FC = () => {
     return (
 
         <div id='image-background'>
-            <div id='create-container'>
-                <div className='add-form-wrapper'>
-                    <form id='add-form'>
+            <div id='edit-container'>
+                <div className='edit-form-wrapper'>
+                    <form id='edit-form'>
                         <h1>Edit page</h1>  
                         <div id='info-container'>
 
@@ -129,7 +127,7 @@ const EditProperty: FC = () => {
                                     />
                                 </div>
                             </div>
-
+                              
 
                             <div id='right-size'>
                                 
@@ -186,23 +184,27 @@ const EditProperty: FC = () => {
                                 <div id="number-bedrooms" className='inputField'>
                                     <Garages/>
                                 </div>
-                                <div id="contact-number" className='inputField'>
-                                    <TextField
-                                        fullWidth
-                                        label="Contact number"
-                                        name='contactNumber'
-                                        variant="standard"
-                                        color="secondary"
-                                        error={false} 
-                                        InputProps={{
-                                            endAdornment: <InputAdornment position="end">📞</InputAdornment>,
-                                           }}
+
+                                <div className='content-container'>
+                                    <TextField className='inputField'
+                                        id="standard-multiline-static"
+                                        label="Descripton"
+                                        multiline
+                                        rows={4}
+                                        placeholder=". . ."
+                                        variant="outlined"
                                     />
                                 </div>
                             </div>
+                                              
                         </div>
-                        
 
+                        <div id='images'>
+                            <input type="file" className="image" accept="image/*" required/>
+                            <input type="file" className="image" accept="image/*" required/>
+                            <input type="file" className="image" accept="image/*" required/>
+                            <input type="file" className="image" accept="image/*" required/>
+                        </div>
                         <div id='add-button-container'>
                             <Button fullWidth variant="contained" size='large' id='add-button' type='submit'>Edit</Button>
                         </div>

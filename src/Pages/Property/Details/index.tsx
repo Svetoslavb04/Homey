@@ -37,7 +37,7 @@ const Property: FC = () => {
 
     const [imageToOpen, setImageToOpen] = useState('');
     const [contactButtonClicked, setContactButtonClicked] = useState<boolean>(false);
-
+    
     if (!property) {
         return (
             <PageLoader />
@@ -102,11 +102,8 @@ const Property: FC = () => {
             claims.push({ Icon: claim.Icon, name: claim.name });
         }
     };
-    console.log(property);
 
     return (
-
-
         <div id='property-main'>
             <div id='top-image' style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${property.images[0]})` }}>
                 <div>

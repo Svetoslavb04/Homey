@@ -5,11 +5,13 @@ import { NavLink } from "react-router-dom";
 
 import { Role } from '../../../enums/Role';
 
-import HouseSidingIcon from '@mui/icons-material/HouseSiding';
 import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
-import { usePubSupContext } from '../../../contexts/PubSubContext';
+
+import { usePubSubContext } from '../../../contexts/PubSubContext';
 import { customEvents } from '../../../utils/pubsub';
+
+import { useAuthContext } from '../../../contexts/AuthContext';
 
 interface INavLink {
     to: string,
@@ -19,7 +21,8 @@ interface INavLink {
 
 const Sidebar: FC = () => {
 
-    const eventBus = usePubSupContext();
+    const eventBus = usePubSubContext();
+    const { user } = useAuthContext();
 
     const [isOpened, setIsOpened] = useState<boolean>(true);
 
@@ -31,25 +34,29 @@ const Sidebar: FC = () => {
 
     }, [isOpened, eventBus])
 
-    const role: Role = Role.agency //get from somewhere
+    const role: Role = user.role//get from somewhere
 
     const navLinks: INavLink[] = [
-        { to: '/', text: 'Home', visibleTo: [Role.guest, Role.buyer, Role.agency] },
-        { to: '/profile', text: 'My Profile', visibleTo: [Role.buyer, Role.agency] },
-        { to: '/properties', text: 'Properties', visibleTo: [Role.guest, Role.buyer, Role.agency] },
+        { to: '/', text: 'Home', visibleTo: [Role.guest, Role.user, Role.agency] },
+        { to: '/profile', text: 'My Profile', visibleTo: [Role.user, Role.agency] },
+        { to: '/properties', text: 'Properties', visibleTo: [Role.guest, Role.user, Role.agency] },
         { to: '/properties/add', text: 'Add Property', visibleTo: [Role.agency] },
-        { to: '/agencies', text: 'Agencies', visibleTo: [Role.guest, Role.buyer, Role.agency] },
+        { to: '/agencies', text: 'Agencies', visibleTo: [Role.guest, Role.user, Role.agency] },
         { to: '/login', text: 'Login', visibleTo: [Role.guest] },
         { to: '/register', text: 'Register', visibleTo: [Role.guest] },
-        { to: '/logout', text: 'Logout', visibleTo: [Role.buyer, Role.agency] },
+        { to: '/logout', text: 'Logout', visibleTo: [Role.user, Role.agency] },
     ]
         .filter(link => link.visibleTo.includes(role))
+
+    useEffect(
+        () => { document.body.toggleAttribute('sidebar-opened', isOpened) }
+        , [isOpened]
+    );
 
     return (
         <div id='sidebar' className={`${!isOpened ? 'hidden' : ''}`}>
             <div id="sidebar-logo">
-                <HouseSidingIcon fontSize='large' />
-                <h2 id='sidebar-logo-text'>Homey</h2>
+                <img src="assets/images/logo.png" alt="" />
             </div>
             <nav>
                 <ul>

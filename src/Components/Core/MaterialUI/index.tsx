@@ -12,12 +12,9 @@ declare module '@mui/material/styles' {
 
     // allow custom values to the theme
     interface Theme {
-
     }
 
-    // allow custom values to the theme
     interface ThemeOptions {
-
     }
 
 }
@@ -29,10 +26,14 @@ const MaterialUIProvider: FC<Props> = ({ children }) => {
         palette: {
             primary: {
                 main: '#282828'
+            },
+            secondary: {
+                main: '#c5aa7e'
             }
         },
         typography: {
-            fontFamily: 'Khand'
+            fontFamily: 'Khand, Arial',
+            
         }
     })
 

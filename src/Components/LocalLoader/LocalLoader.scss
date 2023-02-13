@@ -1,0 +1,26 @@
+@use "src/assets/scss/variables.scss" as v;
+
+.local-loader {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    height: 100%;
+    width: 100%;
+
+    z-index: 10001;
+
+    background-color: v.$background-color;
+
+    .local-loader-logo-wrapper {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.local-loader-transperant {
+    background-color: unset;
+}

@@ -1,0 +1,95 @@
+@use "src/assets/scss/variables.scss" as v;
+
+.property-card-extended {
+    position: relative;
+    transition: all 0.5s;
+
+    .property-card-extended-description-block {
+        position: absolute;
+        max-width: 60%;
+        padding: 10px 10px 10px 5px;
+        background-color: v.$background-color;
+        border: 1px solid v.$background-color-lighter;
+
+        * {
+            user-select: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .property-card-extended-heading {
+            color: v.$gold;
+            font-size: 1.6rem;
+            font-weight: 300;
+            margin: 0;
+        }
+
+        .property-card-extended-text {
+            color: #fff;
+            font-size: 1.3rem;
+            margin: 0;
+        }
+
+        @media screen and (max-width: 780px) {
+            padding: 10px 25px 10px 10px;
+            max-width: 75%;
+        }
+    }
+
+    .property-card-extended-top-right {
+        top: 0;
+        right: 0;
+    }
+
+    .property-card-extended-top-left {
+        top: 0;
+        left: 0;
+    }
+
+    .property-card-extended-bottom-left {
+        bottom: 0;
+        left: 0;
+    }
+
+    .property-card-extended-bottom-right {
+        bottom: 0;
+        right: 0;
+    }
+
+    .property-card-extended-image-wrapper {
+        width: 85%;
+        margin: auto;
+
+        padding-top: 20px;
+        padding-bottom: 30px;
+        transition: all 0.5s;
+
+        img {
+            cursor: pointer;
+            max-height: 80vh;
+            height: auto;
+            max-width: 100%;
+            width: 100%;
+
+            object-fit: cover;
+
+            transition: all 0.5s;
+
+            &:hover {
+                transform: scale(0.9);
+            }
+
+            @media screen and (max-width: 780px) {
+                max-height: 90vh;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1080px) {
+    body:not([sidebar-hidden]) .property-card-extended-image-wrapper {
+        padding-top: 50px;
+        padding-bottom: 60px;
+    }
+}

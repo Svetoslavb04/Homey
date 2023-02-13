@@ -28,7 +28,7 @@ const CountrySelect: FC<CountrySelectProps> = ({ className, label, value, onChan
                 {
                     <MenuItem
                         key={'any'}
-                        value={'any'}
+                        value={'Any'}
                     >
                         <div className='country-select-item'>
                             <span className='country-select-name'>Any</span>

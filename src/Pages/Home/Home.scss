@@ -39,6 +39,7 @@
             #home-top-properties-left,
             #home-top-properties-right {
                 flex-basis: 45%;
+                flex-shrink: 0;
             }
 
             #home-top-properties-left {

@@ -37,6 +37,7 @@ import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOu
 import SvgIcon from '@mui/material/SvgIcon';
 import Input from '@mui/material/Input';
 import { PropertyStatus } from '../../../enums/PropertyStatus';
+import IPropertiesMeta from '../../../interfaces/IPropertiesMeta';
 
 const AdvancedFilterCheckBox: FC<{ label: string, Icon: typeof SvgIcon, name: string }> = ({ label, Icon, name }) =>
   <div className='property-filter-advanced-checkbox-item'>
@@ -47,365 +48,357 @@ const AdvancedFilterCheckBox: FC<{ label: string, Icon: typeof SvgIcon, name: st
   </div>
 
 export type PropertyFilterProps = {
-  handleFilterChange: (newFilter: IPropertyFilter) => void
+  handleFilterChange: (newFilter: IPropertyFilter) => void,
+  metaData: IPropertiesMeta
+  initialPropertyFilter: IPropertyFilter,
 } & DetailedHTMLProps<HTMLAttributes<HTMLFormElement>, HTMLFormElement>
 
-const PropertyFilter: FC<PropertyFilterProps> = ({ className, handleFilterChange, ...rest }) => {
+const PropertyFilter: FC<PropertyFilterProps> =
+  ({ className, metaData, initialPropertyFilter, handleFilterChange, ...rest }) => {
 
-  const initialPropertyFilter: IPropertyFilter = {
-    country: 'BG',
-    type: 'Any',
-    priceRange: [0, 100000],
-    status: 'Any',
-    sizeRange: [0, 500],
-    city: '',
-    bedrooms: 'Any',
-    bathrooms: 'Any',
-    garages: 'Any',
-    claims: []
-  }
+    const isInitial = useRef<number>(0);
 
-  const addNewcheckBoxItemRef = useRef<HTMLDivElement | null>(null);
+    const addNewcheckBoxItemRef = useRef<HTMLDivElement | null>(null);
 
-  const [advancedFilterOpened, setAdvancedFilterOpened] = useState<boolean>(false);
+    const [advancedFilterOpened, setAdvancedFilterOpened] = useState<boolean>(false);
 
-  const [selectedCountry, setSelectedCountry] = useState<string>(initialPropertyFilter.country || 'Bulgaria');
-  const [availableCities, setAvailableCities] = useState<string[]>([]);
+    const [selectedCountry, setSelectedCountry] = useState<string>(initialPropertyFilter.country || 'Bulgaria');
+    const [availableCities, setAvailableCities] = useState<string[]>([]);
 
-  const [priceRange, setPriceRange] = useState<number[]>(initialPropertyFilter.priceRange);
-  const [sizeRange, setSizeRange] = useState<number[]>(initialPropertyFilter.sizeRange || [0, 0]);
+    const [priceRange, setPriceRange] = useState<number[]>([metaData.minPrice, metaData.maxPrice]);
+    const [sizeRange, setSizeRange] = useState<number[]>([metaData.minSize, metaData.maxSize]);
 
-  const [customCheckBoxes, setCustomCheckBoxes] = useState<number>(0);
+    const [customCheckBoxes, setCustomCheckBoxes] = useState<number>(0);
 
-  const checkBoxes = [
-    {
-      label: 'Wifi',
-      Icon: WifiIcon,
-      name: 'wifi'
-    }, {
-      label: 'Air Conditioning',
-      Icon: AcUnitIcon,
-      name: 'airConditioning'
-    }, {
-      label: 'Fire Place',
-      Icon: FireplaceIcon,
-      name: 'fireplace'
-    }, {
-      label: 'Balcony',
-      Icon: BalconyIcon,
-      name: 'balcony'
-    }, {
-      label: 'Fitness',
-      Icon: FitnessCenterIcon,
-      name: 'fitness'
-    }, {
-      label: 'Swimming Pool',
-      Icon: PoolIcon,
-      name: 'swimmingPool'
-    }, {
-      label: 'Parking',
-      Icon: LocalParkingIcon,
-      name: 'parking'
-    }
-  ];
+    const checkBoxes = [
+      {
+        label: 'Wifi',
+        Icon: WifiIcon,
+        name: 'wifi'
+      }, {
+        label: 'Air Conditioning',
+        Icon: AcUnitIcon,
+        name: 'airConditioning'
+      }, {
+        label: 'Fire Place',
+        Icon: FireplaceIcon,
+        name: 'fireplace'
+      }, {
+        label: 'Balcony',
+        Icon: BalconyIcon,
+        name: 'balcony'
+      }, {
+        label: 'Fitness',
+        Icon: FitnessCenterIcon,
+        name: 'fitness'
+      }, {
+        label: 'Swimming Pool',
+        Icon: PoolIcon,
+        name: 'swimmingPool'
+      }, {
+        label: 'Parking',
+        Icon: LocalParkingIcon,
+        name: 'parking'
+      }
+    ];
 
-  useEffect(() => {
+    useEffect(() => {
 
-    if (!countries.some(c => c.code === selectedCountry)) { return setAvailableCities([]) }
+      if (!countries.some(c => c.code === selectedCountry)) { return setAvailableCities([]) }
 
-    fetch(citiesOfCountryURL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ country: countries.filter(c => c.code === selectedCountry)[0].name })
-    })
-      .then(res => res.json())
-      .then(payload => setAvailableCities(payload.data))
-      .catch(err => console.log(err))
+      fetch(citiesOfCountryURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ country: countries.filter(c => c.code === selectedCountry)[0].name })
+      })
+        .then(res => res.json())
+        .then(payload => setAvailableCities(payload.data))
+        .catch(err => console.log(err))
 
-  }, [selectedCountry])
+    }, [selectedCountry])
 
-  useEffect(() => {
+    useEffect(() => {
 
-    fetch('http://ip-api.com/json')
-      .then(res => res.json())
-      .then(payload => { setSelectedCountry(payload.countryCode) })
+      fetch('http://ip-api.com/json')
+        .then(res => res.json())
+        .then(payload => { setSelectedCountry(payload.country) })
 
-  }, [setSelectedCountry])
+    }, [setSelectedCountry])
 
-  const handleCountryChange = (e: SelectChangeEvent<string>) => setSelectedCountry(e.target.value)
+    const handleCountryChange = (e: SelectChangeEvent<string>) => setSelectedCountry(e.target.value)
 
-  const handleCheckBoxButtonClick = () => {
-    const checkboxInput = addNewcheckBoxItemRef.current
-      ?.previousElementSibling
-      ?.querySelector("input[type='text']") as HTMLInputElement
+    const handleCheckBoxButtonClick = () => {
+      const checkboxInput = addNewcheckBoxItemRef.current
+        ?.previousElementSibling
+        ?.querySelector("input[type='text']") as HTMLInputElement
 
-    if (checkboxInput?.value === '') { return }
+      if (checkboxInput?.value === '') { return }
 
-    setCustomCheckBoxes(prev => ++prev)
-  }
-
-  const handleFormSubmit = (e: FormEvent) => {
-    e.preventDefault()
-
-    const formData = new FormData(e.target as HTMLFormElement)
-
-    const newFilter: IPropertyFilter = {
-      priceRange,
-      sizeRange,
-      claims: []
+      setCustomCheckBoxes(prev => ++prev)
     }
 
-    if (countries.some(c => c.code === selectedCountry)) { newFilter.country = selectedCountry }
+    const handleFormSubmit = (e: FormEvent) => {
+      e.preventDefault()
 
-    const type = formData.get('type') as PropertyType || 'Any'
-    if (type && type in PropertyType) { newFilter.type = type }
-    
-    const status = formData.get('status-radio-group') as PropertyStatus || 'Any'
-    if (status && status in PropertyStatus) { newFilter.status = status }
+      const formData = new FormData(e.target as HTMLFormElement)
 
-    const city = formData.get('city')?.toString().trim();
-    if (city) { newFilter.city = city }
+      const newFilter: IPropertyFilter = {
+        priceRange,
+        sizeRange,
+        claims: []
+      }
 
-    const bedrooms = Number(formData.get('bedrooms'))
-    if (bedrooms > 1) { newFilter.bedrooms = bedrooms }
+      if (countries.some(c => c.name === selectedCountry)) { newFilter.country = selectedCountry }
 
-    const bathrooms = Number(formData.get('bathrooms'))
-    if (bathrooms > 1) { newFilter.bathrooms = bathrooms }
+      const type = formData.get('type') as PropertyType || 'Any'
+      if (type && type in PropertyType) { newFilter.type = type }
 
-    const garages = Number(formData.get('garages'))
-    if (garages > 1) { newFilter.garages = garages }
+      const status = formData.get('status-radio-group') as PropertyStatus || 'Any'
+      if (status && status in PropertyStatus) { newFilter.status = status }
 
-    const nonCheckboxes = ['type', 'status-radio-group', 'priceRange', 'sizeRange', 'city', 'bedrooms', 'bathrooms', 'garages']
+      const city = formData.get('city')?.toString().trim();
+      if (city) { newFilter.city = city }
 
-    formData.forEach((value, key) => !nonCheckboxes.includes(key)
-      ? newFilter.claims?.push(key) : {}
-    )
+      const bedrooms = Number(formData.get('bedrooms'))
+      if (bedrooms > 1) { newFilter.bedrooms = bedrooms }
 
-    handleFilterChange(newFilter);
-  }
+      const bathrooms = Number(formData.get('bathrooms'))
+      if (bathrooms > 1) { newFilter.bathrooms = bathrooms }
 
-  return (
-    <form
-      {...rest}
-      className={`property-filter${className ? ` ${className}` : ''}`}
-      onSubmit={handleFormSubmit}
-    >
-      <div className='property-filter-basic'>
-        <div className='property-filter-basic-item'>
-          <CountrySelect
-            className='property-filter-country-select'
-            label='Country'
-            value={selectedCountry}
-            onChange={handleCountryChange}
-          />
+      const garages = Number(formData.get('garages'))
+      if (garages > 1) { newFilter.garages = garages }
+
+      const nonCheckboxes = ['type', 'status-radio-group', 'priceRange', 'sizeRange', 'city', 'bedrooms', 'bathrooms', 'garages']
+
+      formData.forEach((value, key) => !nonCheckboxes.includes(key)
+        ? newFilter.claims?.push(key) : {}
+      )
+
+      handleFilterChange(newFilter);
+    }
+
+    return (
+      <form
+        {...rest}
+        className={`property-filter${className ? ` ${className}` : ''}`}
+        onSubmit={handleFormSubmit}
+      >
+        <div className='property-filter-basic'>
+          <div className='property-filter-basic-item'>
+            <CountrySelect
+              className='property-filter-country-select'
+              label='Country'
+              value={selectedCountry}
+              onChange={handleCountryChange}
+            />
+          </div>
+          <div className='property-filter-basic-item'>
+            <FormControl variant='standard' fullWidth>
+              <InputLabel>Type</InputLabel>
+              <Select
+                name='type'
+                defaultValue={initialPropertyFilter.type}
+                label="Type"
+              >
+                {
+                  [...Object.values(PropertyType), 'Any']
+                    .map(type =>
+                      <MenuItem key={type} value={type}>{
+                        type.charAt(0).toUpperCase() + type.slice(1)
+                      }</MenuItem>
+                    )
+                }
+              </Select>
+            </FormControl>
+          </div>
+          <div className='property-filter-basic-item'>
+            <label className='property-filter-price-label'>Price: {priceRange[0]} - {priceRange[1]}</label>
+            <Slider
+              name='priceRange'
+              size="small"
+              getAriaLabel={() => 'Price range'}
+              value={priceRange}
+              valueLabelDisplay="auto"
+              onChange={(e: Event, newValue: number[] | number) => { setPriceRange(newValue as number[]) }}
+              min={metaData.minPrice}
+              max={metaData.maxPrice}
+            />
+          </div>
+          <div className='property-filter-basic-item'>
+            <Button fullWidth variant="contained" type='submit'>Search Property</Button>
+          </div>
         </div>
-        <div className='property-filter-basic-item'>
-          <FormControl variant='standard' fullWidth>
-            <InputLabel>Type</InputLabel>
-            <Select
-              name='type'
-              defaultValue={initialPropertyFilter.type}
-              label="Type"
-            >
-              {
-                [...Object.values(PropertyType), 'Any']
-                  .map(type =>
-                    <MenuItem key={type} value={type}>{
-                      type.charAt(0).toUpperCase() + type.slice(1)
-                    }</MenuItem>
-                  )
-              }
-            </Select>
-          </FormControl>
-        </div>
-        <div className='property-filter-basic-item'>
-          <label className='property-filter-price-label'>Price: {priceRange[0]} - {priceRange[1]}</label>
-          <Slider
-            name='priceRange'
-            size="small"
-            getAriaLabel={() => 'Price range'}
-            defaultValue={initialPropertyFilter.priceRange}
-            valueLabelDisplay="auto"
-            onChange={(e: Event, newValue: number[] | number) => { setPriceRange(newValue as number[]) }}
-            min={0} //Should get from server
-            max={100000} //Should get from server
-          />
-        </div>
-        <div className='property-filter-basic-item'>
-          <Button fullWidth variant="contained" type='submit'>Search Property</Button>
-        </div>
-      </div>
-      <div className='property-filter-advanced'>
-        <Collapse in={advancedFilterOpened}>
-          <div className='property-filter-advanced-content'>
-            <div className='property-filter-advanced-row df fww jcsb'>
-              <div className='property-filter-advanced-item'>
-                <FormControl>
-                  <FormLabel className="property-filter-advanced-label">Status</FormLabel>
-                  <RadioGroup
-                    row
-                    name="status-radio-group"
-                    defaultValue={initialPropertyFilter.status}
-                  >
-                    <FormControlLabel
-                      value={PropertyStatus.for_sale}
-                      className='property-filter-advanced-radio-value'
-                      control={
-                        <Radio
-                          disableRipple
-                          sx={{
-                            '& .MuiSvgIcon-root': {
-                              fontSize: 12,
-                              marginRight: 0
-                            },
-                          }} />
-                      }
-                      label="for sale"
+        <div className='property-filter-advanced'>
+          <Collapse in={advancedFilterOpened}>
+            <div className='property-filter-advanced-content'>
+              <div className='property-filter-advanced-row df fww jcsb'>
+                <div className='property-filter-advanced-item'>
+                  <FormControl>
+                    <FormLabel className="property-filter-advanced-label">Status</FormLabel>
+                    <RadioGroup
+                      row
+                      name="status-radio-group"
+                      defaultValue={initialPropertyFilter.status}
+                    >
+                      <FormControlLabel
+                        value={PropertyStatus.for_sale}
+                        className='property-filter-advanced-radio-value'
+                        control={
+                          <Radio
+                            disableRipple
+                            sx={{
+                              '& .MuiSvgIcon-root': {
+                                fontSize: 12,
+                                marginRight: 0
+                              },
+                            }} />
+                        }
+                        label="for sale"
+                      />
+                      <FormControlLabel
+                        value={PropertyStatus.for_rent}
+                        className='property-filter-advanced-radio-value'
+                        control={
+                          <Radio
+                            disableRipple
+                            sx={{
+                              '& .MuiSvgIcon-root': {
+                                fontSize: 12,
+                                marginRight: 0
+                              },
+                            }} />
+                        }
+                        label="for rent"
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                </div>
+                <div className='property-filter-advanced-item df fdc'>
+                  <label className='property-filter-advanced-label'>Size: {sizeRange[0]} - {sizeRange[1]} (m2)</label>
+                  <div className='df'>
+                    <Slider
+                      name='sizeRange'
+                      size="small"
+                      getAriaLabel={() => 'Size range'}
+                      value={sizeRange}
+                      onChange={(e: Event, newValue: number[] | number) => { setSizeRange(newValue as number[]) }}
+                      valueLabelDisplay="auto"
+                      min={metaData.minSize}
+                      max={metaData.maxSize}
                     />
-                    <FormControlLabel
-                      value={PropertyStatus.for_rent}
-                      className='property-filter-advanced-radio-value'
-                      control={
-                        <Radio
-                          disableRipple
-                          sx={{
-                            '& .MuiSvgIcon-root': {
-                              fontSize: 12,
-                              marginRight: 0
-                            },
-                          }} />
-                      }
-                      label="for rent"
-                    />
-                  </RadioGroup>
-                </FormControl>
-              </div>
-              <div className='property-filter-advanced-item df fdc'>
-                <label className='property-filter-advanced-label'>Size: {sizeRange[0]} - {sizeRange[1]} (m2)</label>
-                <div className='df'>
-                  <Slider
-                    name='sizeRange'
-                    size="small"
-                    getAriaLabel={() => 'Size range'}
-                    defaultValue={initialPropertyFilter.sizeRange}
-                    onChange={(e: Event, newValue: number[] | number) => { setSizeRange(newValue as number[]) }}
-                    valueLabelDisplay="auto"
-                    min={0} //Should get from server
-                    max={500} //Should get from server
+                  </div>
+                </div>
+                <div className='property-filter-advanced-item'>
+                  <Autocomplete
+                    freeSolo
+                    clearOnBlur={false}
+                    disablePortal
+                    options={availableCities}
+                    defaultValue={initialPropertyFilter.city}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="City"
+                        name='city'
+                        placeholder='Enter a city'
+                        className='property-filter-advanced-value'
+                        variant='standard'
+                      />
+                    )}
                   />
                 </div>
               </div>
-              <div className='property-filter-advanced-item'>
-                <Autocomplete
-                  freeSolo
-                  clearOnBlur={false}
-                  disablePortal
-                  options={availableCities}
-                  defaultValue={initialPropertyFilter.city}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="City"
-                      name='city'
-                      placeholder='Enter a city'
-                      className='property-filter-advanced-value'
-                      variant='standard'
-                    />
-                  )}
-                />
+              <div className='property-filter-advanced-row df fww jcsb'>
+                <div className='property-filter-advanced-item'>
+                  <FormControl variant='standard' fullWidth>
+                    <InputLabel>Bedrooms</InputLabel>
+                    <Select
+                      defaultValue={initialPropertyFilter.bedrooms}
+                      name="bedrooms"
+                      label="Bedrooms"
+                    >
+                      {
+                        [...Array.from(Array(10).keys()).map(n => ++n), 'Any']
+                          .map(number => <MenuItem key={number} value={number}>{number}</MenuItem>)
+                      }
+                    </Select>
+                  </FormControl>
+                </div>
+                <div className='property-filter-advanced-item'>
+                  <FormControl variant='standard' fullWidth>
+                    <InputLabel>Bathrooms</InputLabel>
+                    <Select
+                      defaultValue={initialPropertyFilter.bathrooms}
+                      name="bathrooms"
+                      label="Bathrooms"
+                    >
+                      {
+                        [...Array.from(Array(10).keys()).map(n => ++n), 'Any']
+                          .map(number => <MenuItem key={number} value={number}>{number}</MenuItem>)
+                      }
+                    </Select>
+                  </FormControl>
+                </div>
+                <div className='property-filter-advanced-item'>
+                  <FormControl variant='standard' fullWidth>
+                    <InputLabel>Garages</InputLabel>
+                    <Select
+                      defaultValue={initialPropertyFilter.garages}
+                      name="garages"
+                      label="Garages"
+                    >
+                      {
+                        [...Array.from(Array(10).keys()).map(n => ++n), 'Any']
+                          .map(number => <MenuItem key={number} value={number}>{number}</MenuItem>)
+                      }
+                    </Select>
+                  </FormControl>
+                </div>
               </div>
-            </div>
-            <div className='property-filter-advanced-row df fww jcsb'>
-              <div className='property-filter-advanced-item'>
-                <FormControl variant='standard' fullWidth>
-                  <InputLabel>Bedrooms</InputLabel>
-                  <Select
-                    defaultValue={initialPropertyFilter.bedrooms}
-                    name="bedrooms"
-                    label="Bedrooms"
-                  >
-                    {
-                      [...Array.from(Array(10).keys()).map(n => ++n), 'Any']
-                        .map(number => <MenuItem key={number} value={number}>{number}</MenuItem>)
-                    }
-                  </Select>
-                </FormControl>
-              </div>
-              <div className='property-filter-advanced-item'>
-                <FormControl variant='standard' fullWidth>
-                  <InputLabel>Bathrooms</InputLabel>
-                  <Select
-                    defaultValue={initialPropertyFilter.bathrooms}
-                    name="bathrooms"
-                    label="Bathrooms"
-                  >
-                    {
-                      [...Array.from(Array(10).keys()).map(n => ++n), 'Any']
-                        .map(number => <MenuItem key={number} value={number}>{number}</MenuItem>)
-                    }
-                  </Select>
-                </FormControl>
-              </div>
-              <div className='property-filter-advanced-item'>
-                <FormControl variant='standard' fullWidth>
-                  <InputLabel>Garages</InputLabel>
-                  <Select
-                    defaultValue={initialPropertyFilter.garages}
-                    name="garages"
-                    label="Garages"
-                  >
-                    {
-                      [...Array.from(Array(10).keys()).map(n => ++n), 'Any']
-                        .map(number => <MenuItem key={number} value={number}>{number}</MenuItem>)
-                    }
-                  </Select>
-                </FormControl>
-              </div>
-            </div>
-            <div className='property-filter-advanced-checkbox-row df fww'>
-              {
-                checkBoxes.map(c => <AdvancedFilterCheckBox key={c.name} label={c.label} name={c.name} Icon={c.Icon} />)
-              }
-              {
-                Array.from(Array(customCheckBoxes).keys()).map((_, i) =>
-                  <div key={i} className='property-filter-advanced-checkbox-item property-filter-advanced-checkbox-new-item df'>
-                    <Checkbox defaultChecked sx={{ '& .MuiSvgIcon-root': { fontSize: 16 } }} disableRipple />
-                    <Input
-                      placeholder="Enter keyword"
-                      className='property-filter-advanced-new-checkbox-label'
-                      onChange={(e) => {
-                        const input = e.target.parentElement?.parentElement?.children[0].children[0];
+              <div className='property-filter-advanced-checkbox-row df fww'>
+                {
+                  checkBoxes.map(c => <AdvancedFilterCheckBox key={c.name} label={c.label} name={c.name} Icon={c.Icon} />)
+                }
+                {
+                  Array.from(Array(customCheckBoxes).keys()).map((_, i) =>
+                    <div key={i} className='property-filter-advanced-checkbox-item property-filter-advanced-checkbox-new-item df'>
+                      <Checkbox defaultChecked sx={{ '& .MuiSvgIcon-root': { fontSize: 16 } }} disableRipple />
+                      <Input
+                        placeholder="Enter keyword"
+                        className='property-filter-advanced-new-checkbox-label'
+                        onChange={(e) => {
+                          const input = e.target.parentElement?.parentElement?.children[0].children[0];
 
-                        if (input && input.tagName.toLowerCase() === 'input') {
-                          (input as HTMLInputElement).name = e.target.value
-                        }
-                      }}
-                    />
+                          if (input && input.tagName.toLowerCase() === 'input') {
+                            (input as HTMLInputElement).name = e.target.value
+                          }
+                        }}
+                      />
+                    </div>
+                  )
+                }
+                <div ref={addNewcheckBoxItemRef} className='property-filter-advanced-checkbox-item'>
+                  <div
+                    className='df aic jcc property-filter-advanced-checkbox-add-item'
+                    onClick={handleCheckBoxButtonClick}
+                  >
+                    <AddCircleOutlineOutlinedIcon />
                   </div>
-                )
-              }
-              <div ref={addNewcheckBoxItemRef} className='property-filter-advanced-checkbox-item'>
-                <div
-                  className='df aic jcc property-filter-advanced-checkbox-add-item'
-                  onClick={handleCheckBoxButtonClick}
-                >
-                  <AddCircleOutlineOutlinedIcon />
                 </div>
               </div>
             </div>
-          </div>
-        </Collapse>
-        <div className='property-filter-advanced-toggler'>
-          <div onClick={() => setAdvancedFilterOpened(o => !o)}>
-            <p>Advanced Search</p>
-            <KeyboardArrowDownIcon fontSize='small' />
+          </Collapse>
+          <div className='property-filter-advanced-toggler'>
+            <div onClick={() => setAdvancedFilterOpened(o => !o)}>
+              <p>Advanced Search</p>
+              <KeyboardArrowDownIcon fontSize='small' />
+            </div>
           </div>
         </div>
-      </div>
-    </form>
-  )
-}
+      </form>
+    )
+  }
 
 export default PropertyFilter

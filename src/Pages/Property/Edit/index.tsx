@@ -1,5 +1,5 @@
 import './Edit.scss';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -14,9 +14,25 @@ import Bedrooms from './Components/bedroomsSelectComponent';
 import Bathrooms from './Components/bathroomsSelectComponent';
 import Garages from './Components/garagesSelectComponent';
 import CountrySelect from '../../../Components/Core/CountrySelect';
-import { Autocomplete, SelectChangeEvent } from '@mui/material';
+import { Autocomplete, Checkbox, FormControlLabel, Input, SelectChangeEvent, SvgIcon } from '@mui/material';
+
+import WifiIcon from '@mui/icons-material/Wifi';
+import AcUnitIcon from '@mui/icons-material/AcUnit';
+import FireplaceIcon from '@mui/icons-material/Fireplace';
+import BalconyIcon from '@mui/icons-material/Balcony';
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+import PoolIcon from '@mui/icons-material/Pool';
+import LocalParkingIcon from '@mui/icons-material/LocalParking';
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 
 
+const AdvancedFilterCheckBox: FC<{ label: string, Icon: typeof SvgIcon, name: string }> = ({ label, Icon, name }) =>
+  <div className='property-filter-advanced-checkbox-item'>
+    <FormControlLabel
+      control={<Checkbox name={name} sx={{ '& .MuiSvgIcon-root': { fontSize: 16 } }} disableRipple checkedIcon={<Icon />} />}
+      label={label}
+    />
+  </div>
 
 
 
@@ -24,6 +40,38 @@ const EditProperty: FC = () => {
     
     const [selectedCountry, setSelectedCountry] = useState<string>('BG');
     const [availableCities, setAvailableCities] = useState<string[]>([]);
+
+    const checkBoxes = [
+        {
+          label: 'Wifi',
+          Icon: WifiIcon,
+          name: 'wifi'
+        }, {
+          label: 'Air Conditioning',
+          Icon: AcUnitIcon,
+          name: 'airConditioning'
+        }, {
+          label: 'Fire Place',
+          Icon: FireplaceIcon,
+          name: 'fireplace'
+        }, {
+          label: 'Balcony',
+          Icon: BalconyIcon,
+          name: 'balcony'
+        }, {
+          label: 'Fitness',
+          Icon: FitnessCenterIcon,
+          name: 'fitness'
+        }, {
+          label: 'Swimming Pool',
+          Icon: PoolIcon,
+          name: 'swimmingPool'
+        }, {
+          label: 'Parking',
+          Icon: LocalParkingIcon,
+          name: 'parking'
+        }
+      ];
 
     useEffect(() => {
 
@@ -53,6 +101,17 @@ const EditProperty: FC = () => {
     
       const handleCountryChange = (e: SelectChangeEvent<string>) => setSelectedCountry(e.target.value);
 
+      const handleCheckBoxButtonClick = () => {
+        const checkboxInput = addNewcheckBoxItemRef.current
+          ?.previousElementSibling
+          ?.querySelector("input[type='text']") as HTMLInputElement
+    
+        if (checkboxInput?.value === '') { return }
+    
+        setCustomCheckBoxes(prev => ++prev)
+      }
+      const [customCheckBoxes, setCustomCheckBoxes] = useState<number>(0);
+      const addNewcheckBoxItemRef = useRef<HTMLDivElement | null>(null);
 
 
 
@@ -198,6 +257,38 @@ const EditProperty: FC = () => {
                             </div>
                                               
                         </div>
+                        
+                        <div className='property-filter-advanced-checkbox-row df fww'>
+                            {
+                                checkBoxes.map(c => <AdvancedFilterCheckBox key={c.name} label={c.label} name={c.name} Icon={c.Icon} />)
+                            }
+                            {
+                                Array.from(Array(customCheckBoxes).keys()).map((_, i) =>
+                                <div key={i} className='property-filter-advanced-checkbox-item property-filter-advanced-checkbox-new-item df'>
+                                    <Checkbox defaultChecked sx={{ '& .MuiSvgIcon-root': { fontSize: 16 } }} disableRipple />
+                                    <Input
+                                    placeholder="Enter keyword"
+                                    className='property-filter-advanced-new-checkbox-label'
+                                    onChange={(e) => {
+                                        const input = e.target.parentElement?.parentElement?.children[0].children[0];
+
+                                        if (input && input.tagName.toLowerCase() === 'input') {
+                                        (input as HTMLInputElement).name = e.target.value
+                                        }
+                                    }}
+                                    />
+                                </div>
+                                )
+                            }
+                            <div ref={addNewcheckBoxItemRef} className='property-filter-advanced-checkbox-item'>
+                                <div
+                                className='df aic jcc property-filter-advanced-checkbox-add-item'
+                                onClick={handleCheckBoxButtonClick}
+                                >
+                                <AddCircleOutlineOutlinedIcon />
+                                </div>
+                            </div>
+                        </div>  
 
                         <div id='images'>
                             <input type="file" className="image" accept="image/*" required/>

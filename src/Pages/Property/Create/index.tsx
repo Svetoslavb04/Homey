@@ -26,7 +26,6 @@ import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import PoolIcon from '@mui/icons-material/Pool';
 import LocalParkingIcon from '@mui/icons-material/LocalParking';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-import { PhotoCamera } from '@mui/icons-material';
 
 
 const AdvancedFilterCheckBox: FC<{ label: string, Icon: typeof SvgIcon, name: string }> = ({ label, Icon, name }) =>
@@ -219,6 +218,27 @@ const AddProperty: FC = () => {
                                     </div>
 
                                 </div>
+                                <div className='content-container'>
+                                    <div id="street" className='inputField'>
+                                        <TextField
+                                            fullWidth
+                                            label="Street"
+                                            variant="standard"
+                                            color="secondary"
+                                            error={false}
+                                        />
+                                    </div>
+                                    <div id="number" className='inputField'>
+                                        <TextField
+                                            fullWidth
+                                            label="Number"
+                                            variant="standard"
+                                            color="secondary"
+                                            error={false}
+                                        />
+                                    </div>
+
+                                </div>
                                 
                             </div>
                         }
@@ -345,6 +365,9 @@ const AddProperty: FC = () => {
                                             variant="standard"
                                             color="secondary"
                                             error={false}
+                                            InputProps={{
+                                               endAdornment: <InputAdornment position="start">📞</InputAdornment>,
+                                                }}
                                         />
                                     </div>
                                 </div>
@@ -365,11 +388,6 @@ const AddProperty: FC = () => {
                                     <input type="file" id="images" accept="image/*" required/>
                                     <input type="file" id="images" accept="image/*" required/>
                                 </label>
-                                
-                                {/* <IconButton  color="secondary" aria-label="upload picture" component="label">
-                                    <input accept="image/*" type="file" />
-                                    <PhotoCamera className='image-upload-button'/>
-                                </IconButton> */}
                                 </div>
 
                             </div>

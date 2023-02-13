@@ -14,7 +14,7 @@ export default function NativeSelectDemo() {
         </InputLabel>
         <Select
           name='type'
-          defaultValue="House"
+          defaultValue="house"
           label="Type"
         >
           <MenuItem value={'house'}>House</MenuItem>

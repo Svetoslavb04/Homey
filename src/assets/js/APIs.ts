@@ -8,4 +8,13 @@ export const homeyAPI = {
     logout: `${homeyAPIBaseURL}/logout`,
     registerUser: `${homeyAPIBaseURL}/register/user`,
     registerAgency: `${homeyAPIBaseURL}/register/agency`,
+    properties: {
+        baseURL: `${homeyAPIBaseURL}/properties`,
+        get getTop(): string { return `${this.baseURL}/top` },
+        get getFiltered(): string { return `${this.baseURL}/filtered` },
+        get getMetaData(): string { return `${this.baseURL}/meta` },
+    },
+    images: {
+        baseURL : `${homeyAPIBaseURL}/images`
+    }
 }

@@ -33,3 +33,9 @@ Many more will come...
 - Mongoose
 
 > THE WHOLE PROJECT HAS BEEN MADE FOR EDUCATION PURPOSES ONLY!
+
+### How to run
+
+1. Configure homeyAPIBaseURL in src/assets/js/APIs.ts
+2. To start in development environment: run npm start
+3. To build for production: run npm run build

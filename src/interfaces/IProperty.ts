@@ -1,5 +1,6 @@
 import { PropertyStatus } from "../enums/PropertyStatus";
 import { PropertyType } from "../enums/PropertyType";
+import { IAgency } from "./IAgency";
 
 export interface IProperty {
     _id: string,
@@ -18,5 +19,9 @@ export interface IProperty {
     yearBuilt: number,
     price: number,
     images: string[],
-    agency_id: string
+    claims: {
+        name: string,
+        value: string
+    }[],
+    agency_id: IAgency
 }

@@ -1,9 +1,5 @@
 # Homey | Property board for NOIT
 
-<p align="center">
-  <img src="public/assets/images/logo_not_transperant.png" width="40%">
-</p>
-
 ## Live demo
 
 Currently unavailable
@@ -20,8 +16,8 @@ On the client-side we are using MaterialUI and SASS for better stylization
 Many more will come...
 
 - [x] Home with listing
-- [ ] Login or Register as Buyer or Agency
-- [ ] CRUD operation on property
+- [X] Login or Register as Buyer or Agency
+- [X] CRUD operation on property
 - [ ] User & Agency profile
 - [ ] Shopping cart
 
@@ -32,6 +28,7 @@ Many more will come...
 - SASS
 - NodeJS
 - MongoDB
+- MongoDB GridFs
 - Express
 - Mongoose
 

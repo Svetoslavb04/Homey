@@ -6,13 +6,19 @@
     justify-content: space-around;
     gap: 50px;
 
-    > div {
+    #home-top-properties-left,
+    #home-top-properties-right {
+        flex-basis: 45%;
+        flex-shrink: 0;
+    }
+
+    #home-top-properties-left {
         display: flex;
         flex-direction: column;
         gap: 40px;
     }
 
-    > div:nth-child(2) {
+    #home-top-properties-right {
         margin-top: 50px;
     }
 }

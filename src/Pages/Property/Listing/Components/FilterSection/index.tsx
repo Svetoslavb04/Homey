@@ -4,12 +4,28 @@ import { Dispatch, FC, SetStateAction } from 'react';
 
 import PropertyFilter from '../../../../../Components/Core/PropertyFilter';
 import IPropertyFilter from '../../../../../interfaces/IPropertyFilter';
+import IPropertiesMeta from '../../../../../interfaces/IPropertiesMeta';
+import PageLoader from '../../../../../Components/Core/PageLoader';
 
 type FilterSectionProps = {
-    setFilter: Dispatch<SetStateAction<IPropertyFilter | null>>
+    metaData?: IPropertiesMeta
+    setFilter: Dispatch<SetStateAction<IPropertyFilter>>
 }
 
-const FilterSection: FC<FilterSectionProps> = ({ setFilter }) => {
+const defaultInitialPropertyFilter: IPropertyFilter = {
+    country: 'Any',
+    type: 'Any',
+    priceRange: [0, 0],
+    status: 'Any',
+    sizeRange: [0, 0],
+    city: '',
+    bedrooms: 'Any',
+    bathrooms: 'Any',
+    garages: 'Any',
+    claims: []
+}
+
+const FilterSection: FC<FilterSectionProps> = ({ metaData, setFilter }) => {
 
     const handleFilterChange = (newFilter: IPropertyFilter) => { setFilter(newFilter) }
 
@@ -23,7 +39,16 @@ const FilterSection: FC<FilterSectionProps> = ({ setFilter }) => {
                     <h2><span>New home.&nbsp;</span><span>New adventures.&nbsp;</span><span>New memories.</span></h2>
                 </div>
                 <div className='property-listing-filter-container'>
-                    <PropertyFilter className='property-listing-filter' handleFilterChange={handleFilterChange} />
+                    {
+                        metaData
+                            ? <PropertyFilter
+                                className='property-listing-filter'
+                                metaData={metaData}
+                                initialPropertyFilter={defaultInitialPropertyFilter}
+                                handleFilterChange={handleFilterChange}
+                            />
+                            : <PageLoader />
+                    }
                 </div>
             </div>
         </section>

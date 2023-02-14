@@ -24,6 +24,7 @@ import PoolIcon from '@mui/icons-material/Pool';
 import LocalParkingIcon from '@mui/icons-material/LocalParking';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import { ActionTypes, PropertyFormData, useRegisterFormData } from './useEditFormData';
+import { useNotificationContext } from '../../../contexts/NotificationContext/NotificationContext';
 
 
 const AdvancedFilterCheckBox: FC<{ label: string, Icon: typeof SvgIcon, name: string }> = ({ label, Icon, name }) =>
@@ -41,7 +42,7 @@ const EditProperty: FC = () => {
     const [selectedCountry, setSelectedCountry] = useState<string>('BG');
     const [availableCities, setAvailableCities] = useState<string[]>([]);
 
-    //const { popNotification } = useNotificationContext();
+    const { popNotification } = useNotificationContext();
 
     const checkBoxes = [
         {
@@ -137,17 +138,17 @@ const EditProperty: FC = () => {
             }
 
        
-            // if (validateValues(userInfo)) { return }
+             if (validateValues(info)) { return }
 
-            // const normalizedUserInfo = normalizeData(userInfo) as IUserData;
+            // const normalizedPropertyInfo = normalizeData(info) as IPropertyData;
 
             // try {
-            //     const res = await registerUser(normalizedUserInfo)
+            //     const res = await editProperty(normalizedPropertyInfo)
 
             //     if (res.status !== 200) { throw res.message }
                 
-            //     updateUser()
-            //     popNotification({ type: 'success', message: 'Succesful registration!' })
+            //     updateProperty()
+            //     popNotification({ type: 'success', message: 'Succesful edit!' })
             //     navigate('/', { replace: true });
 
             // } catch (error: any) { popNotification({ type: 'error', message: error }) }
@@ -158,10 +159,10 @@ const EditProperty: FC = () => {
             let flag = false;
 
             if (Object.values(object).some(v => v.error)) {
-               // popNotification({ type: 'error', message: 'All fields must be valid!' })
+                popNotification({ type: 'error', message: 'All fields must be valid!' })
                 flag = true;
             } else if (Object.values(object).some(v => v.value === '')) {
-                //popNotification({ type: 'error', message: 'All fields are required!' })
+                popNotification({ type: 'error', message: 'All fields are required!' })
                 flag = true;
             }
 
@@ -228,7 +229,7 @@ const EditProperty: FC = () => {
                                         variant="standard"
                                         color="secondary"
                                         name='size'
-                                        helperText={formData.size.error && "The property size cannot be more than 9999 sqare meters!"}
+                                        helperText={formData.size.error && "The property size should be less than 9999 m²!"}
                                         value={formData.size.value}
                                         error={formData.size.error}
                                         onChange={(e) => { dispatch({ type: ActionTypes.CHANGE_SIZE, payload: e.target.value }) }}

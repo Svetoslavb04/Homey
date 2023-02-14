@@ -103,7 +103,7 @@ const formDataReducer = (state: PropertyFormData, action:Action)=>{
         case ActionTypes.CHANGE_SIZE:
             return {...state, size: {error: state.size.error, value:action.payload.trim()}}
         case ActionTypes.VALIDATE_SIZE:
-            if (action.payload > 9999 && action.payload < 0 && action.payload.trim() !== '') {
+            if (action.payload > 9999 && action.payload.trim() !== '') {
                 return { ...state, size: { error: true, value: state.size.value } }
             } else {
                 return { ...state, size: { error: false, value: state.size.value } }

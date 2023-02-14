@@ -48,7 +48,7 @@ export const AuthProvider: FC<Props> = ({ children }) => {
 
                 setTimeout(() => setIsUserLoaded(true), 500)
             })
-            .catch(err => { console.log(err); setTimeout(() => setIsUserLoaded(true), 500) })
+            .catch(err => { setTimeout(() => setIsUserLoaded(true), 500) })
 
     }
 

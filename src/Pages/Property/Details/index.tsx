@@ -19,7 +19,7 @@ import LocalParkingIcon from '@mui/icons-material/LocalParking';
 import { IProperty } from '../../../interfaces/IProperty';
 import PageLoader from '../../../Components/Core/PageLoader';
 import { getById, deleteProperty } from '../../../services/propertyService';
-import {me} from '../../../services/authService'
+import { me } from '../../../services/authService'
 import { homeyAPI } from '../../../assets/js/APIs';
 import { useNotificationContext } from '../../../contexts/NotificationContext/NotificationContext';
 import { IUser } from '../../../interfaces/IUser';
@@ -51,12 +51,12 @@ const Property: FC = () => {
     }, [propertyId, navigate, popNotification])
 
 
-    useEffect(()=>{
-        me().then(payload =>{
+    useEffect(() => {
+        me().then(payload => {
 
             setUser(payload.user);
         })
-        .catch(err => console.log(err))
+            .catch(err => console.log(err))
 
     }, [])
 
@@ -68,9 +68,9 @@ const Property: FC = () => {
             <PageLoader />
         )
     }
-    const deleteHandler = ()=>{
+    const deleteHandler = () => {
         deleteProperty(propertyId || '')
-            .then(res =>{
+            .then(res => {
                 popNotification({ type: 'success', message: 'Property deleted!' })
                 navigate('/properties');
             })
@@ -80,7 +80,7 @@ const Property: FC = () => {
             })
     }
 
-    const editHandler = ()=>{
+    const editHandler = () => {
         navigate(`/properties/${propertyId}/edit`)
     }
 
@@ -200,19 +200,19 @@ const Property: FC = () => {
                         </div>
                     }
 
-                   {user?._id == property.agency_id._id && 
+                    {user?._id === property.agency_id._id &&
                         <div id='owner-buttons'>
-                            <Button className='owner-button' variant="contained" color="error" onClick={()=>deleteHandler()} startIcon={<DeleteIcon />}>
+                            <Button className='owner-button' variant="contained" color="error" onClick={() => deleteHandler()} startIcon={<DeleteIcon />}>
                                 Delete
-                            </Button> 
-                            <Button className='owner-button' variant="contained" color="success" onClick={()=>editHandler()} startIcon={<DeleteIcon />}>
+                            </Button>
+                            <Button className='owner-button' variant="contained" color="success" onClick={() => editHandler()} startIcon={<DeleteIcon />}>
                                 Edit
                             </Button>
                         </div>
-                   }
-                    
-                  
-                   
+                    }
+
+
+
                 </div>
 
             </div>

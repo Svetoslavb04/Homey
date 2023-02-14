@@ -102,7 +102,7 @@ const Property: FC = () => {
             claims.push({ Icon: claim.Icon, name: claim.name });
         }
     };
-
+    
     return (
         <div id='property-main'>
             <div id='top-image' style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${property.images[0]})` }}>
@@ -127,7 +127,7 @@ const Property: FC = () => {
                 <div id='property-description'>
                     <p> {property.description}
                     </p>
-                    <p><b className='property-info'>Status : </b> {property.status.split('_').join(' ')}</p>
+                    <p><b className='property-info'>Status : </b> {property.status?.split('_').join(' ')}</p>
                     <p><b className='property-info'>Type : </b> {property.type}</p>
                     <p><b className='property-info'>Price : </b> {property.price} €</p>
                     <p><b className='property-info'>Site Size : </b> {property.size} m²</p>
@@ -150,7 +150,7 @@ const Property: FC = () => {
 
             <div id='contact-section'>
                 <div id='agency-info'>
-                    <span>This property is offered by</span> <b className='property-info'>{property.agency_id.agencyName}</b>
+                    <span>This property is offered by</span> <b className='property-info'>{property.agency_id?.agencyName}</b>
                 </div>
                 <Button variant="contained" size='large' id='contact-button' type='submit' onClick={() => contactButtonHandler()}>
                     {contactButtonClicked ? '' : 'Contact'}

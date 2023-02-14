@@ -9,18 +9,17 @@ import { MenuItem } from '@mui/material';
 export default function NativeSelectDemo() {
     return (
         <FormControl variant='standard' fullWidth>
-            <InputLabel>Bedrooms</InputLabel>
+            <InputLabel>Garages</InputLabel>
              <Select
                 defaultValue="1"
-                name="bedrooms"
-                label="Bedrooms"
+                name="garage"
+                label="Garages"
                 >
                 {
-                    [...Array.from(Array(10).keys()).map(n => ++n)]
+                    [...Array.from(Array(11).keys()).map(n => n)]
                     .map(number => <MenuItem key={number} value={number}>{number}</MenuItem>)
                 }
             </Select>
         </FormControl>
     );
   }
-

@@ -56,7 +56,7 @@ const Sidebar: FC = () => {
     return (
         <div id='sidebar' className={`${!isOpened ? 'hidden' : ''}`}>
             <div id="sidebar-logo">
-                <img src="assets/images/logo.png" alt="" />
+                <img src="/assets/images/logo.png" alt="" />
             </div>
             <nav>
                 <ul>

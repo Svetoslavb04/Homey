@@ -1,7 +1,7 @@
 import './Property.scss'
 
 import { FC, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import CloseIcon from '@mui/icons-material/Close';
 import ArrowBack from '@mui/icons-material/ArrowBackIosRounded';
@@ -18,9 +18,13 @@ import LocalParkingIcon from '@mui/icons-material/LocalParking';
 import { IProperty } from '../../../interfaces/IProperty';
 import PageLoader from '../../../Components/Core/PageLoader';
 import { getById } from '../../../services/propertyService';
+import { homeyAPI } from '../../../assets/js/APIs';
+import { useNotificationContext } from '../../../contexts/NotificationContext/NotificationContext';
 
 const Property: FC = () => {
 
+    const { popNotification } = useNotificationContext();
+    const navigate = useNavigate();
     const { propertyId } = useParams();
 
     const [property, setProperty] = useState<IProperty | null>(null)
@@ -28,16 +32,22 @@ const Property: FC = () => {
     useEffect(() => {
         getById(propertyId || '')
             .then(payload => {
+
                 const property = { ...payload[0][0], claims: payload[0].claims }
+
+                if (!property._id) {
+                    navigate('/properties')
+                    return popNotification({ type: 'error', message: 'Property not found!' })
+                }
 
                 setProperty(property)
             })
             .catch(err => console.log(err))
-    }, [])
+    }, [propertyId, navigate, popNotification])
 
     const [imageToOpen, setImageToOpen] = useState('');
     const [contactButtonClicked, setContactButtonClicked] = useState<boolean>(false);
-    
+
     if (!property) {
         return (
             <PageLoader />
@@ -51,14 +61,16 @@ const Property: FC = () => {
     const closeImageHandler = () => { setImageToOpen(oldValue => oldValue = '') }
 
     const forwardImageOpen = (url: string) => {
-        let imageIndex = property.images.findIndex(u => u === url);
+        let imageIndex = property.images
+            .map(name => `${homeyAPI.images.baseURL}/${name}`)
+            .findIndex(u => u === url);
 
         imageIndex += 1;
         if (imageIndex > 3) {
             imageIndex = 0;
         }
 
-        setImageToOpen(property.images[imageIndex]);
+        setImageToOpen(`${homeyAPI.images.baseURL}/${property.images[imageIndex]}`);
     }
 
     const backImageOpen = (url: string) => {
@@ -69,7 +81,7 @@ const Property: FC = () => {
             imageIndex = 3;
         }
 
-        setImageToOpen(property.images[imageIndex]);
+        setImageToOpen(`${homeyAPI.images.baseURL}/${property.images[imageIndex]}`);
     }
 
     const IconifiedExtras = [{
@@ -104,22 +116,26 @@ const Property: FC = () => {
     };
 
     return (
-        <div id='property-main'>
-            <div id='top-image' style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${property.images[0]})` }}>
+        <div id='property-container'>
+            <div
+                id='top-image'
+                style={{
+                    backgroundImage: `
+                linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("${homeyAPI.images.baseURL}/${property.images[0]}")`
+                }}>
                 <div>
                     <h1>{property.name}</h1>
                 </div>
             </div>
-
             <div id='property-content'>
                 <div id='property-images'>
-                    <img id='property-primary-image' src={property.images[1]} alt='house' onClick={() => clickImageHandler(property.images[1])} />
+                    <img id='property-primary-image' src={`${homeyAPI.images.baseURL}/${property.images[1]}`} alt='house' onClick={() => clickImageHandler(`${homeyAPI.images.baseURL}/${property.images[1]}`)} />
                     <div id='property-secondary-images'>
                         <div className='secondary-image'>
-                            <img src={property.images[2]} onClick={() => clickImageHandler(property.images[2])} alt="house" />
+                            <img src={`${homeyAPI.images.baseURL}/${property.images[2]}`} onClick={() => clickImageHandler(`${homeyAPI.images.baseURL}/${property.images[2]}`)} alt="house" />
                         </div>
                         <div className='secondary-image'>
-                            <img src={property.images[3]} onClick={() => clickImageHandler(property.images[3])} alt="house" />
+                            <img src={`${homeyAPI.images.baseURL}/${property.images[3]}`} onClick={() => clickImageHandler(`${homeyAPI.images.baseURL}/${property.images[3]}`)} alt="house" />
                         </div>
 
                     </div>
@@ -127,7 +143,7 @@ const Property: FC = () => {
                 <div id='property-description'>
                     <p> {property.description}
                     </p>
-                    <p><b className='property-info'>Status : </b> {property.status.split('_').join(' ')}</p>
+                    <p><b className='property-info'>Status : </b> {property.status?.split('_').join(' ')}</p>
                     <p><b className='property-info'>Type : </b> {property.type}</p>
                     <p><b className='property-info'>Price : </b> {property.price} €</p>
                     <p><b className='property-info'>Site Size : </b> {property.size} m²</p>
@@ -150,7 +166,7 @@ const Property: FC = () => {
 
             <div id='contact-section'>
                 <div id='agency-info'>
-                    <span>This property is offered by</span> <b className='property-info'>{property.agency_id.agencyName}</b>
+                    <span>This property is offered by</span> <b className='property-info'>{property.agency_id?.agencyName}</b>
                 </div>
                 <Button variant="contained" size='large' id='contact-button' type='submit' onClick={() => contactButtonHandler()}>
                     {contactButtonClicked ? '' : 'Contact'}
@@ -161,8 +177,17 @@ const Property: FC = () => {
                 <div id='selected-image'>
                     <div id='backdrop' onClick={() => closeImageHandler()}></div>
                     <ArrowBack id='arrow-back' className='arrow' onClick={() => backImageOpen(imageToOpen)} />
-                    <img src={imageToOpen} alt='house' />
-                    <CloseIcon className="btn-close" onClick={() => closeImageHandler()} />
+                    {
+                        property.images.map((name, i) =>
+                            <img
+                                style={{ display: `${homeyAPI.images.baseURL}/${name}` === imageToOpen ? 'block' : 'none' }}
+                                key={name + i}
+                                src={`${homeyAPI.images.baseURL}/${name}`}
+                                alt='house'
+                            />
+                        )
+                    }
+                    <CloseIcon className="btn-close" fontSize='small' onClick={() => closeImageHandler()} />
                     <ArrowForward className='arrow' id='arrow-forward' onClick={() => forwardImageOpen(imageToOpen)} />
                 </div>
             }

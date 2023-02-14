@@ -25,6 +25,9 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import InputAdornment from '@mui/material/InputAdornment';
 import { ActionTypes, PropertyFormData, useAddPropertyFormData } from './useAddPropertyFormData';
+import { create } from '../../../services/propertyService';
+import { useNavigate } from 'react-router';
+import { useNotificationContext } from '../../../contexts/NotificationContext/NotificationContext';
 
 const AdvancedCheckBox: FC<{ label: string, Icon: typeof SvgIcon, name: string }> = ({ label, Icon, name }) =>
     <div className='property-filter-advanced-checkbox-item'>
@@ -35,6 +38,9 @@ const AdvancedCheckBox: FC<{ label: string, Icon: typeof SvgIcon, name: string }
     </div>
 
 const AddProperty: FC = () => {
+
+    const navigate = useNavigate();
+    const { popNotification } = useNotificationContext();
 
     const [formData, dispatch] = useAddPropertyFormData();
     const [availableCities, setAvailableCities] = useState<string[]>([]);
@@ -59,7 +65,9 @@ const AddProperty: FC = () => {
             body: JSON.stringify({ country: countries.filter(c => c.name === formData.country.value)[0]?.name })
         })
             .then(res => res.json())
-            .then(payload => setAvailableCities(payload.data))
+            .then(payload => {
+                setAvailableCities(payload.data)
+            })
             .catch(err => console.log(err))
 
     }, [formData.country.value]);
@@ -163,7 +171,7 @@ const AddProperty: FC = () => {
         setCustomCheckBoxes(prev => ++prev)
     }
 
-    const handleFormSubmit = (e: FormEvent) => {
+    const handleFormSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
         const serverFormData = new FormData();
@@ -182,7 +190,7 @@ const AddProperty: FC = () => {
         serverFormData.append('bathrooms', formData.bathrooms.value.toString());
         serverFormData.append('garages', formData.garages.value.toString());
         serverFormData.append('description', formData.description.value);
-        serverFormData.append('price', formData.description.value.toString());
+        serverFormData.append('price', formData.price.value.toString());
 
         images.current.forEach(i => {
             serverFormData.append('image', i)
@@ -193,6 +201,15 @@ const AddProperty: FC = () => {
             serverFormData.append('claims', key)
         })
 
+        try {
+            const res = await create(serverFormData)
+
+            if (res.message) { throw res.message }
+
+            popNotification({ type: 'success', message: 'Successfully added a property!' })
+            navigate(`/properties/${res._id}`);
+
+        } catch (error: any) { popNotification({ type: 'error', message: error }) }
     }
 
     const marks = [

@@ -14,6 +14,7 @@ export const homeyAPI = {
         get getFiltered(): string { return `${this.baseURL}/filtered` },
         get getMetaData(): string { return `${this.baseURL}/meta` },
         get getById(): string { return `${this.baseURL}` },
+        get create(): string { return `${this.baseURL}` },
     },
     images: {
         baseURL : `${homeyAPIBaseURL}/images`

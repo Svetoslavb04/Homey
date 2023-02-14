@@ -45,3 +45,13 @@ export const getMetaData = () =>
 
             return res.json()
         })
+
+export const create = (formData: FormData) =>
+    fetch(homeyAPI.properties.create, {
+        method: 'POST',
+        credentials: 'include',
+        body: formData
+    })
+        .then(res => {
+            return res.json()
+        })

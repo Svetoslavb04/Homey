@@ -2,10 +2,10 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { MenuItem } from '@mui/material';
 
-export default function NativeSelectDemo() {
+export default function NativeSelectDemo({ value, onChange }: { value: string, onChange: (e: SelectChangeEvent) => void }) {
   return (
     <Box sx={{ minWidth: 180 }}>
       <FormControl fullWidth variant="standard">
@@ -14,7 +14,9 @@ export default function NativeSelectDemo() {
         </InputLabel>
         <Select
           name='type'
-          defaultValue="House"
+          value={value}
+          onChange={onChange}
+          defaultValue="house"
           label="Type"
         >
           <MenuItem value={'house'}>House</MenuItem>

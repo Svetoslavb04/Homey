@@ -6,6 +6,7 @@ import Register from '../Pages/Auth/Register';
 import Home from '../Pages/Home';
 import Property from '../Pages/Property/Details';
 import PropertiesListing from '../Pages/Property/Listing';
+import Edit from '../Pages/Property/Edit';
 import AddProperty from '../Pages/Property/Create';
 import Logout from '../Pages/Auth/Logout';
 import FourOFour from '../Pages/404';
@@ -20,6 +21,7 @@ const RoutesList = () => {
             <Route index path='/' element={<Home />} />
             <Route path='/properties' element={<PropertiesListing />} />
             <Route path='/properties/:propertyId' element={<Property />} />
+            <Route index path='/properties/:propertyId/edit' element={<Edit />} />
             <Route path='*' element={<FourOFour />} />
         </Routes>
     )

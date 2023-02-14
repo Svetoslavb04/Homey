@@ -70,49 +70,49 @@ const formDataReducer = (state: PropertyFormData, action: Action) => {
 
     switch (action.type) {
         case ActionTypes.CHANGE_COUNTRY:
-            return { ...state, country: { error: state.country.error, value: action.payload.trimStart() || '' } }
+            return { ...state, country: { error: state.country.error, value: action.payload?.trimStart() || '' } }
         case ActionTypes.CHANGE_CITY:
-            return { ...state, city: { error: state.city.error, value: action.payload.trimStart() || '' } }
+            return { ...state, city: { error: state.city.error, value: action.payload?.trimStart() || '' } }
         case ActionTypes.VALIDATE_CITY:
-            if (action.payload.trim().length > 85 && action.payload.trim() !== '') {
+            if (action.payload?.trim().length > 85 && action.payload?.trim() !== '') {
                 return { ...state, city: { error: true, value: action.payload?.trim() || '' } }
             } else {
                 return { ...state, city: { error: false, value: action.payload?.trim() || '' } }
             }
         case ActionTypes.CHANGE_STREET:
-            return { ...state, street: { error: state.street.error, value: action.payload.trimStart() || '' } }
+            return { ...state, street: { error: state.street.error, value: action.payload?.trimStart() || '' } }
         case ActionTypes.VALIDATE_STREET:
-            if (action.payload.trim().length > 120 && action.payload.trim() !== '') {
+            if (action.payload?.trim().length > 120 && action.payload?.trim() !== '') {
                 return { ...state, street: { error: true, value: action.payload?.trim() || '' } }
             } else {
                 return { ...state, street: { error: false, value: action.payload?.trim() || '' } }
             }
         case ActionTypes.CHANGE_NUMBER:
-            return { ...state, number: { error: state.number?.error || false, value: action.payload.trimStart() } }
+            return { ...state, number: { error: state.number?.error || false, value: action.payload?.toString().trimStart() } }
         case ActionTypes.VALIDATE_NUMBER:
-            if ((isNaN(action.payload) || Number(action.payload) > 9999) && action.payload.trim() !== '') {
-                return { ...state, number: { error: true, value: action.payload.trim() } }
+            if ((isNaN(action.payload) || Number(action.payload) > 9999) && action.payload?.trim() !== '') {
+                return { ...state, number: { error: true, value: action.payload?.toString().trim() } }
             } else {
                 return { ...state, number: { error: false, value: Number(action.payload).toFixed(0) } }
             }
         case ActionTypes.CHANGE_NAME:
             return { ...state, name: { error: state.name.error, value: action.payload?.trimStart() || '' } }
         case ActionTypes.VALIDATE_NAME:
-            if ((action.payload.trim().length > 250 || action.payload.trim().length < 4) && action.payload.trim() !== '') {
+            if ((action.payload?.trim().length > 250 || action.payload?.trim().length < 4) && action.payload?.trim() !== '') {
                 return { ...state, name: { error: true, value: action.payload?.trim() || '' } }
             } else {
                 return { ...state, name: { error: false, value: action.payload?.trim() || '' } }
             }
         case ActionTypes.CHANGE_YEARBUILT:
-            return { ...state, yearBuilt: { error: state.yearBuilt.error || false, value: action.payload.trim() } }
+            return { ...state, yearBuilt: { error: state.yearBuilt.error || false, value: action.payload?.toString().trim() } }
         case ActionTypes.VALIDATE_YEARBUILT:
-            if ((isNaN(action.payload) || Number(action.payload) > (new Date().getFullYear() + 50)) && action.payload.trim() !== '') {
-                return { ...state, yearBuilt: { error: true, value: action.payload.trim() } }
+            if ((isNaN(action.payload) || Number(action.payload) > (new Date().getFullYear() + 50)) && action.payload?.trim() !== '') {
+                return { ...state, yearBuilt: { error: true, value: action.payload?.toString().trim() } }
             } else {
                 return { ...state, yearBuilt: { error: false, value: Number(action.payload).toFixed(0) } }
             }
         case ActionTypes.CHANGE_SIZE:
-            return { ...state, size: { error: state.size.error || false, value: action.payload.trim() } }
+            return { ...state, size: { error: state.size.error || false, value: action.payload?.toString().trim() } }
         case ActionTypes.CHANGE_BEDROOMS:
             return { ...state, bedrooms: { error: state.bedrooms.error || false, value: action.payload } }
         case ActionTypes.CHANGE_BATHROOMS:
@@ -120,31 +120,31 @@ const formDataReducer = (state: PropertyFormData, action: Action) => {
         case ActionTypes.CHANGE_GARAGES:
             return { ...state, garages: { error: state.garages.error || false, value: action.payload } }
         case ActionTypes.VALIDATE_SIZE:
-            if ((isNaN(action.payload) || Number(action.payload) > 999999) && action.payload.trim() !== '') {
-                return { ...state, size: { error: true, value: action.payload.trim() } }
+            if ((isNaN(action.payload) || Number(action.payload) > 999999) && action.payload?.toString().trim() !== '') {
+                return { ...state, size: { error: true, value: action.payload?.toString().trim() } }
             } else {
                 return { ...state, size: { error: false, value: Number(action.payload).toFixed(0) } }
             }
         case ActionTypes.CHANGE_DESCRIPTION:
             return { ...state, description: { error: state.description.error, value: action.payload?.trimStart() || '' } }
         case ActionTypes.VALIDATE_DESCRIPTION:
-            if ((action.payload.trim().length > 9999) && action.payload.trim() !== '') {
+            if ((action.payload?.trim().length > 9999) && action.payload?.trim() !== '') {
                 return { ...state, description: { error: true, value: action.payload?.trim() || '' } }
             } else {
                 return { ...state, description: { error: false, value: action.payload?.trim() || '' } }
             }
         case ActionTypes.CHANGE_PRICE:
-            return { ...state, price: { error: state.price.error || false, value: action.payload.trim() } }
+            return { ...state, price: { error: state.price.error || false, value: action.payload?.toString().trim() } }
         case ActionTypes.VALIDATE_PRICE:
-            if ((isNaN(action.payload) || Number(action.payload) > 99999999999) && action.payload.trim() !== '') {
-                return { ...state, price: { error: true, value: action.payload.trim() } }
+            if ((isNaN(action.payload) || Number(action.payload) > 99999999999) && action.payload?.toString().trim() !== '') {
+                return { ...state, price: { error: true, value: action.payload?.toString().trim() } }
             } else {
                 return { ...state, price: { error: false, value: Number(action.payload).toFixed(0) } }
             }
         case ActionTypes.CHANGE_STATUS:
-            return { ...state, status: { error: false, value: action.payload.trim() } }
+            return { ...state, status: { error: false, value: action.payload?.trim() } }
         case ActionTypes.CHANGE_TYPE:
-            return { ...state, type: { error: false, value: action.payload.trim() } }
+            return { ...state, type: { error: false, value: action.payload?.trim() } }
         default:
             return state
     }

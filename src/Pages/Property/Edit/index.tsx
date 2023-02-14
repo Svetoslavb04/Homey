@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import InputAdornment from '@mui/material/InputAdornment';
 import { countries } from '../../../assets/js/countries';
-import { citiesOfCountryURL } from '../../../assets/js/APIs';
+import { citiesOfCountryURL, homeyAPI } from '../../../assets/js/APIs';
 import { IProperty } from '../../../interfaces/IProperty';
 
 import Status from './Components/radioStatusComponent';
@@ -27,24 +27,71 @@ import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOu
 
 import { ActionTypes, PropertyFormData, useEditFormData } from './useEditFormData';
 import { useNotificationContext } from '../../../contexts/NotificationContext/NotificationContext';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
+import { edit, getById } from '../../../services/propertyService';
 
 
-const AdvancedCheckBox: FC<{ label: string, Icon: typeof SvgIcon, name: string }> = ({ label, Icon, name }) =>
+const AdvancedCheckBox: FC<{ label: string, Icon: typeof SvgIcon, name: string, checked?: boolean }> = ({ label, Icon, name, checked }) =>
     <div className='property-filter-advanced-checkbox-item'>
         <FormControlLabel
-            control={<Checkbox name={name} sx={{ '& .MuiSvgIcon-root': { fontSize: 16 } }} disableRipple checkedIcon={<Icon />} />}
+            control={<Checkbox checked={checked || false} name={name} sx={{ '& .MuiSvgIcon-root': { fontSize: 16 } }} disableRipple checkedIcon={<Icon />} />}
             label={label}
         />
     </div>
 
 const EditProperty: FC = () => {
 
-    const [selectedCountry, setSelectedCountry] = useState<string>('BG');
-    const [availableCities, setAvailableCities] = useState<string[]>([]);
+    const { propertyId } = useParams();
 
     const { popNotification } = useNotificationContext();
     const navigate = useNavigate();
+
+    const [property, setProperty] = useState<IProperty | null>(null);
+
+    const [claims, setClaims] = useState<string[]>();
+
+    useEffect(() => {
+        getById(propertyId || '')
+            .then(payload => {
+
+                const property = { ...payload[0] }
+
+                if (!property._id) {
+                    navigate('/properties')
+                    return popNotification({ type: 'error', message: 'Property not found!' })
+                }
+
+                setProperty(property)
+            })
+            .catch(err => console.log(err))
+    }, [propertyId, navigate, popNotification])
+
+    useEffect(() => {
+
+        if (property) {
+            dispatch({ type: ActionTypes.CHANGE_NAME, payload: property.name })
+            dispatch({ type: ActionTypes.CHANGE_COUNTRY, payload: property.country })
+            dispatch({ type: ActionTypes.CHANGE_CITY, payload: property.city })
+            dispatch({ type: ActionTypes.CHANGE_STREET, payload: property.street })
+            dispatch({ type: ActionTypes.CHANGE_NUMBER, payload: property.number || 0 })
+            dispatch({ type: ActionTypes.CHANGE_TYPE, payload: property.type })
+            dispatch({ type: ActionTypes.CHANGE_NAME, payload: property.name })
+            dispatch({ type: ActionTypes.CHANGE_PRICE, payload: property.price })
+            dispatch({ type: ActionTypes.CHANGE_SIZE, payload: property.size })
+            dispatch({ type: ActionTypes.CHANGE_STATUS, payload: property.status })
+            dispatch({ type: ActionTypes.CHANGE_BATHROOMS, payload: property.bathrooms })
+            dispatch({ type: ActionTypes.CHANGE_BEDROOMS, payload: property.bedrooms })
+            dispatch({ type: ActionTypes.CHANGE_GARAGES, payload: property.garages })
+            dispatch({ type: ActionTypes.CHANGE_YEARBUILT, payload: property.yearBuilt })
+            dispatch({ type: ActionTypes.CHANGE_DESCRIPTION, payload: property.description })
+
+            setClaims(property.claims.map(c => c.name))
+        }
+
+    }, [property])
+    const [formData, dispatch] = useEditFormData();
+
+    const [availableCities, setAvailableCities] = useState<string[]>([]);
 
     const checkBoxes = [
         {
@@ -78,30 +125,32 @@ const EditProperty: FC = () => {
         }
     ];
 
+    const nonCustomCheckboxes = ['wifi', 'airConditioning', 'fireplace', 'balcony', 'fitness', 'swimmingPool', 'parking']
+
     useEffect(() => {
 
         fetch('http://ip-api.com/json')
             .then(res => res.json())
-            .then(payload => { setSelectedCountry(payload.country) })
+            .then(payload => { dispatch({ type: ActionTypes.CHANGE_COUNTRY, payload: payload.country }) })
 
-    }, [setSelectedCountry]);
+    }, [dispatch]);
 
     useEffect(() => {
 
-        if (!countries.some(c => c.name === selectedCountry)) { return setAvailableCities([]) }
+        if (!countries.some(c => c.name === formData.country.value)) { return setAvailableCities([]) }
 
         fetch(citiesOfCountryURL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ country: countries.filter(c => c.name === selectedCountry)[0].name })
+            body: JSON.stringify({ country: countries.filter(c => c.name === formData.country.value)[0].name })
         })
             .then(res => res.json())
             .then(payload => setAvailableCities(payload.data))
             .catch(err => console.log(err))
 
-    }, [selectedCountry]);
+    }, [formData.country.value]);
 
     const handleCheckBoxButtonClick = () => {
         const checkboxInput = addNewcheckBoxItemRef.current
@@ -115,30 +164,23 @@ const EditProperty: FC = () => {
     const [customCheckBoxes, setCustomCheckBoxes] = useState<number>(0);
     const addNewcheckBoxItemRef = useRef<HTMLDivElement | null>(null);
 
-    const [formData, dispatch] = useEditFormData();
-
     const handleFormSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
-        if (validateValues(formData)) {
-            popNotification({ type: 'success', message: 'Succesful edit!' });
-            return
-        }
+        if (validateValues(formData)) { return }
 
         const serverFormData = new FormData(e.currentTarget as HTMLFormElement)
-        serverFormData.forEach((value, key) => {
-            console.log(value, key);
-        })
+        serverFormData.append('country', formData.country.value);
 
         try {
-            //const res = await editProperty(normalizedPropertyInfo)
+            const res = await edit(property?._id || '', serverFormData)
 
-            //if (res.status !== 200) { throw res.message }
+            if (res.status !== 200) { throw res.message }
 
             popNotification({ type: 'success', message: 'Succesful edit!' });
-            //navigate('/', { replace: true });
+            navigate('/', { replace: true });
 
-        } catch (error: any) { popNotification({ type: 'error', message: error }) }
+        } catch (error: any) { popNotification({ type: 'error', message: error.message }) }
     }
 
 
@@ -271,8 +313,25 @@ const EditProperty: FC = () => {
                                     onBlur={(e) => { dispatch({ type: ActionTypes.VALIDATE_NUMBER, payload: e.target.value }) }}
                                 />
                             </div>
+                            <div className='inputField'>
+                                <TextField
+                                    fullWidth
+                                    label="Year Built"
+                                    name='yearBuilt'
+                                    helperText={formData.yearBuilt?.error && "Year build should bot be after " + (new Date().getFullYear() + 50)}
+                                    variant="standard"
+                                    color="secondary"
+                                    error={formData.yearBuilt?.error}
+                                    value={formData.yearBuilt?.value === 0 ? '' : formData.yearBuilt?.value || ''}
+                                    onChange={(e) => { dispatch({ type: ActionTypes.CHANGE_YEARBUILT, payload: e.target.value }) }}
+                                    onBlur={(e) => { dispatch({ type: ActionTypes.VALIDATE_YEARBUILT, payload: e.target.value }) }}
+                                />
+                            </div>
                             <div id='status' className='inputField'>
-                                <Status />
+                                <Status
+                                    value={formData.status.value.toString()}
+                                    onChange={(newValue) => { dispatch({ type: ActionTypes.CHANGE_STATUS, payload: newValue }) }}
+                                />
                             </div>
                             <div id="price" className='inputField'>
                                 <TextField
@@ -292,10 +351,15 @@ const EditProperty: FC = () => {
                                 />
                             </div>
                             <div id="number-bedrooms" className='inputField'>
-                                <Bedrooms />
+                                <Bedrooms
+                                    value={formData.bedrooms.value.toString()}
+                                    onChange={(e) => { dispatch({ type: ActionTypes.CHANGE_BEDROOMS, payload: e.target.value }) }}
+                                />
                             </div>
-                            <div id="number-bedrooms" className='inputField'>
-                                <Garages />
+                            <div id="number-garages" className='inputField'>
+                                <Garages
+                                    value={formData.garages.value.toString()}
+                                    onChange={(e) => { dispatch({ type: ActionTypes.CHANGE_GARAGES, payload: e.target.value }) }} />
                             </div>
                         </div>
                     </div>
@@ -317,7 +381,33 @@ const EditProperty: FC = () => {
                     </div>
                     <div className='edit-checkbox-row df fww'>
                         {
-                            checkBoxes.map(c => <AdvancedCheckBox key={c.name} label={c.label} name={c.name} Icon={c.Icon} />)
+                            checkBoxes.map(c => <AdvancedCheckBox
+                                checked={claims?.some(name => name === c.name)}
+                                key={c.name}
+                                label={c.label}
+                                name={c.name}
+                                Icon={c.Icon}
+                            />)
+                        }
+                        {
+                            property?.claims.filter(c => !nonCustomCheckboxes.includes(c.value))
+                                .map((c, i) =>
+                                    <div key={i} className='property-filter-advanced-checkbox-item property-filter-advanced-checkbox-new-item df'>
+                                        <Checkbox defaultChecked sx={{ '& .MuiSvgIcon-root': { fontSize: 16 } }} disableRipple />
+                                        <Input
+                                            placeholder="Enter keyword"
+                                            className='property-filter-advanced-new-checkbox-label'
+                                            value={c.value}
+                                            onChange={(e) => {
+                                                const input = e.target.parentElement?.parentElement?.children[0].children[0];
+
+                                                if (input && input.tagName.toLowerCase() === 'input') {
+                                                    (input as HTMLInputElement).name = e.target.value
+                                                }
+                                            }}
+                                        />
+                                    </div>
+                                )
                         }
                         {
                             Array.from(Array(customCheckBoxes).keys()).map((_, i) =>
@@ -347,10 +437,10 @@ const EditProperty: FC = () => {
                         </div>
                     </div>
                     <div id='images'>
-                        <input name="image1" type="file" className="image" accept="image/*" required />
-                        <input name="image2" type="file" className="image" accept="image/*" required />
-                        <input name="image3" type="file" className="image" accept="image/*" required />
-                        <input name="image4" type="file" className="image" accept="image/*" required />
+                        <input name="image" type="file" className="image" accept="image/*" required />
+                        <input name="image" type="file" className="image" accept="image/*" required />
+                        <input name="image" type="file" className="image" accept="image/*" required />
+                        <input name="image" type="file" className="image" accept="image/*" required />
                     </div>
                     <div id='add-button-container'>
                         <Button fullWidth variant="contained" size='large' id='add-button' type='submit'>Edit</Button>

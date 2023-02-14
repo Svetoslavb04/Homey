@@ -33,7 +33,7 @@ const Property: FC = () => {
         getById(propertyId || '')
             .then(payload => {
 
-                const property = { ...payload[0][0], claims: payload[0].claims }
+                const property = { ...payload[0] }
 
                 if (!property._id) {
                     navigate('/properties')
@@ -88,10 +88,10 @@ const Property: FC = () => {
         name: 'wifi',
         Icon: WifiIcon,
     }, {
-        name: 'air conditioning',
+        name: 'airConditioning',
         Icon: AcUnitIcon,
     }, {
-        name: 'fire place',
+        name: 'fireplace',
         Icon: FireplaceIcon,
     }, {
         name: 'balcony',
@@ -100,7 +100,7 @@ const Property: FC = () => {
         name: 'fitness',
         Icon: FitnessCenterIcon,
     }, {
-        name: 'swimming pool',
+        name: 'swimmingPool',
         Icon: PoolIcon,
     }, {
         name: 'parking',
@@ -108,10 +108,14 @@ const Property: FC = () => {
     }];
 
     const claims = [];
+    const noIconClaims = [];
+
     for (const extra of property.claims) {
         const claim = IconifiedExtras.find(c => c.name.toLowerCase() === extra.value.toLowerCase())
         if (claim) {
             claims.push({ Icon: claim.Icon, name: claim.name });
+        } else {
+            noIconClaims.push(extra.name)
         }
     };
 
@@ -154,8 +158,14 @@ const Property: FC = () => {
                     {property.claims.length > 0
                         && <div>
                             <b className='property-info'>Extras : </b>
-                            <div className='extras'>{claims
-                                .map(e => <div className='extra' key={e.name}><e.Icon /> {e.name}</div>)}
+                            <div className='extras'>
+                                {claims
+                                    .map(e => <div className='extra' key={e.name}><e.Icon /> {e.name}</div>)
+                                }
+                                {
+                                    noIconClaims
+                                        .map(c => <div className='extra' key={c}>{c}</div>)
+                                }
                             </div>
                         </div>
                     }

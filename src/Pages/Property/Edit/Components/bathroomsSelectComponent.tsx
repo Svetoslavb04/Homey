@@ -3,9 +3,7 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { MenuItem } from '@mui/material';
 
-
-
-export default function NativeSelectDemo({ value, onChange }: { value: string, onChange(e: SelectChangeEvent): void }) {
+export default function Bathrooms({ value, onChange }: { value: string, onChange(e: SelectChangeEvent): void }) {
     return (
         <FormControl variant='standard' fullWidth>
             <InputLabel>Bathrooms</InputLabel>

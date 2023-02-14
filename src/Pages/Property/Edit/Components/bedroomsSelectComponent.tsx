@@ -1,16 +1,15 @@
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { MenuItem } from '@mui/material';
 
-
-
-export default function NativeSelectDemo() {
+export default function Bedrooms({ value, onChange }: { value: string, onChange(e: SelectChangeEvent): void }) {
     return (
         <FormControl variant='standard' fullWidth>
             <InputLabel>Bedrooms</InputLabel>
              <Select
-                defaultValue="1"
+                value={value}
+                onChange={onChange}
                 name="bedrooms"
                 label="Bedrooms"
                 >

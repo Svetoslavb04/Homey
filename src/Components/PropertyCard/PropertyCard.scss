@@ -6,9 +6,17 @@
 
     .home-top-property-description {
         position: absolute;
+        max-width: 60%;
         padding: 10px 10px 10px 5px;
         bottom: 0;
         background-color: v.$background-color;
+
+        * {
+            user-select: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
         h5 {
             color: v.$gold;
@@ -33,12 +41,21 @@
 
         img {
             cursor: pointer;
+            max-height: 80vh;
             max-width: 100%;
+            width: 100%;
             height: auto;
+
+            object-fit: cover;
+
             transition: all 0.5s;
 
             &:hover {
                 transform: scale(0.9);
+            }
+
+            @media screen and (max-width: 780px) {
+                max-height: 90vh;
             }
         }
     }

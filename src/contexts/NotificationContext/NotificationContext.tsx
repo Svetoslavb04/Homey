@@ -37,7 +37,7 @@ export const NotificationProvider: FC<{ children: ReactNode }> = ({ children }) 
         setNotifications(notifications => notifications.filter(n => n.message !== message));
 
     const popNotification = (newNotification: INotification) => {
-        
+
         const notificationIndex = notifications.findIndex(n => n.message === newNotification.message);
 
         if (notificationIndex > -1) {

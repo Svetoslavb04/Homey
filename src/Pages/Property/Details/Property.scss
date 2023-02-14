@@ -1,13 +1,8 @@
 @use "src/assets/scss/variables.scss" as v;
 
-#property-main {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+#property-container {
     color: v.$grey-font;
+    position: relative;
     hr {
         width: 80%;
     }
@@ -15,7 +10,7 @@
         color: v.$gold;
     }
     #contact-section {
-        margin-bottom: 30px;
+        margin: 30px auto;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -68,6 +63,7 @@
     }
 
     #top-image {
+        background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
         width: 100%;
@@ -119,13 +115,12 @@
                 width: 39.7vw;
                 cursor: pointer;
                 @media screen and (max-width: 1194px) {
-                    height: 33vh;
-                    width: 65%;
+                    height: 45vh;
+                    width: 80%;
                 }
 
                 @media screen and (max-width: 803px) {
-                    height: 30vh;
-                    width: 60%;
+                    height: 40vh;
                 }
 
                 @media screen and (max-width: 646px) {
@@ -135,52 +130,48 @@
 
                 @media screen and (max-width: 572px) {
                     height: 25vh;
-                    width: 100%;
+                    width: 90%;
                 }
             }
 
             #property-secondary-images {
                 display: flex;
                 flex-direction: row;
-                //align-items: center;
-                //justify-content: center;
+                align-items: center;
+                justify-content: center;
                 width: 39.7vw;
                 height: 43.6vh;
                 gap: 30px;
+
                 @media screen and (max-width: 1194px) {
-                    height: 33vh;
-                    width: 65%;
-                }
-                @media screen and (max-width: 803px) {
-                    height: 30vh;
-                    width: 60%;
+                    height: 35vh;
+                    width: 80%;
                 }
 
-                @media screen and (max-width: 646px) {
-                    height: 25vh;
-                    width: 60%;
+                @media screen and (max-width: 750px) {
+                    flex-direction: column;
+                    height: unset;
                 }
 
                 @media screen and (max-width: 572px) {
-                    flex-direction: column;
-                    align-items: center;
-                    height: 60vh;
-                    width: 60%;
-                    margin-bottom: 10px;
+                    width: 90%;
                 }
+
                 .secondary-image {
                     position: initial;
                     height: 90%;
                     width: 50%;
 
-                    @media screen and (max-width: 572px) {
-                        height: 28vh;
+                    @media screen and (max-width: 750px) {
                         width: 100%;
+                        max-height: 80vh;
                     }
+
 
                     img {
                         height: 100%;
                         width: 100%;
+                        object-fit: cover;
                         cursor: pointer;
                     }
                 }
@@ -195,6 +186,11 @@
             font-size: 18px;
             width: 320px;
             color: v.$grey-font;
+
+            @media screen and (max-width: 1100px) {
+                width: 80%;
+                margin: 0 auto;
+            }
 
             .extras {
                 display: flex;

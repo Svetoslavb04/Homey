@@ -51,6 +51,8 @@ const AddProperty: FC = () => {
 
         if (!countries.some(c => c.name === formData.country.value)) { return setAvailableCities([]) }
 
+        dispatch({ type: ActionTypes.CHANGE_CITY, payload: ''})
+
         fetch(citiesOfCountryURL, {
             method: 'POST',
             headers: {
@@ -59,7 +61,9 @@ const AddProperty: FC = () => {
             body: JSON.stringify({ country: countries.filter(c => c.name === formData.country.value)[0]?.name })
         })
             .then(res => res.json())
-            .then(payload => setAvailableCities(payload.data))
+            .then(payload => {
+                setAvailableCities(payload.data)
+            })
             .catch(err => console.log(err))
 
     }, [formData.country.value]);
@@ -192,7 +196,6 @@ const AddProperty: FC = () => {
         currentFormData.forEach((value, key) => {
             serverFormData.append('claims', key)
         })
-
     }
 
     const marks = [

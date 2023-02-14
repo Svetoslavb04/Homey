@@ -13,7 +13,7 @@ import Type from './Components/typeSelectComponent';
 import Bedrooms from './Components/bedroomsSelectComponent';
 import Bathrooms from './Components/bathroomsSelectComponent';
 import Garages from './Components/garagesSelectComponent';
-import CountrySelect from '../../../Components/Core/CountrySelect';
+import CountrySelect from '../../../Components/CountrySelect';
 import { Autocomplete, Checkbox, FormControlLabel, Input, SelectChangeEvent, SvgIcon } from '@mui/material';
 
 import WifiIcon from '@mui/icons-material/Wifi';
@@ -129,7 +129,7 @@ const EditProperty: FC = () => {
         serverFormData.forEach((value, key) => {
             console.log(value, key);
         })
-        
+
         try {
             //const res = await editProperty(normalizedPropertyInfo)
 

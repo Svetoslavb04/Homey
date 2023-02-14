@@ -187,7 +187,7 @@ const Property: FC = () => {
                             />
                         )
                     }
-                    <CloseIcon className="btn-close" onClick={() => closeImageHandler()} />
+                    <CloseIcon className="btn-close" fontSize='small' onClick={() => closeImageHandler()} />
                     <ArrowForward className='arrow' id='arrow-forward' onClick={() => forwardImageOpen(imageToOpen)} />
                 </div>
             }

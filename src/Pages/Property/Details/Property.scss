@@ -190,7 +190,19 @@
                 width: 80%;
                 margin: 0 auto;
             }
+            #owner-buttons{
+                margin-top: 40px;
+                display: flex;
+                flex-direction: row;
+                align-items: flex-start;
+                justify-content: space-between;
+                //gap: 20px;
+                width: 230px;
 
+               .owner-button{
+                width:100px;
+               }
+            }
             .extras {
                 display: flex;
                 flex-direction: row;

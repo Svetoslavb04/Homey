@@ -7,7 +7,6 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { countries } from '../../../assets/js/countries';
 import { citiesOfCountryURL } from '../../../assets/js/APIs';
 
-
 import Status from './Components/radioStatusComponent';
 import Type from './Components/typeSelectComponent';
 import Bedrooms from './Components/bedroomsSelectComponent';
@@ -119,26 +118,39 @@ const EditProperty: FC = () => {
       const [formData, dispatch] = useRegisterFormData();
 
       const handleFormSubmit = (e: FormEvent) => {
-        e.preventDefault();
+            e.preventDefault();
 
-        const info = {
-            country: formData.country,
-            city: formData.city,
-            street: formData.street,
-            number: formData.number,
-            type: formData.type,
-            status: formData.status,
-            name: formData.name,
-            price: formData.price,
-            size: formData.size,
-            bedrooms: formData.bedrooms,
-            bathrooms: formData.bathrooms,
-            garages: formData.garages,
-            description: formData.description,
-        }
+            const info = {
+                country: formData.country,
+                city: formData.city,
+                street: formData.street,
+                number: formData.number,
+                type: formData.type,
+                status: formData.status,
+                name: formData.name,
+                price: formData.price,
+                size: formData.size,
+                bedrooms: formData.bedrooms,
+                bathrooms: formData.bathrooms,
+                garages: formData.garages,
+                description: formData.description,
+            }
 
-        if (validateValues(info)) { return }
+       
+            // if (validateValues(userInfo)) { return }
 
+            // const normalizedUserInfo = normalizeData(userInfo) as IUserData;
+
+            // try {
+            //     const res = await registerUser(normalizedUserInfo)
+
+            //     if (res.status !== 200) { throw res.message }
+                
+            //     updateUser()
+            //     popNotification({ type: 'success', message: 'Succesful registration!' })
+            //     navigate('/', { replace: true });
+
+            // } catch (error: any) { popNotification({ type: 'error', message: error }) }
         }
 
 

@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import InputAdornment from '@mui/material/InputAdornment';
 import { countries } from '../../../assets/js/countries';
-import { citiesOfCountryURL, homeyAPI } from '../../../assets/js/APIs';
+import { citiesOfCountryURL } from '../../../assets/js/APIs';
 import { IProperty } from '../../../interfaces/IProperty';
 
 import Status from './Components/radioStatusComponent';
@@ -53,6 +53,8 @@ const EditProperty: FC = () => {
 
     const [claims, setClaims] = useState<string[]>();
 
+    const [formData, dispatch] = useEditFormData();
+
     useEffect(() => {
         getById(propertyId || '')
             .then(payload => {
@@ -97,8 +99,7 @@ const EditProperty: FC = () => {
             setClaims(property.claims.map(c => c.name))
         }
 
-    }, [property])
-    const [formData, dispatch] = useEditFormData();
+    }, [property, dispatch, user._id, navigate, popNotification])
 
     const [availableCities, setAvailableCities] = useState<string[]>([]);
 
@@ -183,15 +184,14 @@ const EditProperty: FC = () => {
 
         try {
             const res = await edit(property?._id || '', serverFormData)
-
+            
             if (!res[0]?._id) { throw res.message }
 
             popNotification({ type: 'success', message: 'Succesful edit!' });
             navigate(`/properties/${propertyId}`, { replace: true });
 
         } catch (error: any) {
-            console.log(error);
-            popNotification({ type: 'error', message: error.message })
+            popNotification({ type: 'error', message: error.message || error })
         }
     }
 

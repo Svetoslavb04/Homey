@@ -1,7 +1,7 @@
 import './CountrySelect.scss';
 import { FC } from 'react';
 
-import { countries } from '../../../assets/js/countries';
+import { countries } from '../../assets/js/countries';
 
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
@@ -29,7 +29,7 @@ const CountrySelect: FC<CountrySelectProps> = ({ className, label, value, onChan
                 {
                     hasValueAny && <MenuItem
                         key={'any'}
-                        value={'any'}
+                        value={'Any'}
                     >
                         <div className='country-select-item'>
                             <span className='country-select-name'>Any</span>

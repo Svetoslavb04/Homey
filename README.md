@@ -1,9 +1,5 @@
 # Homey | Property board for NOIT
 
-<p align="center">
-  <img src="public/assets/images/logo_not_transperant.png" width="40%">
-</p>
-
 ## Live demo
 
 Currently unavailable
@@ -20,8 +16,8 @@ On the client-side we are using MaterialUI and SASS for better stylization
 Many more will come...
 
 - [x] Home with listing
-- [ ] Login or Register as Buyer or Agency
-- [ ] CRUD operation on property
+- [X] Login or Register as Buyer or Agency
+- [X] CRUD operation on property
 - [ ] User & Agency profile
 - [ ] Shopping cart
 
@@ -32,7 +28,14 @@ Many more will come...
 - SASS
 - NodeJS
 - MongoDB
+- MongoDB GridFs
 - Express
 - Mongoose
 
 > THE WHOLE PROJECT HAS BEEN MADE FOR EDUCATION PURPOSES ONLY!
+
+### How to run
+
+1. Configure homeyAPIBaseURL in src/assets/js/APIs.ts
+2. To start in development environment: run npm start
+3. To build for production: run npm run build

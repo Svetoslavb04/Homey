@@ -1,7 +1,7 @@
 import './PropertyCardExtended.scss'
 
 import { FC, MouseEvent } from 'react'
-import { IProperty } from '../../../interfaces/IProperty'
+import { IProperty } from '../../interfaces/IProperty'
 
 import BedOutlinedIcon from '@mui/icons-material/BedOutlined';
 import BathtubOutlinedIcon from '@mui/icons-material/BathtubOutlined';

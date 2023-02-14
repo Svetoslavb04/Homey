@@ -12,7 +12,7 @@ export default function RowRadioButtonsGroup() {
       <RadioGroup
         row
         aria-labelledby="demo-row-radio-buttons-group-label"
-        name="row-radio-buttons-group"
+        name="status"
       >
         <FormControlLabel value="sale" control={<Radio />} label="for sale" />
         <FormControlLabel value="rent" control={<Radio />} label="for rent" />

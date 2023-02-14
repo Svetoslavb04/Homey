@@ -70,7 +70,7 @@ const formDataReducer = (state: PropertyFormData, action:Action)=>{
         case ActionTypes.CHANGE_STREET:
             return {...state, street: {error: state.street.error, value:action.payload.trim()}}
         case ActionTypes.VALIDATE_STREET:
-            if (action.payload.trim().length > 120 && action.payload.trim() !== '') {
+            if (action.payload.trim().length > 60 && action.payload.trim() !== '') {
                 return { ...state, street: { error: true, value: state.street.value } }
             } else {
                 return { ...state, street: { error: false, value: state.street.value } }
@@ -83,19 +83,27 @@ const formDataReducer = (state: PropertyFormData, action:Action)=>{
             } else {
                 return { ...state, number: { error: false, value: state.number.value } }
             }
+        case ActionTypes.CHANGE_NAME:
+            return {...state, name: {error: state.name.error, value:action.payload.trim()}}
+        case ActionTypes.VALIDATE_NAME:
+            if (action.payload.trim().length < 4 && action.payload.trim() !== '') {
+                return { ...state, name: { error: true, value: state.name.value } }
+            } else {
+                return { ...state, name: { error: false, value: state.name.value } }
+            }
         case ActionTypes.CHANGE_PRICE:
             return {...state, price: {error: state.price.error, value:action.payload.trim()}}
     
         case ActionTypes.VALIDATE_PRICE:
-            if (action.payload > 99999999999 && action.payload < 0 && action.payload.trim() !== '') {
+            if (action.payload > 99999999999  && action.payload.trim() !== '') {
                 return { ...state, price: { error: true, value: state.price.value } }
             } else {
-                return { ...state, number: { error: false, value: state.price.value } }
+                return { ...state, price: { error: false, value: state.price.value } }
             }
         case ActionTypes.CHANGE_SIZE:
             return {...state, size: {error: state.size.error, value:action.payload.trim()}}
         case ActionTypes.VALIDATE_SIZE:
-            if (action.payload > 999999 && action.payload < 0 && action.payload.trim() !== '') {
+            if (action.payload > 9999 && action.payload < 0 && action.payload.trim() !== '') {
                 return { ...state, size: { error: true, value: state.size.value } }
             } else {
                 return { ...state, size: { error: false, value: state.size.value } }

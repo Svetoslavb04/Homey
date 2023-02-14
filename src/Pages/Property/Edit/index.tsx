@@ -1,5 +1,5 @@
 import './Edit.scss';
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, FormEvent, useEffect, useRef, useState } from 'react';
 
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -24,6 +24,7 @@ import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import PoolIcon from '@mui/icons-material/Pool';
 import LocalParkingIcon from '@mui/icons-material/LocalParking';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
+import { ActionTypes, PropertyFormData, useRegisterFormData } from './useEditFormData';
 
 
 const AdvancedFilterCheckBox: FC<{ label: string, Icon: typeof SvgIcon, name: string }> = ({ label, Icon, name }) =>
@@ -40,6 +41,8 @@ const EditProperty: FC = () => {
     
     const [selectedCountry, setSelectedCountry] = useState<string>('BG');
     const [availableCities, setAvailableCities] = useState<string[]>([]);
+
+    //const { popNotification } = useNotificationContext();
 
     const checkBoxes = [
         {
@@ -113,14 +116,52 @@ const EditProperty: FC = () => {
       const [customCheckBoxes, setCustomCheckBoxes] = useState<number>(0);
       const addNewcheckBoxItemRef = useRef<HTMLDivElement | null>(null);
 
+      const [formData, dispatch] = useRegisterFormData();
 
+      const handleFormSubmit = (e: FormEvent) => {
+        e.preventDefault();
+
+        const info = {
+            country: formData.country,
+            city: formData.city,
+            street: formData.street,
+            number: formData.number,
+            type: formData.type,
+            status: formData.status,
+            name: formData.name,
+            price: formData.price,
+            size: formData.size,
+            bedrooms: formData.bedrooms,
+            bathrooms: formData.bathrooms,
+            garages: formData.garages,
+            description: formData.description,
+        }
+
+        if (validateValues(info)) { return }
+
+        }
+
+
+        function validateValues(object: PropertyFormData) {
+            let flag = false;
+
+            if (Object.values(object).some(v => v.error)) {
+               // popNotification({ type: 'error', message: 'All fields must be valid!' })
+                flag = true;
+            } else if (Object.values(object).some(v => v.value === '')) {
+                //popNotification({ type: 'error', message: 'All fields are required!' })
+                flag = true;
+            }
+
+            return flag
+        }
 
     return (
 
         <div id='image-background'>
             <div id='edit-container'>
                 <div className='edit-form-wrapper'>
-                    <form id='edit-form'>
+                    <form id='edit-form' onSubmit={handleFormSubmit}>
                         <h1>Edit page</h1>  
                         <div id='info-container'>
 
@@ -131,6 +172,7 @@ const EditProperty: FC = () => {
                                         label='Country'
                                         value={selectedCountry}
                                         onChange={handleCountryChange}
+                                        
                                     />
                                 </div>
 
@@ -141,7 +183,11 @@ const EditProperty: FC = () => {
                                         variant="standard"
                                         color="secondary"
                                         name='street'
-                                        error={false}
+                                        helperText={formData.street.error && "The name of the street should be less than 60 characters long!"}
+                                        value={formData.street.value}
+                                        error={formData.street.error}
+                                        onChange={(e) => { dispatch({ type: ActionTypes.CHANGE_STREET, payload: e.target.value }) }}
+                                        onBlur={(e) => { dispatch({ type: ActionTypes.VALIDATE_STREET, payload: e.target.value }) }}
                                     />
                                 </div>
 
@@ -156,7 +202,11 @@ const EditProperty: FC = () => {
                                         variant="standard"
                                         color="secondary"
                                         name='name'
-                                        error={false}
+                                        helperText={formData.name.error && "The name should be at least 4 characters long!"}
+                                        value={formData.name.value}
+                                        error={formData.name.error}
+                                        onChange={(e) => { dispatch({ type: ActionTypes.CHANGE_NAME, payload: e.target.value }) }}
+                                        onBlur={(e) => { dispatch({ type: ActionTypes.VALIDATE_NAME, payload: e.target.value }) }}
                                     />
                                 </div>
                                 <div id="size" className='inputField'>
@@ -166,7 +216,11 @@ const EditProperty: FC = () => {
                                         variant="standard"
                                         color="secondary"
                                         name='size'
-                                        error={false}
+                                        helperText={formData.size.error && "The property size cannot be more than 9999 sqare meters!"}
+                                        value={formData.size.value}
+                                        error={formData.size.error}
+                                        onChange={(e) => { dispatch({ type: ActionTypes.CHANGE_SIZE, payload: e.target.value }) }}
+                                        onBlur={(e) => { dispatch({ type: ActionTypes.VALIDATE_SIZE, payload: e.target.value }) }}
                                         InputProps={{
                                            endAdornment: <InputAdornment position="end">m²</InputAdornment>,
                                           }}
@@ -174,16 +228,6 @@ const EditProperty: FC = () => {
                                 </div>
                                 <div id="number-batrooms" className='inputField'>
                                     <Bathrooms/>
-                                </div>
-                                <div id="agency" className='inputField'>
-                                    <TextField
-                                        fullWidth
-                                        label="Agency Name"
-                                        variant="standard"
-                                        color="secondary"
-                                        name='agency'
-                                        error={false}
-                                    />
                                 </div>
                             </div>
                               
@@ -215,9 +259,13 @@ const EditProperty: FC = () => {
                                         fullWidth
                                         label="Number"
                                         name='number'
+                                        helperText={formData.number.error && "Street number should be less then 9999!"}
+                                        value={formData.number.value}
+                                        error={formData.number.error}
                                         variant="standard"
                                         color="secondary"
-                                        error={false}
+                                        onChange={(e) => { dispatch({ type: ActionTypes.CHANGE_NUMBER, payload: e.target.value }) }}
+                                        onBlur={(e) => { dispatch({ type: ActionTypes.VALIDATE_NUMBER, payload: e.target.value }) }}
                                     />
                                 </div>
 
@@ -231,7 +279,11 @@ const EditProperty: FC = () => {
                                         name='price'
                                         variant="standard"
                                         color="secondary"
-                                        error={false}
+                                        helperText={formData.price.error && "Price should be less than 9999999999!"}
+                                        value={formData.price.value}
+                                        error={formData.price.error}
+                                        onChange={(e) => { dispatch({ type: ActionTypes.CHANGE_PRICE, payload: e.target.value }) }}
+                                        onBlur={(e) => { dispatch({ type: ActionTypes.VALIDATE_PRICE, payload: e.target.value }) }}
                                         InputProps={{
                                             endAdornment: <InputAdornment position="end">€</InputAdornment>,
                                         }}
@@ -252,6 +304,11 @@ const EditProperty: FC = () => {
                                         rows={4}
                                         placeholder=". . ."
                                         variant="outlined"
+                                        helperText={formData.description.error && "Description length should be less than 9999 symbols!"}
+                                        value={formData.description.value}
+                                        error={formData.description.error}
+                                        onChange={(e) => { dispatch({ type: ActionTypes.CHANGE_DESCRIPTION, payload: e.target.value }) }}
+                                        onBlur={(e) => { dispatch({ type: ActionTypes.VALIDATE_DESCRIPTION, payload: e.target.value }) }}
                                     />
                                 </div>
                             </div>
@@ -291,10 +348,10 @@ const EditProperty: FC = () => {
                         </div>  
 
                         <div id='images'>
-                            <input type="file" className="image" accept="image/*" required/>
-                            <input type="file" className="image" accept="image/*" required/>
-                            <input type="file" className="image" accept="image/*" required/>
-                            <input type="file" className="image" accept="image/*" required/>
+                            <input name="image1" type="file" className="image" accept="image/*" required/>
+                            <input name="image2" type="file" className="image" accept="image/*" required/>
+                            <input name="image3" type="file" className="image" accept="image/*" required/>
+                            <input name="image4" type="file" className="image" accept="image/*" required/>
                         </div>
                         <div id='add-button-container'>
                             <Button fullWidth variant="contained" size='large' id='add-button' type='submit'>Edit</Button>

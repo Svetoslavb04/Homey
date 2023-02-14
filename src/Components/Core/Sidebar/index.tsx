@@ -38,10 +38,8 @@ const Sidebar: FC = () => {
 
     const navLinks: INavLink[] = [
         { to: '/', text: 'Home', visibleTo: [Role.guest, Role.user, Role.agency] },
-        { to: '/profile', text: 'My Profile', visibleTo: [Role.user, Role.agency] },
         { to: '/properties', text: 'Properties', visibleTo: [Role.guest, Role.user, Role.agency] },
         { to: '/properties/add', text: 'Add Property', visibleTo: [Role.agency] },
-        { to: '/agencies', text: 'Agencies', visibleTo: [Role.guest, Role.user, Role.agency] },
         { to: '/login', text: 'Login', visibleTo: [Role.guest] },
         { to: '/register', text: 'Register', visibleTo: [Role.guest] },
         { to: '/logout', text: 'Logout', visibleTo: [Role.user, Role.agency] },
@@ -56,7 +54,7 @@ const Sidebar: FC = () => {
     return (
         <div id='sidebar' className={`${!isOpened ? 'hidden' : ''}`}>
             <div id="sidebar-logo">
-                <img src="assets/images/logo.png" alt="" />
+                <img src="/assets/images/logo.png" alt="" />
             </div>
             <nav>
                 <ul>

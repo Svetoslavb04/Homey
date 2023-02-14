@@ -12,10 +12,11 @@ type CountrySelectProps = {
     className?: string,
     label: string,
     value: string,
-    onChange: (e: SelectChangeEvent<string>) => void
+    onChange: (e: SelectChangeEvent<string>) => void,
+    hasValueAny?: boolean
 }
 
-const CountrySelect: FC<CountrySelectProps> = ({ className, label, value, onChange }) => {
+const CountrySelect: FC<CountrySelectProps> = ({ className, label, value, onChange, hasValueAny = true }) => {
     return (
         <FormControl fullWidth variant='standard' className={`country-select${className ? ` ${className}` : ''}`}>
             <InputLabel className="country-select-label">{label}</InputLabel>
@@ -26,7 +27,7 @@ const CountrySelect: FC<CountrySelectProps> = ({ className, label, value, onChan
                 onChange={onChange}
             >
                 {
-                    <MenuItem
+                    hasValueAny && <MenuItem
                         key={'any'}
                         value={'any'}
                     >
@@ -39,7 +40,7 @@ const CountrySelect: FC<CountrySelectProps> = ({ className, label, value, onChan
                     countries?.map(country =>
                         <MenuItem
                             key={country.name}
-                            value={country.code}
+                            value={country.name}
                         >
                             <div className='country-select-item'>
                                 <span className='country-select-flag-container'>

@@ -53,7 +53,7 @@ export type PropertyFilterProps = {
 const PropertyFilter: FC<PropertyFilterProps> = ({ className, handleFilterChange, ...rest }) => {
 
   const initialPropertyFilter: IPropertyFilter = {
-    country: 'BG',
+    country: 'any',
     type: 'Any',
     priceRange: [0, 100000],
     status: 'Any',
@@ -130,7 +130,7 @@ const PropertyFilter: FC<PropertyFilterProps> = ({ className, handleFilterChange
 
     fetch('http://ip-api.com/json')
       .then(res => res.json())
-      .then(payload => { setSelectedCountry(payload.countryCode) })
+      .then(payload => { setSelectedCountry(payload.country) })
 
   }, [setSelectedCountry])
 

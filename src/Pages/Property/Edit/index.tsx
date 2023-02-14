@@ -29,6 +29,8 @@ import { ActionTypes, PropertyFormData, useEditFormData } from './useEditFormDat
 import { useNotificationContext } from '../../../contexts/NotificationContext/NotificationContext';
 import { useNavigate, useParams } from 'react-router';
 import { edit, getById } from '../../../services/propertyService';
+import { useAuthContext } from '../../../contexts/AuthContext';
+import PageLoader from '../../../Components/Core/PageLoader';
 
 
 const AdvancedCheckBox: FC<{ label: string, Icon: typeof SvgIcon, name: string, checked?: boolean }> = ({ label, Icon, name, checked }) =>
@@ -41,6 +43,7 @@ const AdvancedCheckBox: FC<{ label: string, Icon: typeof SvgIcon, name: string, 
 
 const EditProperty: FC = () => {
 
+    const { user } = useAuthContext();
     const { propertyId } = useParams();
 
     const { popNotification } = useNotificationContext();
@@ -69,6 +72,12 @@ const EditProperty: FC = () => {
     useEffect(() => {
 
         if (property) {
+
+            if (property.agency_id._id !== user._id) {
+                navigate('/properties')
+                return popNotification({ type: 'error', message: 'You are not allowed to edit this property' })
+            }
+
             dispatch({ type: ActionTypes.CHANGE_NAME, payload: property.name })
             dispatch({ type: ActionTypes.CHANGE_COUNTRY, payload: property.country })
             dispatch({ type: ActionTypes.CHANGE_CITY, payload: property.city })
@@ -174,14 +183,16 @@ const EditProperty: FC = () => {
 
         try {
             const res = await edit(property?._id || '', serverFormData)
-            
+
             if (!res[0]?._id) { throw res.message }
 
             popNotification({ type: 'success', message: 'Succesful edit!' });
             navigate(`/properties/${propertyId}`, { replace: true });
 
-        } catch (error: any) { console.log(error);
-         popNotification({ type: 'error', message: error.message }) }
+        } catch (error: any) {
+            console.log(error);
+            popNotification({ type: 'error', message: error.message })
+        }
     }
 
 
@@ -201,6 +212,7 @@ const EditProperty: FC = () => {
 
     return (
         <div id='edit-container'>
+            {!property && <PageLoader />}
             <div className='edit-form-wrapper'>
                 <form id='edit-form' encType='multipart/form-data' onSubmit={handleFormSubmit}>
                     <h1>Edit page</h1>

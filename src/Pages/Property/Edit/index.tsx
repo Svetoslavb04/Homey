@@ -174,13 +174,14 @@ const EditProperty: FC = () => {
 
         try {
             const res = await edit(property?._id || '', serverFormData)
-
-            if (res.status !== 200) { throw res.message }
+            
+            if (!res[0]?._id) { throw res.message }
 
             popNotification({ type: 'success', message: 'Succesful edit!' });
-            navigate('/', { replace: true });
+            navigate(`/properties/${propertyId}`, { replace: true });
 
-        } catch (error: any) { popNotification({ type: 'error', message: error.message }) }
+        } catch (error: any) { console.log(error);
+         popNotification({ type: 'error', message: error.message }) }
     }
 
 

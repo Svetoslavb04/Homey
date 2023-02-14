@@ -38,7 +38,7 @@ const Property: FC = () => {
     useEffect(() => {
         getById(propertyId || '')
             .then(payload => {
-                
+
                 const property = { ...payload[0] }
 
                 if (!property._id) {
@@ -78,9 +78,6 @@ const Property: FC = () => {
                 popNotification({ type: 'error', message: 'Property cannot be deleted!' })
                 console.log(err);
             })
-                
-            
-
     }
 
     const editHandler = ()=>{
@@ -203,15 +200,17 @@ const Property: FC = () => {
                         </div>
                     }
 
-                   
-                    <div id='owner-buttons'>
-                        <Button className='owner-button' variant="contained" color="error" onClick={()=>deleteHandler()} startIcon={<DeleteIcon />}>
-                            Delete
-                        </Button> 
-                        <Button className='owner-button' variant="contained" color="success" onClick={()=>editHandler()} startIcon={<DeleteIcon />}>
-                            Edit
-                        </Button>
-                    </div>
+                   {user?._id == property.agency_id._id && 
+                        <div id='owner-buttons'>
+                            <Button className='owner-button' variant="contained" color="error" onClick={()=>deleteHandler()} startIcon={<DeleteIcon />}>
+                                Delete
+                            </Button> 
+                            <Button className='owner-button' variant="contained" color="success" onClick={()=>editHandler()} startIcon={<DeleteIcon />}>
+                                Edit
+                            </Button>
+                        </div>
+                   }
+                    
                   
                    
                 </div>

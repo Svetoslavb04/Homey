@@ -16,13 +16,10 @@ const RoutesList = () => {
             <Route element={<Login />} path='/login' />
             <Route element={<Authenticated><Logout /></Authenticated>} path='/logout' />
             <Route element={<Register />} path='/register' />
-            <Route 
-                element = {<AddProperty/>} 
-                path='/properties/add'
-            />
+            <Route element={<AddProperty />} path='/properties/add' />
             <Route index path='/' element={<Home />} />
             <Route path='/properties' element={<PropertiesListing />} />
-            <Route path='/properties/:propertyId' element={<Property/>}/>
+            <Route path='/properties/:propertyId' element={<Property />} />
             <Route path='*' element={<FourOFour />} />
         </Routes>
     )

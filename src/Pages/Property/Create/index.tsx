@@ -9,7 +9,7 @@ import Type from './Components/typeSelectComponent';
 import Bedrooms from './Components/bedroomsSelectComponent';
 import Bathrooms from './Components/bathroomSelectComponent';
 import Garages from './Components/garagesSelectComponent';
-import CountrySelect from '../../../Components/Core/CountrySelect';
+import CountrySelect from '../../../Components/CountrySelect';
 import { Autocomplete, Checkbox, FormControlLabel, Input, Slider, SvgIcon } from '@mui/material';
 
 import WifiIcon from '@mui/icons-material/Wifi';
@@ -292,7 +292,7 @@ const AddProperty: FC = () => {
                                         <CountrySelect
                                             label='Country'
                                             value={formData.country.value}
-                                            onChange={(e) => { dispatch({ type: ActionTypes.CHANGE_COUNTRY, payload: e.target.value }) }}
+                                            onChange={(e: any) => { dispatch({ type: ActionTypes.CHANGE_COUNTRY, payload: e.target.value }) }}
                                         />
                                     </div>
                                     <div id='city' className='inputField'>

@@ -55,3 +55,13 @@ export const create = (formData: FormData) =>
         .then(res => {
             return res.json()
         })
+
+export const edit = (id: string, formData: FormData) =>
+    fetch(`${homeyAPI.properties.edit}/${id}`, {
+        method: 'PATCH',
+        credentials: 'include',
+        body: formData
+    })
+        .then(res => {
+            return res.json()
+        })

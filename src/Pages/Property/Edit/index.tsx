@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import InputAdornment from '@mui/material/InputAdornment';
 import { countries } from '../../../assets/js/countries';
 import { citiesOfCountryURL } from '../../../assets/js/APIs';
+import {IProperty} from '../../../interfaces/IProperty';
 
 import Status from './Components/radioStatusComponent';
 import Type from './Components/typeSelectComponent';
@@ -25,6 +26,7 @@ import LocalParkingIcon from '@mui/icons-material/LocalParking';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import { ActionTypes, PropertyFormData, useRegisterFormData } from './useEditFormData';
 import { useNotificationContext } from '../../../contexts/NotificationContext/NotificationContext';
+import { useNavigate } from 'react-router';
 
 
 const AdvancedFilterCheckBox: FC<{ label: string, Icon: typeof SvgIcon, name: string }> = ({ label, Icon, name }) =>
@@ -43,6 +45,7 @@ const EditProperty: FC = () => {
     const [availableCities, setAvailableCities] = useState<string[]>([]);
 
     const { popNotification } = useNotificationContext();
+    const navigate = useNavigate();
 
     const checkBoxes = [
         {
@@ -118,7 +121,7 @@ const EditProperty: FC = () => {
 
       const [formData, dispatch] = useRegisterFormData();
 
-      const handleFormSubmit = (e: FormEvent) => {
+      const handleFormSubmit = async (e: FormEvent) => {
             e.preventDefault();
 
             const info = {
@@ -140,18 +143,17 @@ const EditProperty: FC = () => {
        
              if (validateValues(info)) { return }
 
-            // const normalizedPropertyInfo = normalizeData(info) as IPropertyData;
+            const normalizedPropertyInfo = normalizeData(info) as IProperty;
 
-            // try {
-            //     const res = await editProperty(normalizedPropertyInfo)
+            try {
+                //const res = await editProperty(normalizedPropertyInfo)
 
-            //     if (res.status !== 200) { throw res.message }
+                //if (res.status !== 200) { throw res.message }
                 
-            //     updateProperty()
-            //     popNotification({ type: 'success', message: 'Succesful edit!' })
-            //     navigate('/', { replace: true });
+                popNotification({ type: 'success', message: 'Succesful edit!' });
+                //navigate('/', { replace: true });
 
-            // } catch (error: any) { popNotification({ type: 'error', message: error }) }
+            } catch (error: any) { popNotification({ type: 'error', message: error }) }
         }
 
 
@@ -167,6 +169,19 @@ const EditProperty: FC = () => {
             }
 
             return flag
+        }
+
+        function normalizeData(data:PropertyFormData): IProperty {
+
+            const keys = Object.keys(data);
+
+            let newData: any = {};
+
+            keys.forEach((k) => {
+                newData[k as keyof (PropertyFormData)] = data[k as keyof (PropertyFormData)].value
+            })
+
+            return newData
         }
 
     return (

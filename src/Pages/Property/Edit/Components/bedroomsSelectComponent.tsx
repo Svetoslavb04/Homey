@@ -15,7 +15,7 @@ export default function NativeSelectDemo() {
                 label="Bedrooms"
                 >
                 {
-                    [...Array.from(Array(10).keys()).map(n => ++n)]
+                    [...Array.from(Array(11).keys()).map(n => n)]
                     .map(number => <MenuItem key={number} value={number}>{number}</MenuItem>)
                 }
             </Select>

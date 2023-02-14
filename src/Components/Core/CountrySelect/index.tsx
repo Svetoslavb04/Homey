@@ -39,7 +39,7 @@ const CountrySelect: FC<CountrySelectProps> = ({ className, label, value, onChan
                     countries?.map(country =>
                         <MenuItem
                             key={country.name}
-                            value={country.code}
+                            value={country.name}
                         >
                             <div className='country-select-item'>
                                 <span className='country-select-flag-container'>

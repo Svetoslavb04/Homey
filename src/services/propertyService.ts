@@ -59,8 +59,14 @@ export const create = (formData: FormData) =>
 
 export const deleteProperty = (propertyId: string) =>
     fetch(`${homeyAPI.properties.delete}/${propertyId}`, {
-        method: 'DELETE'
+        method: 'DELETE'})
+
+        
+export const edit = (id: string, formData: FormData) =>
+    fetch(`${homeyAPI.properties.edit}/${id}`, {
+        method: 'PATCH',
+        credentials: 'include',
+        body: formData})
+    .then(res => {
+        return res.json()
     })
-        .then(res => {
-            return res.json()
-        })

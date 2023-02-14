@@ -15,7 +15,8 @@ export const homeyAPI = {
         get getMetaData(): string { return `${this.baseURL}/meta` },
         get getById(): string { return `${this.baseURL}` },
         get create(): string { return `${this.baseURL}` },
-        get delete(): string {return `${this.baseURL}` }
+        get delete(): string {return `${this.baseURL}` },
+        get edit(): string { return `${this.baseURL}` },
     },
     images: {
         baseURL : `${homeyAPIBaseURL}/images`

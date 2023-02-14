@@ -410,7 +410,7 @@ const EditProperty: FC = () => {
                                         <Input
                                             placeholder="Enter keyword"
                                             className='property-filter-advanced-new-checkbox-label'
-                                            value={c.value}
+                                            defaultValue={c.value}
                                             onChange={(e) => {
                                                 const input = e.target.parentElement?.parentElement?.children[0].children[0];
 

@@ -1,5 +1,5 @@
 import './Create.scss';
-import { FC, useEffect, useState, useRef, useCallback, FormEvent, ChangeEvent } from 'react';
+import { FC, useEffect, useState, useRef, useCallback, FormEvent } from 'react';
 
 import { countries } from '../../../assets/js/countries';
 import { citiesOfCountryURL } from '../../../assets/js/APIs';
@@ -10,7 +10,7 @@ import Bedrooms from './Components/bedroomsSelectComponent';
 import Bathrooms from './Components/bathroomSelectComponent';
 import Garages from './Components/garagesSelectComponent';
 import CountrySelect from '../../../Components/Core/CountrySelect';
-import { Autocomplete, Checkbox, FormControlLabel, Input, SelectChangeEvent, Slider, SvgIcon } from '@mui/material';
+import { Autocomplete, Checkbox, FormControlLabel, Input, Slider, SvgIcon } from '@mui/material';
 
 import WifiIcon from '@mui/icons-material/Wifi';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
@@ -45,7 +45,7 @@ const AddProperty: FC = () => {
             .then(res => res.json())
             .then(payload => { dispatch({ type: ActionTypes.CHANGE_COUNTRY, payload: payload.country }) })
 
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
 
@@ -114,11 +114,11 @@ const AddProperty: FC = () => {
             return true
         }
 
-    }, [continueButtonRef.current, formData]);
+    }, [validateCurrentPage]);
 
     useEffect(() => {
         setNavigationButtonState()
-    }, [formData, validateCurrentPage])
+    }, [formData, setNavigationButtonState])
 
     useEffect(() => {
 
@@ -138,7 +138,7 @@ const AddProperty: FC = () => {
                 }
             })
         }
-    }, [Page])
+    }, [Page, setNavigationButtonState])
 
     const handlePageChange = (newPage: number) => {
         setNavigationButtonState()
@@ -192,6 +192,7 @@ const AddProperty: FC = () => {
         currentFormData.forEach((value, key) => {
             serverFormData.append('claims', key)
         })
+
     }
 
     const marks = [

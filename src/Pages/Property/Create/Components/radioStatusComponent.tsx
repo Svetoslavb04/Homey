@@ -3,7 +3,6 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import { ChangeEvent } from 'react';
 import { PropertyStatus } from '../../../../enums/PropertyStatus';
 
 export default function RowRadioButtonsGroup({ value, onChange }: { value: string, onChange: (newValue: PropertyStatus) => void }) {

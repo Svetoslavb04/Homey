@@ -1,0 +1,1 @@
+export const homeyAPIBaseURL = 'https://homey-rest-api.herokuapp.com'

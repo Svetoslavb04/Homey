@@ -14,7 +14,7 @@ import Bedrooms from './Components/bedroomsSelectComponent';
 import Bathrooms from './Components/bathroomsSelectComponent';
 import Garages from './Components/garagesSelectComponent';
 import CountrySelect from '../../../Components/CountrySelect';
-import { Autocomplete, Checkbox, FormControlLabel, Input, SelectChangeEvent, SvgIcon } from '@mui/material';
+import { Autocomplete, Checkbox, FormControlLabel, Input, SelectChangeEvent } from '@mui/material';
 
 import WifiIcon from '@mui/icons-material/Wifi';
 import AcUnitIcon from '@mui/icons-material/AcUnit';

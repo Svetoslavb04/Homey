@@ -120,7 +120,7 @@ const Property: FC = () => {
         name: 'wifi',
         Icon: WifiIcon,
     }, {
-        name: 'airConditioning',
+        name: 'air conditioning',
         Icon: AcUnitIcon,
     }, {
         name: 'fireplace',
@@ -132,7 +132,7 @@ const Property: FC = () => {
         name: 'fitness',
         Icon: FitnessCenterIcon,
     }, {
-        name: 'swimmingPool',
+        name: 'swimming pool',
         Icon: PoolIcon,
     }, {
         name: 'parking',

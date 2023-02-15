@@ -85,7 +85,7 @@
         h1 {
             text-align: center;
         }
-        
+
         @media screen and (max-width: 574px) {
             height: 50vh;
             font-size: 150%;
@@ -222,6 +222,11 @@
                 }
             }
         }
+    }
+
+    .property-description-text {
+        width: 80%;
+        margin: 0 auto;
     }
 
     #selected-image {

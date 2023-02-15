@@ -21,6 +21,7 @@ const PropertiesListings = () => {
     const [filter, setFilter] = useState<IPropertyFilter>({});
     const [page, setPage] = useState<number>(1);
     const [meta, setMeta] = useState<IPropertiesMeta>();
+    const [pagesCount, setPagesCount] = useState<number>(0);
 
     const [propertiesLoading, setPropertiesLoading] = useState<boolean>(true);
     const [properties, setProperties] = useState<IProperty[]>([]);
@@ -36,6 +37,7 @@ const PropertiesListings = () => {
                     return p
                 })
 
+                setPagesCount(payload.meta.pages)
                 setProperties(properties)
             })
             .catch(err => console.log(err))
@@ -60,7 +62,7 @@ const PropertiesListings = () => {
                 <section className='property-listing-pagination df jcc'>
                     <Pagination
                         size={window.innerWidth < 680 ? 'small' : 'medium'}
-                        count={meta?.pages || 1} //Get from server
+                        count={pagesCount || 1}
                         page={page}
                         onChange={(_, page) => setPage(page)} color='secondary'
                     />

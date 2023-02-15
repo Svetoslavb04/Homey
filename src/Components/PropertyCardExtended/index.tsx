@@ -15,6 +15,7 @@ export type PropertyCardExtendedProps = {
 }
 
 const PropertyCardExtended: FC<PropertyCardExtendedProps> = ({ property, className, handleImageClick = () => { } }) => {
+  
   return (
     <div className={`property-card-extended${className ? ` ${className}` : ''}`} >
       <div
@@ -25,11 +26,11 @@ const PropertyCardExtended: FC<PropertyCardExtendedProps> = ({ property, classNa
       </div>
       <div className='property-card-extended-description-block property-card-extended-bottom-left df fdc'>
         <div className='df jcsb gap-20'>
-          <h5 className='property-card-extended-heading'>{property.city.trim()}</h5>
+          <h5 className='property-card-extended-heading'>{property.city?.trim()}</h5>
           <p className='property-card-extended-heading'>€ {property.price.toFixed(2)}</p>
         </div>
         <div className='df jcfe aife'>
-          <p className='property-card-extended-text'>{property.name.trim()}</p>
+          <p className='property-card-extended-text'>{property.name?.trim()}</p>
         </div>
       </div>
       {/* <div className='property-card-extended-description-block property-card-extended-bottom-right'>

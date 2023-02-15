@@ -11,15 +11,19 @@ import Button from '@mui/material/Button';
 import WifiIcon from '@mui/icons-material/Wifi';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
 import FireplaceIcon from '@mui/icons-material/Fireplace';
+import DeleteIcon from '@mui/icons-material/Delete';
 import BalconyIcon from '@mui/icons-material/Balcony';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import PoolIcon from '@mui/icons-material/Pool';
 import LocalParkingIcon from '@mui/icons-material/LocalParking';
 import { IProperty } from '../../../interfaces/IProperty';
 import PageLoader from '../../../Components/Core/PageLoader';
-import { getById } from '../../../services/propertyService';
+import { getById, deleteProperty } from '../../../services/propertyService';
+import { me } from '../../../services/authService'
 import { homeyAPI } from '../../../assets/js/APIs';
 import { useNotificationContext } from '../../../contexts/NotificationContext/NotificationContext';
+import { IUser } from '../../../interfaces/IUser';
+import { IAgency } from '../../../interfaces/IAgency';
 
 const Property: FC = () => {
 
@@ -28,6 +32,8 @@ const Property: FC = () => {
     const { propertyId } = useParams();
 
     const [property, setProperty] = useState<IProperty | null>(null)
+
+    const [user, setUser] = useState<IUser | IAgency | null>(null)
 
     useEffect(() => {
         getById(propertyId || '')
@@ -39,11 +45,20 @@ const Property: FC = () => {
                     navigate('/properties')
                     return popNotification({ type: 'error', message: 'Property not found!' })
                 }
-
                 setProperty(property)
             })
             .catch(err => console.log(err))
     }, [propertyId, navigate, popNotification])
+
+
+    useEffect(() => {
+        me().then(payload => {
+
+            setUser(payload.user);
+        })
+            .catch(err => console.log(err))
+
+    }, [])
 
     const [imageToOpen, setImageToOpen] = useState('');
     const [contactButtonClicked, setContactButtonClicked] = useState<boolean>(false);
@@ -52,6 +67,21 @@ const Property: FC = () => {
         return (
             <PageLoader />
         )
+    }
+    const deleteHandler = () => {
+        deleteProperty(propertyId || '')
+            .then(res => {
+                popNotification({ type: 'success', message: 'Property deleted!' })
+                navigate('/properties');
+            })
+            .catch(err => {
+                popNotification({ type: 'error', message: 'Property cannot be deleted!' })
+                console.log(err);
+            })
+    }
+
+    const editHandler = () => {
+        navigate(`/properties/${propertyId}/edit`)
     }
 
     const clickImageHandler = (imgUrl: string) => { setImageToOpen(imgUrl) }
@@ -169,6 +199,20 @@ const Property: FC = () => {
                             </div>
                         </div>
                     }
+
+                    {user?._id === property.agency_id._id &&
+                        <div id='owner-buttons'>
+                            <Button className='owner-button' variant="contained" color="error" onClick={() => deleteHandler()} startIcon={<DeleteIcon />}>
+                                Delete
+                            </Button>
+                            <Button className='owner-button' variant="contained" color="success" onClick={() => editHandler()} startIcon={<DeleteIcon />}>
+                                Edit
+                            </Button>
+                        </div>
+                    }
+
+
+
                 </div>
 
             </div>
@@ -179,7 +223,7 @@ const Property: FC = () => {
                     <span>This property is offered by</span> <b className='property-info'>{property.agency_id?.agencyName}</b>
                 </div>
                 <Button variant="contained" size='large' id='contact-button' type='submit' onClick={() => contactButtonHandler()}>
-                    {contactButtonClicked ? '' : 'Contact'}
+                    {contactButtonClicked ? property.agency_id.phoneNumber : 'Contact'}
                 </Button>
             </div>
 

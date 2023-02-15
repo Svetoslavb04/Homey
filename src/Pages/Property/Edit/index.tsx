@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import InputAdornment from '@mui/material/InputAdornment';
 import { countries } from '../../../assets/js/countries';
-import { citiesOfCountryURL, homeyAPI } from '../../../assets/js/APIs';
+import { citiesOfCountryURL } from '../../../assets/js/APIs';
 import { IProperty } from '../../../interfaces/IProperty';
 
 import Status from './Components/radioStatusComponent';
@@ -32,15 +32,6 @@ import { edit, getById } from '../../../services/propertyService';
 import { useAuthContext } from '../../../contexts/AuthContext';
 import PageLoader from '../../../Components/Core/PageLoader';
 
-
-const AdvancedCheckBox: FC<{ label: string, Icon: typeof SvgIcon, name: string, checked?: boolean }> = ({ label, Icon, name, checked }) =>
-    <div className='property-filter-advanced-checkbox-item'>
-        <FormControlLabel
-            control={<Checkbox checked={checked || false} name={name} sx={{ '& .MuiSvgIcon-root': { fontSize: 16 } }} disableRipple checkedIcon={<Icon />} />}
-            label={label}
-        />
-    </div>
-
 const EditProperty: FC = () => {
 
     const { user } = useAuthContext();
@@ -51,7 +42,9 @@ const EditProperty: FC = () => {
 
     const [property, setProperty] = useState<IProperty | null>(null);
 
-    const [claims, setClaims] = useState<string[]>();
+    const [claims, setClaims] = useState<string[]>([]);
+
+    const [formData, dispatch] = useEditFormData();
 
     useEffect(() => {
         getById(propertyId || '')
@@ -94,11 +87,10 @@ const EditProperty: FC = () => {
             dispatch({ type: ActionTypes.CHANGE_YEARBUILT, payload: property.yearBuilt })
             dispatch({ type: ActionTypes.CHANGE_DESCRIPTION, payload: property.description })
 
-            setClaims(property.claims.map(c => c.name))
+            setClaims(property.claims.map(c => `claim_${c.name}`))
         }
 
-    }, [property])
-    const [formData, dispatch] = useEditFormData();
+    }, [property, dispatch, user._id, navigate, popNotification])
 
     const [availableCities, setAvailableCities] = useState<string[]>([]);
 
@@ -181,6 +173,12 @@ const EditProperty: FC = () => {
         const serverFormData = new FormData(e.currentTarget as HTMLFormElement)
         serverFormData.append('country', formData.country.value);
 
+        serverFormData.forEach((value, key) => {
+            if (key.startsWith('claim_')) {
+                serverFormData.append('claims', key.split('claim_')[1])
+            }
+        })
+
         try {
             const res = await edit(property?._id || '', serverFormData)
 
@@ -190,11 +188,9 @@ const EditProperty: FC = () => {
             navigate(`/properties/${propertyId}`, { replace: true });
 
         } catch (error: any) {
-            console.log(error);
-            popNotification({ type: 'error', message: error.message })
+            popNotification({ type: 'error', message: error.message || error })
         }
     }
-
 
     function validateValues(object: PropertyFormData) {
         let flag = false;
@@ -394,28 +390,50 @@ const EditProperty: FC = () => {
                     </div>
                     <div className='edit-checkbox-row df fww'>
                         {
-                            checkBoxes.map(c => <AdvancedCheckBox
-                                checked={claims?.some(name => name === c.name)}
-                                key={c.name}
-                                label={c.label}
-                                name={c.name}
-                                Icon={c.Icon}
-                            />)
+                            checkBoxes.map(c =>
+                                <div key={c.name} className='property-filter-advanced-checkbox-item'>
+                                    <FormControlLabel
+                                        control={
+                                            <Checkbox
+                                                checked={claims?.some(name => name?.split('claim_')[1] === c.name) || false}
+                                                onChange={(e) => {
+                                                    setClaims(claims => {
+
+                                                        const index = claims.indexOf(e.target.name);
+
+                                                        if (index > -1 && !e.target.checked) {
+                                                            claims.splice(index, 1)
+                                                        } else if (e.target.checked) {
+                                                            claims.push(`${e.target.name}`)
+                                                        }
+                                                        return [...claims]
+                                                    })
+                                                }}
+                                                name={`claim_${c.name}`}
+                                                sx={{ '& .MuiSvgIcon-root': { fontSize: 16 } }}
+                                                disableRipple
+                                                checkedIcon={<c.Icon />}
+                                            />
+                                        }
+                                        label={c.label}
+                                    />
+                                </div>
+                            )
                         }
                         {
                             property?.claims.filter(c => !nonCustomCheckboxes.includes(c.value))
                                 .map((c, i) =>
                                     <div key={i} className='property-filter-advanced-checkbox-item property-filter-advanced-checkbox-new-item df'>
-                                        <Checkbox defaultChecked sx={{ '& .MuiSvgIcon-root': { fontSize: 16 } }} disableRipple />
+                                        <Checkbox name={c.value} defaultChecked sx={{ '& .MuiSvgIcon-root': { fontSize: 16 } }} disableRipple />
                                         <Input
                                             placeholder="Enter keyword"
                                             className='property-filter-advanced-new-checkbox-label'
-                                            value={c.value}
+                                            defaultValue={c.value}
                                             onChange={(e) => {
                                                 const input = e.target.parentElement?.parentElement?.children[0].children[0];
-
+                                                
                                                 if (input && input.tagName.toLowerCase() === 'input') {
-                                                    (input as HTMLInputElement).name = e.target.value
+                                                    (input as HTMLInputElement).name = `claim_${e.target.value}`
                                                 }
                                             }}
                                         />
@@ -433,7 +451,7 @@ const EditProperty: FC = () => {
                                             const input = e.target.parentElement?.parentElement?.children[0].children[0];
 
                                             if (input && input.tagName.toLowerCase() === 'input') {
-                                                (input as HTMLInputElement).name = e.target.value
+                                                (input as HTMLInputElement).name = `claim_${e.target.value}`
                                             }
                                         }}
                                     />

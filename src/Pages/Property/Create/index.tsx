@@ -212,34 +212,36 @@ const AddProperty: FC = () => {
         } catch (error: any) { popNotification({ type: 'error', message: error }) }
     }
 
+    const hideStep = (document.body.hasAttribute('sidebar-opened') && window.innerWidth < 680) || window.innerWidth < 370;
+
     const marks = [
         {
             value: 1,
-            label: 'Step 1',
+            label: `${hideStep ? '' : 'Step'} 1`,
         },
         {
             value: 2,
-            label: 'Step 2',
+            label: `${hideStep ? '' : 'Step'} 2`,
         },
         {
             value: 3,
-            label: 'Step 3',
+            label: `${hideStep ? '' : 'Step'} 3`,
         },
         {
             value: 4,
-            label: 'Step 4',
+            label: `${hideStep ? '' : 'Step'} 4`,
         },
         {
             value: 5,
-            label: 'Step 5',
+            label: `${hideStep ? '' : 'Step'} 5`,
         },
         {
             value: 6,
-            label: 'Step 6',
+            label: `${hideStep ? '' : 'Step'} 6`,
         },
         {
             value: 7,
-            label: 'Step 7',
+            label: `${hideStep ? '' : 'Step'} 7`,
         }
     ];
 
@@ -278,7 +280,7 @@ const AddProperty: FC = () => {
     return (
         <div id='image-background'>
             <div id='create-container'>
-                <div className='add-form-wrapper'>
+                <div className='add-form-wrapper' data-page={Page + 1}>
                     <form ref={formRef} encType='multipart/form-data' id='add-form' onSubmit={handleFormSubmit}>
                         {Page > 0 &&
                             <Slider
@@ -593,7 +595,7 @@ const AddProperty: FC = () => {
                                         onClick={handlePageChange.bind(null, Page - 1)}
                                     > ◄ </Button>
                                 </div>
-                                <div className='button'>
+                                <div className='button continue-button'>
                                     <Button
                                         ref={continueButtonRef}
                                         fullWidth

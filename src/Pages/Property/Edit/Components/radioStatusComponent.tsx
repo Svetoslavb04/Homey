@@ -19,7 +19,7 @@ export default function RowRadioButtonsGroup({ value, onChange }: { value: strin
       <FormLabel>Status</FormLabel>
       <RadioGroup
         row
-        name="status-radio-group"
+        name="status"
         value={value}
       >
         <FormControlLabel value="for_sale" control={<Radio onChange={handleRadioChange.bind(null, 'for_sale')} />} label="for sale" />

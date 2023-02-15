@@ -102,7 +102,7 @@ const EditProperty: FC = () => {
         }, {
             label: 'Air Conditioning',
             Icon: AcUnitIcon,
-            name: 'airConditioning'
+            name: 'air conditioning'
         }, {
             label: 'Fire Place',
             Icon: FireplaceIcon,
@@ -118,7 +118,7 @@ const EditProperty: FC = () => {
         }, {
             label: 'Swimming Pool',
             Icon: PoolIcon,
-            name: 'swimmingPool'
+            name: 'swimming pool'
         }, {
             label: 'Parking',
             Icon: LocalParkingIcon,
@@ -126,7 +126,7 @@ const EditProperty: FC = () => {
         }
     ];
 
-    const nonCustomCheckboxes = ['wifi', 'airConditioning', 'fireplace', 'balcony', 'fitness', 'swimmingPool', 'parking']
+    const nonCustomCheckboxes = ['wifi', 'air conditioning', 'fireplace', 'balcony', 'fitness', 'swimming pool', 'parking']
 
     useEffect(() => {
 

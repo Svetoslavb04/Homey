@@ -253,7 +253,7 @@ const AddProperty: FC = () => {
         }, {
             label: 'Air Conditioning',
             Icon: AcUnitIcon,
-            name: 'airConditioning'
+            name: 'air conditioning'
         }, {
             label: 'Fire Place',
             Icon: FireplaceIcon,
@@ -269,7 +269,7 @@ const AddProperty: FC = () => {
         }, {
             label: 'Swimming Pool',
             Icon: PoolIcon,
-            name: 'swimmingPool'
+            name: 'swimming pool'
         }, {
             label: 'Parking',
             Icon: LocalParkingIcon,

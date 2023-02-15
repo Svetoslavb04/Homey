@@ -82,6 +82,10 @@
         margin-bottom: 10%;
         z-index: 1;
 
+        h1 {
+            text-align: center;
+        }
+        
         @media screen and (max-width: 574px) {
             height: 50vh;
             font-size: 150%;
@@ -190,7 +194,7 @@
                 width: 80%;
                 margin: 0 auto;
             }
-            #owner-buttons{
+            #owner-buttons {
                 margin-top: 40px;
                 display: flex;
                 flex-direction: row;
@@ -199,9 +203,9 @@
                 //gap: 20px;
                 width: 230px;
 
-               .owner-button{
-                width:100px;
-               }
+                .owner-button {
+                    width: 100px;
+                }
             }
             .extras {
                 display: flex;

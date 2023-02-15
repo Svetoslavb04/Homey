@@ -182,13 +182,13 @@ const EditProperty: FC = () => {
         try {
             const res = await edit(property?._id || '', serverFormData)
 
-            if (!res[0]?._id) { throw res.message }
+            if (!res[0]?._id) { throw res.message || 'Error' }
 
             popNotification({ type: 'success', message: 'Succesful edit!' });
             navigate(`/properties/${propertyId}`, { replace: true });
 
         } catch (error: any) {
-            popNotification({ type: 'error', message: error.message || error })
+            popNotification({ type: 'error', message: error?.message || error })
         }
     }
 
@@ -378,7 +378,7 @@ const EditProperty: FC = () => {
                             name='description'
                             label="Descripton"
                             multiline
-                            rows={4}
+                            rows={8}
                             placeholder=". . ."
                             variant="outlined"
                             helperText={formData.description.error && "Description length should be less than 9999 symbols!"}

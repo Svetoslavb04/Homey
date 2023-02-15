@@ -36,6 +36,6 @@ Many more will come...
 
 ### How to run
 
-1. Configure homeyAPIBaseURL in src/assets/js/APIs.ts
+1. Create a file called env.ts in src and export homeyAPIBaseURL variable
 2. To start in development environment: run npm start
 3. To build for production: run npm run build

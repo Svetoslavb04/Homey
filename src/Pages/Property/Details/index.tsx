@@ -104,7 +104,9 @@ const Property: FC = () => {
     }
 
     const backImageOpen = (url: string) => {
-        let imageIndex = property.images.findIndex(u => u === url);
+        let imageIndex = property.images
+            .map(name => `${homeyAPI.images.baseURL}/${name}`)
+            .findIndex(u => u === url);
 
         imageIndex -= 1;
         if (imageIndex < 0) {

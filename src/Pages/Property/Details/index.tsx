@@ -177,8 +177,6 @@ const Property: FC = () => {
                     </div>
                 </div>
                 <div id='property-description'>
-                    <p> {property.description}
-                    </p>
                     <p><b className='property-info'>Status : </b> {property.status?.split('_').join(' ')}</p>
                     <p><b className='property-info'>Type : </b> {property.type}</p>
                     <p><b className='property-info'>Price : </b> {property.price} €</p>
@@ -216,10 +214,11 @@ const Property: FC = () => {
 
 
                 </div>
-
+            </div>
+            <div className='property-description-text'>
+                <p>{property.description}</p>
             </div>
             <hr></hr>
-
             <div id='contact-section'>
                 <div id='agency-info'>
                     <span>This property is offered by</span> <b className='property-info'>{property.agency_id?.agencyName}</b>

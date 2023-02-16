@@ -73,7 +73,7 @@ const Register: FC = () => {
                 const res = await registerUser(normalizedUserInfo)
 
                 if (res.status !== 200) { throw res.message }
-                
+
                 updateUser()
                 popNotification({ type: 'success', message: 'Succesful registration!' })
                 navigate('/', { replace: true });
@@ -88,6 +88,7 @@ const Register: FC = () => {
                 agencyName: formData.agencyName,
                 city: formData.city,
                 address: formData.address,
+                phoneNumber: formData.phoneNumber
             }
 
             if (validateValues(agencyInfo)) { return }
@@ -245,6 +246,19 @@ const Register: FC = () => {
                                         value={formData.address.value}
                                         onChange={(e) => { dispatch({ type: ActionTypes.CHANGE_ADDRESS, payload: e.target.value }) }}
                                         onBlur={(e) => { dispatch({ type: ActionTypes.VALIDATE_ADDRESS, payload: e.target.value }) }}
+                                    />
+                                </div>
+                                <div id="register-agencyPhoneNumber" className='inputField'>
+                                    <TextField
+                                        fullWidth
+                                        label="Phone Number"
+                                        variant="standard"
+                                        color="primary"
+                                        helperText={formData.phoneNumber.error && "Invalid phone number!"}
+                                        error={formData.phoneNumber.error}
+                                        value={formData.phoneNumber.value}
+                                        onChange={(e) => { dispatch({ type: ActionTypes.CHANGE_PHONENUMBER, payload: e.target.value }) }}
+                                        onBlur={(e) => { dispatch({ type: ActionTypes.VALIDATE_PHONENUMBER, payload: e.target.value }) }}
                                     />
                                 </div>
                             </>

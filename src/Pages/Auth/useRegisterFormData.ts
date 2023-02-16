@@ -1,4 +1,5 @@
 import { Dispatch, useReducer } from "react"
+import isMobilePhone from "validator/lib/isMobilePhone";
 
 export enum FormDataMode {
     'user' = 'user',
@@ -23,6 +24,7 @@ export type AgencyData = CommonData & {
     agencyName: { error: boolean, value: string },
     city: { error: boolean, value: string },
     address: { error: boolean, value: string },
+    phoneNumber: { error: boolean, value: string },
 }
 
 export type AgencyFormData = FormData & AgencyData
@@ -40,6 +42,7 @@ export const initialState: UserFormData & AgencyFormData = {
     agencyName: { error: false, value: '' },
     city: { error: false, value: '' },
     address: { error: false, value: '' },
+    phoneNumber: { error: false, value: '' },
     password: { error: false, value: '' },
     rePassword: { error: false, value: '' },
 }
@@ -61,7 +64,9 @@ export enum ActionTypes {
     'CHANGE_CITY' = 'CHANGE_CITY',
     'VALIDATE_CITY' = 'VALIDATE_CITY',
     'CHANGE_ADDRESS' = 'CHANGE_ADDRESS',
-    'VALIDATE_ADDRESS' = 'VALIDATE_ADDRESS'
+    'VALIDATE_ADDRESS' = 'VALIDATE_ADDRESS',
+    'CHANGE_PHONENUMBER' = 'CHANGE_PHONENUMBER',
+    'VALIDATE_PHONENUMBER' = 'VALIDATE_PHONENUMBER'
 }
 
 const formDataReducer = (state: UserFormData & AgencyFormData, action: Action) => {
@@ -132,6 +137,14 @@ const formDataReducer = (state: UserFormData & AgencyFormData, action: Action) =
                 return { ...state, address: { error: true, value: state.address.value.trim() } }
             } else {
                 return { ...state, address: { error: false, value: state.address.value.trim() } }
+            }
+        case ActionTypes.CHANGE_PHONENUMBER:
+            return { ...state, phoneNumber: { error: state.phoneNumber.error, value: action.payload.trimStart() } }
+        case ActionTypes.VALIDATE_PHONENUMBER:
+            if (!isMobilePhone(action.payload) && action.payload !== '') {
+                return { ...state, phoneNumber: { error: true, value: state.phoneNumber.value.trim() } }
+            } else {
+                return { ...state, phoneNumber: { error: false, value: state.phoneNumber.value.trim() } }
             }
         default:
             return state
